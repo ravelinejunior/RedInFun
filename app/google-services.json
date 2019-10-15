@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "716624684082",
+    "firebase_url": "https://redinfunusers.firebaseio.com",
+    "project_id": "redinfunusers",
+    "storage_bucket": "redinfunusers.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:716624684082:android:d531e905370656a1c8082b",
+        "android_client_info": {
+          "package_name": "br.com.raveline.redinfunusers"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "716624684082-std5b0e9oolfm2b39oojulo563vt0bol.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.raveline.redinfunusers",
+            "certificate_hash": "0d97dcdf1d60259b48a703db944e07e841752d04"
+          }
+        },
+        {
+          "client_id": "716624684082-42g54b21b9ppub4kbgmjq37o5lig7n40.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDVK8nr_ynjSPG1Cz_h1CwiNGLQL9xXK0g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "716624684082-42g54b21b9ppub4kbgmjq37o5lig7n40.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
