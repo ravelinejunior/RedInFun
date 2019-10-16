@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthEmailException;
@@ -53,7 +52,6 @@ public class CadastrarUsuario extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //exibir progressbar
-                progressBarCadastroUsuario.setVisibility(View.VISIBLE);
                 String nomeUsuarioDigitado = nomeCadastroUsuario.getText().toString();
                 String emailUsuarioDigitado = emailCadastroUsuario.getText().toString();
                 String idadeUsuarioDigitado = idadeCadastroUsuario.getText().toString();
@@ -99,7 +97,7 @@ public class CadastrarUsuario extends AppCompatActivity {
     }
 
     public void carregarComponentes(){
-        botaoCadastroUsuario = findViewById(R.id.botao_cadastrar_cadastro);
+        botaoCadastroUsuario = findViewById(R.id.botao_cadastro_cadastrar);
         emailCadastroUsuario = findViewById(R.id.email_id_cadastrar);
         idadeCadastroUsuario = findViewById(R.id.idade_id_cadastrar);
         nomeCadastroUsuario = findViewById(R.id.nome_id_cadastrar);
@@ -110,6 +108,7 @@ public class CadastrarUsuario extends AppCompatActivity {
 
     public void cadastrarUsuario(final Usuario usuario) {
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+        progressBarCadastroUsuario.setVisibility(View.VISIBLE);
         //criando autenticação via email e senha
         autenticacao.createUserWithEmailAndPassword(
             usuario.getEmail(),usuario.getSenha()
@@ -156,5 +155,11 @@ public class CadastrarUsuario extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+        super.onBackPressed();
     }
 }

@@ -53,7 +53,7 @@
             app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
         <Button
-            android:id="@+id/botao_cadastrar_cadastro"
+            android:id="@+id/botao_cadastro_cadastrar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -88,7 +88,7 @@
             android:textColorHint="@color/branco"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/botao_cadastrar_cadastro"
+            app:layout_constraintBottom_toTopOf="@+id/botao_cadastro_cadastrar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/idade_id_cadastrar" />
@@ -147,7 +147,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/botao_cadastrar_cadastro" />
+            app:layout_constraintTop_toBottomOf="@+id/botao_cadastro_cadastrar" />
 
         <androidx.constraintlayout.widget.Barrier
             android:id="@+id/barrier"
