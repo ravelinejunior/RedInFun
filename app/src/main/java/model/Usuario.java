@@ -6,6 +6,7 @@ public class Usuario {
     private String email;
     private String senha;
     private String caminhoFoto;
+    private String idade;
 
     public Usuario() {
     }
@@ -48,5 +49,13 @@ public class Usuario {
 
     public void setCaminhoFoto(String caminhoFoto) {
         this.caminhoFoto = caminhoFoto;
+    }
+
+    public String getIdade() {
+        return idade;
+    }
+
+    public void setIdade(String idade) {
+        this.idade = idade;
     }
 }
