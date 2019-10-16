@@ -39,6 +39,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        verificarUsuarioLogado();
         carregarElementos();
         progressBarLogin.setVisibility(View.GONE);
         botaoLogarLogin.setOnClickListener(new View.OnClickListener() {
