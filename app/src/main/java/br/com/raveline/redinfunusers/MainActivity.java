@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Build;
@@ -13,8 +15,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
+import fragment.ContatoFragment;
+import fragment.HomeFragment;
+import fragment.PerfilFragment;
+import fragment.UsuariosFragment;
 import helper.ConfiguracaoFirebase;
 
 public class MainActivity extends AppCompatActivity {
@@ -32,7 +40,68 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setTitle("RedInFun");
         toolbar.setTitleTextColor(getColor(R.color.branco));
         setSupportActionBar(toolbar);
+
+        //habilitando bottomNav
+        configurarBottomNav();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frame_layout_main, new PerfilFragment()).commit();
+
+        //instanciar usuario firebase
         auth = ConfiguracaoFirebase.getFirebaseAutenticacao();
+    }
+
+    private void configurarBottomNav(){
+        BottomNavigationViewEx bottomNavigationViewEx = findViewById(R.id.bottom_navigation);
+        //configurar o bottom navigation
+        bottomNavigationViewEx.enableAnimation(true);
+        bottomNavigationViewEx.enableItemShiftingMode(true);
+        bottomNavigationViewEx.enableShiftingMode(true);
+        bottomNavigationViewEx.setTextVisibility(true);
+
+        //habilitando a navegação nas fragments
+        habilitarEventosBottomNav(bottomNavigationViewEx);
+
+        //configurar menu inicial quando tela for carrega ou houver algum impacto na rede
+        Menu menu = bottomNavigationViewEx.getMenu();
+        MenuItem menuItem = menu.getItem(1);
+        menuItem.setChecked(true);
+
+
+    }
+
+    //metodo para habilitar e tratar eventos de clique no bottom navigation
+    private void habilitarEventosBottomNav(BottomNavigationViewEx viewEx){
+        viewEx.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+
+                //criar objetos para carregar as fragments
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                //recuperando o item de menu que foi selecionado
+                switch (menuItem.getItemId()){
+                    case R.id.home_bottom:
+                        fragmentTransaction.replace(R.id.frame_layout_main, new HomeFragment()).commit();
+                        return true;
+
+                    case R.id.perfil_bottom:
+                        fragmentTransaction.replace(R.id.frame_layout_main, new PerfilFragment()).commit();
+                        return true;
+
+                    case R.id.usuarios_bottom:
+                        fragmentTransaction.replace(R.id.frame_layout_main, new UsuariosFragment()).commit();
+                        return true;
+
+                    case R.id.contato_bottom:
+                        fragmentTransaction.replace(R.id.frame_layout_main, new ContatoFragment()).commit();
+                        return true;
+
+                }
+                return false;
+            }
+        });
     }
 
     //criando menu na tela
@@ -66,5 +135,12 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Erro." +e.getMessage(), Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(MainActivity.this,LoginActivity.class));
+        finish();
+        super.onBackPressed();
     }
 }

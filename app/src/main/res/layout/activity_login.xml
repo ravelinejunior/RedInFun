@@ -73,6 +73,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/senha_id_login" />
 
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/botao_logar_google_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/progressBar_login"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/shape_edit_text"
+
+        android:foreground="@drawable/shape_edit_text"
+        app:buttonSize="standard"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/progressBar_login" />
+
     <TextView
         android:id="@+id/cadastrar_text_login"
         android:layout_width="0dp"
