@@ -3,11 +3,15 @@ package br.com.raveline.redinfunusers;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,6 +52,7 @@ public class LoginActivity extends AppCompatActivity {
     //login google
     private static final int RC_SIGN_IN = 100;
     GoogleSignInClient mGoogleSignInClient;
+    private TextView esqueceuSenhaLogin;
 
     //Firebase
     private FirebaseAuth autenticacao;
@@ -83,6 +88,14 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        //configurando botao para reenviar recuperação de senha
+        esqueceuSenhaLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                esqueceuSenha();
+            }
+        });
+
 
         // Configure Google Sign In
         //Tem que ser antes do Firebase Autentication
@@ -107,6 +120,73 @@ public class LoginActivity extends AppCompatActivity {
 
 
     }
+
+    //METODO PARA Abrir o linear layout de recuperação de senha
+    private void esqueceuSenha(){
+        //Alert dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Recuperar a senha");
+
+        //setar layout linear
+        LinearLayout linearLayout = new LinearLayout(this);
+
+        //views do alertdialog
+        final EditText emailDigitadoNovo = new EditText(this);
+        emailDigitadoNovo.setHint("Digite seu Email");
+        emailDigitadoNovo.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+        emailDigitadoNovo.setMinEms(20);
+        linearLayout.addView(emailDigitadoNovo);
+        linearLayout.setPadding(10,10,10,10);
+        builder.setView(linearLayout);
+
+        //botoes para recuperar
+        builder.setPositiveButton("Recuperar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                String emailRecuperado = emailDigitadoNovo.getText().toString();
+                progressBarLogin.setVisibility(View.VISIBLE);
+                recuperarSenha(emailRecuperado);
+
+            }
+        });
+
+        //botao para cancelar
+        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+            }
+        });
+
+        builder.create().show();
+    }
+
+    private void recuperarSenha(String email){
+
+        autenticacao.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
+
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()){
+                    progressBarLogin.setVisibility(GONE);
+                    Toast.makeText(LoginActivity.this, "Email enviado.", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    progressBarLogin.setVisibility(GONE);
+                    Toast.makeText(LoginActivity.this, "Falha ao enviar.", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                progressBarLogin.setVisibility(GONE);
+                //mostrar o erro
+                Toast.makeText(LoginActivity.this, ""+e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
 
     //verificar se usuario está logado
     public void verificarUsuarioLogado(){
@@ -243,6 +323,7 @@ public class LoginActivity extends AppCompatActivity {
         senhaLogarLogin = findViewById(R.id.senha_id_login);
         progressBarLogin = findViewById(R.id.progressBar_login);
         botaoGoogleLogin = findViewById(R.id.botao_logar_google_login);
+        esqueceuSenhaLogin = findViewById(R.id.esqueceu_senha_login);
     }
 
 }

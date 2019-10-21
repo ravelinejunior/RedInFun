@@ -23,6 +23,7 @@ import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import java.util.Objects;
 
 import helper.ConfiguracaoFirebase;
+import helper.UsuarioFirebase;
 import model.Usuario;
 
 public class CadastrarUsuario extends AppCompatActivity {
@@ -103,7 +104,6 @@ public class CadastrarUsuario extends AppCompatActivity {
         nomeCadastroUsuario = findViewById(R.id.nome_id_cadastrar);
         senhaCadastroUsuario = findViewById(R.id.senha_id_cadastrar);
         progressBarCadastroUsuario = findViewById(R.id.progressBar_cadastro);
-
     }
 
     public void cadastrarUsuario(final Usuario usuario) {
@@ -127,6 +127,9 @@ public class CadastrarUsuario extends AppCompatActivity {
                         String idUsuario =  Objects.requireNonNull(Objects.requireNonNull(task.getResult()).getUser()).getUid();
                         usuario.setId(idUsuario);
                         usuario.salvarDados();
+
+                        //Salvar os dados no cadastro no profile do Firebase
+                        UsuarioFirebase.atualizarNomeUsuario(usuario.getNome());
 
                         Intent intent = new Intent(CadastrarUsuario.this,MainActivity.class);
                         startActivity(intent);

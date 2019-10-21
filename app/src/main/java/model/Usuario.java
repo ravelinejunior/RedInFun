@@ -3,6 +3,9 @@ package model;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Exclude;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import helper.ConfiguracaoFirebase;
 
 public class Usuario {
@@ -21,6 +24,27 @@ public class Usuario {
         DatabaseReference usuariosRef = firebaseRef.child("usuarios").child(getId());
         usuariosRef.push();
         usuariosRef.setValue(this);
+    }
+
+    public void atualizarDados(){
+        DatabaseReference firebaseRef = ConfiguracaoFirebase.getReferenciaDatabase();
+        DatabaseReference usuariosRef = firebaseRef.child("usuarios").child(getId());
+        Map<String,Object> valoresMap = converterToMap();
+        usuariosRef.updateChildren(valoresMap);
+    }
+
+    public Map<String,Object> converterToMap(){
+
+        HashMap<String,Object> hashMapUsuario = new HashMap<>();
+        hashMapUsuario.put("email",getEmail());
+        hashMapUsuario.put("senha",getSenha());
+        hashMapUsuario.put("caminhoFoto",getCaminhoFoto());
+        hashMapUsuario.put("nome",getNome());
+        hashMapUsuario.put("idade",getIdade());
+        hashMapUsuario.put("id",getId());
+
+        return hashMapUsuario;
+
     }
 
     public String getId() {
