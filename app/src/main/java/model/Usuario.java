@@ -1,5 +1,10 @@
 package model;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Exclude;
+
+import helper.ConfiguracaoFirebase;
+
 public class Usuario {
     private String id;
     private String nome;
@@ -9,6 +14,13 @@ public class Usuario {
     private String idade;
 
     public Usuario() {
+    }
+
+    public void salvarDados(){
+        DatabaseReference firebaseRef = ConfiguracaoFirebase.getReferenciaDatabase();
+        DatabaseReference usuariosRef = firebaseRef.child("usuarios").child(getId());
+        usuariosRef.push();
+        usuariosRef.setValue(this);
     }
 
     public String getId() {
@@ -35,6 +47,8 @@ public class Usuario {
         this.email = email;
     }
 
+    //excluir senha para nao ser exibida
+    @Exclude
     public String getSenha() {
         return senha;
     }

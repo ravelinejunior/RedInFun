@@ -108,52 +108,64 @@ public class CadastrarUsuario extends AppCompatActivity {
 
     public void cadastrarUsuario(final Usuario usuario) {
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
-        progressBarCadastroUsuario.setVisibility(View.VISIBLE);
-        //criando autenticação via email e senha
-        autenticacao.createUserWithEmailAndPassword(
-            usuario.getEmail(),usuario.getSenha()
-        ).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()){
-                    Toast.makeText(CadastrarUsuario.this, "Usuario "+usuario.getNome().toUpperCase()+" cadastrado.", Toast.LENGTH_SHORT).show();
-                    //caso usuario tenha sido cadastrado , sucesso.
-                    progressBarCadastroUsuario.setVisibility(View.GONE);
-                    Intent intent = new Intent(CadastrarUsuario.this,MainActivity.class);
-                    startActivity(intent);
-                    finish();
+
+        try {
+            progressBarCadastroUsuario.setVisibility(View.VISIBLE);
+
+            //criando autenticação via email e senha
+            autenticacao.createUserWithEmailAndPassword(
+                    usuario.getEmail(),usuario.getSenha()
+            ).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()){
+                        Toast.makeText(CadastrarUsuario.this, "Usuario "+usuario.getNome().toUpperCase()+" cadastrado.", Toast.LENGTH_SHORT).show();
+                        //caso usuario tenha sido cadastrado , sucesso.
+                        progressBarCadastroUsuario.setVisibility(View.GONE);
+
+                        //Cadastrando e configurando os dados na Firebase
+                        String idUsuario =  Objects.requireNonNull(Objects.requireNonNull(task.getResult()).getUser()).getUid();
+                        usuario.setId(idUsuario);
+                        usuario.salvarDados();
+
+                        Intent intent = new Intent(CadastrarUsuario.this,MainActivity.class);
+                        startActivity(intent);
+                        finish();
 
 
-                }else {
-                    progressBarCadastroUsuario.setVisibility(View.GONE);
-                    //tratando os erros
-                    String erro = "";
-                    try {
-                        throw Objects.requireNonNull(task.getException());
+                    }else {
+                        progressBarCadastroUsuario.setVisibility(View.GONE);
+                        //tratando os erros
+                        String erro = "";
+                        try {
+                            throw Objects.requireNonNull(task.getException());
 
-                    }catch (FirebaseAuthEmailException e){
-                        erro = "Autenticação falhou.";
+                        }catch (FirebaseAuthEmailException e){
+                            erro = "Autenticação falhou.";
 
-                    } catch (FirebaseAuthWeakPasswordException e){
-                        erro = "Senha fraca.";
+                        } catch (FirebaseAuthWeakPasswordException e){
+                            erro = "Senha fraca.";
 
-                    } catch (FirebaseAuthInvalidCredentialsException e){
-                        erro = "Digite um email válido.";
+                        } catch (FirebaseAuthInvalidCredentialsException e){
+                            erro = "Digite um email válido.";
 
-                    } catch (FirebaseAuthUserCollisionException e){
-                        erro = "Usuario já cadastrado.";
+                        } catch (FirebaseAuthUserCollisionException e){
+                            erro = "Usuario já cadastrado.";
+                        }
+                        catch (Exception e){
+                            erro = "Erro de autenticação: "+e.getMessage();
+                            e.printStackTrace();
+                        }
+
+                        Toast.makeText(CadastrarUsuario.this, "Erro: "+erro, Toast.LENGTH_LONG).show();
+
                     }
-                    catch (Exception e){
-                        erro = "Erro de autenticação: "+e.getMessage();
-                        e.printStackTrace();
-                    }
-
-                    Toast.makeText(CadastrarUsuario.this, "Erro: "+erro, Toast.LENGTH_LONG).show();
-
-
                 }
-            }
-        });
+            });
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
 
     }
 
