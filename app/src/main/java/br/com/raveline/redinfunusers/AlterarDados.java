@@ -19,6 +19,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -45,6 +46,7 @@ public class AlterarDados extends AppCompatActivity {
     private ImageView fotoPerfilAlterarDados;
     private ImageButton imagemBotaoVoltar;
     private ProgressBar progressBarAlterarDados;
+    private String identificadorUsuario;
 
     //Firebase
     private FirebaseUser firebaseUser;
@@ -68,6 +70,7 @@ public class AlterarDados extends AppCompatActivity {
         //configurações iniciais do usuario
         usuarioLogado = UsuarioFirebase.getUsuarioLogado();
         storageRef = ConfiguracaoFirebase.getStorageReference();
+        identificadorUsuario = UsuarioFirebase.getIdentificadorUsuario();
 
         //atualizando nome do usuario no banco de dados
         usuarioLogado.salvarDados();
@@ -82,6 +85,13 @@ public class AlterarDados extends AppCompatActivity {
                 editarEmailAlterarDados.setText(firebaseUser.getEmail().toString());
             }catch (Exception e){
                 e.getStackTrace();
+            }
+
+            Uri url = firebaseUser.getPhotoUrl();
+            if (url !=null){
+                Glide.with(AlterarDados.this).load(url).fitCenter().into(fotoPerfilAlterarDados);
+            } else{
+                fotoPerfilAlterarDados.setImageResource(R.drawable.ic_pessoa_usuario);
             }
 
         botaoAlterarDados.setOnClickListener(new View.OnClickListener() {
@@ -154,7 +164,7 @@ public class AlterarDados extends AppCompatActivity {
                     StorageReference imagemRef = storageRef.
                             child("imagens").
                             child("perfil").
-                            child("<id-usuario>.jpeg");
+                            child(identificadorUsuario+".jpeg");
 
                     //passar um array de bytes no putbytes da imagem
                     UploadTask uploadTask = imagemRef.putBytes(dadosImagem);
@@ -172,6 +182,14 @@ public class AlterarDados extends AppCompatActivity {
                     }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            //recuperar local da foto
+                                taskSnapshot.getStorage().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    atualizarFoto(uri);
+                                }
+                            });
+
                             Toast.makeText(AlterarDados.this, "Realizado com sucesso.", Toast.LENGTH_SHORT).show();
                             progressBarAlterarDados.setVisibility(View.GONE);
                         }
@@ -183,6 +201,17 @@ public class AlterarDados extends AppCompatActivity {
             }
         }
     }
+
+    private void atualizarFoto(Uri uri) {
+            //atualizar foto no perfil
+                UsuarioFirebase.atualizarFotoUsuario(uri);
+
+        //atualizar foto no firebase
+        usuarioLogado.setCaminhoFoto(uri.toString());
+        usuarioLogado.atualizarDados();
+        Toast.makeText(this, "Foto atualizada", Toast.LENGTH_SHORT).show();
+    }
+
     @Override
     public boolean onSupportNavigateUp() {
         finish();

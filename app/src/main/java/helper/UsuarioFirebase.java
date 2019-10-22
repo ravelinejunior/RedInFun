@@ -1,5 +1,6 @@
 package helper;
 
+import android.net.Uri;
 import android.util.Log;
 import androidx.annotation.NonNull;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -13,6 +14,10 @@ public class UsuarioFirebase {
 
     public UsuarioFirebase() {
 
+    }
+
+    public static String getIdentificadorUsuario(){
+        return getUsuarioAtual().getUid();
     }
 
     public static FirebaseUser getUsuarioAtual(){
@@ -50,6 +55,37 @@ public class UsuarioFirebase {
             e.printStackTrace();
         }
     }
+
+    public static void atualizarFotoUsuario(Uri caminhoFoto){
+        try {
+            //usuario logado
+            FirebaseUser firebaseUserLogado = getUsuarioAtual();
+
+            //configurar usuario logado
+            UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.
+                    Builder().
+                    setPhotoUri(caminhoFoto).
+                    build();
+
+            firebaseUserLogado.updateProfile(profileChangeRequest).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()){
+
+                    }
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.e("Perfil: "+getUsuarioAtual().getDisplayName(),"Erro: "+e.getMessage());
+                }
+            });
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
 
     public static Usuario getUsuarioLogado(){
 
