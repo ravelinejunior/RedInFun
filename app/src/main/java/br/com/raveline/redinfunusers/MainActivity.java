@@ -22,6 +22,7 @@ import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import fragment.ContatoFragment;
 import fragment.HomeFragment;
 import fragment.PerfilFragment;
+import fragment.PesquisarFragment;
 import fragment.UsuariosFragment;
 import helper.ConfiguracaoFirebase;
 
@@ -96,6 +97,10 @@ public class MainActivity extends AppCompatActivity {
 
                     case R.id.contato_bottom:
                         fragmentTransaction.replace(R.id.frame_layout_main, new ContatoFragment()).commit();
+                        return true;
+
+                    case R.id.pesquisar_bottom:
+                        fragmentTransaction.replace(R.id.frame_layout_main, new PesquisarFragment()).commit();
                         return true;
 
                 }

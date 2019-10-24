@@ -39,7 +39,7 @@
         android:id="@+id/voltar_tela_topo_alterar_dados"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:background="@drawable/botao_transparente_shape"
+        android:background="@drawable/shape_edit_text"
         app:layout_constraintBottom_toBottomOf="@+id/imagem_alterar_perfil"
         app:layout_constraintEnd_toStartOf="@+id/imagem_alterar_perfil"
         app:layout_constraintHorizontal_bias="0.168"

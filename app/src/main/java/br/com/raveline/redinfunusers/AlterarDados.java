@@ -3,8 +3,6 @@ package br.com.raveline.redinfunusers;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -18,22 +16,16 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-
 import java.io.ByteArrayOutputStream;
 import java.util.Objects;
-
-import fragment.PerfilFragment;
 import helper.ConfiguracaoFirebase;
 import helper.UsuarioFirebase;
 import model.Usuario;
@@ -103,6 +95,7 @@ public class AlterarDados extends AppCompatActivity {
 
                 //atualizar o nome no Firebase
                 usuarioLogado.setNome(nomeAtualizado);
+                usuarioLogado.setNomeUsuarioPesquisa(nomeAtualizado);
                 usuarioLogado.atualizarDados();
                 Toast.makeText(AlterarDados.this, "Nome alterado", Toast.LENGTH_SHORT).show();
 

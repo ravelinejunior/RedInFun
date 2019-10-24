@@ -35,8 +35,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 import helper.ConfiguracaoFirebase;
+import helper.UsuarioFirebase;
 import model.Usuario;
 
 import static android.view.View.GONE;
@@ -56,6 +58,7 @@ public class LoginActivity extends AppCompatActivity {
 
     //Firebase
     private FirebaseAuth autenticacao;
+    private DatabaseReference databaseReference;
 
     //Usuario
     public Usuario usuario;
@@ -232,31 +235,14 @@ public class LoginActivity extends AppCompatActivity {
                             FirebaseUser user = autenticacao.getCurrentUser();
 
                             //se o usuario logar primeiro antes das informações carregarem
-                            if (task.getResult().getAdditionalUserInfo().isNewUser()){
+                            if (task.getResult().getAdditionalUserInfo().isNewUser()) {
 
                                 //recuperando valores e ids do usuario
                                 String emailUser = user.getEmail();
-                                String uidUser = user.getUid();
+                                 String uidUser = user.getUid();
 
-                                //registrar informações do usuario no RealTime usando HashMap
-                                HashMap<Object,String> hashMap = new HashMap<>();
-
-                                //colocando informações no hashmap
-                                hashMap.put("email", emailUser);
-                                hashMap.put("uid", uidUser);
-                                hashMap.put("nome", ""); //adicionar depois 19/09/2019
-                                hashMap.put("telefone", ""); //adicionar depois 19/09/2019
-                                hashMap.put("imagem", ""); //adicionar depois 19/09/2019
-
-                                //criar instancia Firebase
-                                FirebaseDatabase reference = FirebaseDatabase.getInstance();
-
-                                //encaminhar dados de usuario para caminho, "usuario"
-                                DatabaseReference databaseReference = reference.getReference("usuario");
-
-                                //adicionando dados dentro do Hashmap
-                                databaseReference.child(uidUser).setValue(hashMap);
                             }
+
 
                             Toast.makeText(LoginActivity.this, "Usuario: "+user.getDisplayName()+" Logado.", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(LoginActivity.this,MainActivity.class);
@@ -324,6 +310,7 @@ public class LoginActivity extends AppCompatActivity {
         progressBarLogin = findViewById(R.id.progressBar_login);
         botaoGoogleLogin = findViewById(R.id.botao_logar_google_login);
         esqueceuSenhaLogin = findViewById(R.id.esqueceu_senha_login);
+        databaseReference = ConfiguracaoFirebase.getReferenciaDatabase();
     }
 
 }

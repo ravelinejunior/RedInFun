@@ -15,6 +15,8 @@ public class Usuario {
     private String senha;
     private String caminhoFoto;
     private String idade;
+    private String nomeUsuarioPesquisa;
+
 
     public Usuario() {
     }
@@ -39,10 +41,10 @@ public class Usuario {
         hashMapUsuario.put("email",getEmail());
         hashMapUsuario.put("senha",getSenha());
         hashMapUsuario.put("caminhoFoto",getCaminhoFoto());
+        hashMapUsuario.put("nomePesquisa",getNomeUsuarioPesquisa());
         hashMapUsuario.put("nome",getNome());
         hashMapUsuario.put("idade",getIdade());
         hashMapUsuario.put("id",getId());
-
         return hashMapUsuario;
 
     }
@@ -61,6 +63,15 @@ public class Usuario {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public String getNomeUsuarioPesquisa() {
+        nomeUsuarioPesquisa = getNome().toUpperCase();
+        return nomeUsuarioPesquisa;
+    }
+
+    public void setNomeUsuarioPesquisa(String nomeUsuarioPesquisa) {
+        this.nomeUsuarioPesquisa = nomeUsuarioPesquisa.toUpperCase();
     }
 
     public String getEmail() {
