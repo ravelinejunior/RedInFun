@@ -28,6 +28,7 @@ import br.com.raveline.redinfunusers.R;
 import de.hdodenhof.circleimageview.CircleImageView;
 import helper.ConfiguracaoFirebase;
 import helper.UsuarioFirebase;
+import model.Usuario;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -72,11 +73,7 @@ public class PerfilFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getActivity(), AlterarDados.class));
-                try {
-                    PerfilFragment.this.finalize();
-                } catch (Throwable throwable) {
-                    throwable.printStackTrace();
-                }
+
             }
         });
 
