@@ -17,6 +17,9 @@ public class Usuario implements Serializable {
     private String caminhoFoto;
     private String idade;
     private String nomeUsuarioPesquisa;
+    private int fotos = 0;
+    private int clientes = 0;
+    private int fas = 0;
 
 
     public Usuario() {
@@ -46,8 +49,35 @@ public class Usuario implements Serializable {
         hashMapUsuario.put("nome",getNome());
         hashMapUsuario.put("idade",getIdade());
         hashMapUsuario.put("id",getId());
+        hashMapUsuario.put("fotos",getFotos());
+        hashMapUsuario.put("clientes",getClientes());
+        hashMapUsuario.put("fas",getFas());
         return hashMapUsuario;
 
+    }
+
+    public int getFotos() {
+        return fotos;
+    }
+
+    public void setFotos(int fotos) {
+        this.fotos = fotos;
+    }
+
+    public int getClientes() {
+        return clientes;
+    }
+
+    public void setClientes(int clientes) {
+        this.clientes = clientes;
+    }
+
+    public int getFas() {
+        return fas;
+    }
+
+    public void setFas(int fas) {
+        this.fas = fas;
     }
 
     public String getId() {

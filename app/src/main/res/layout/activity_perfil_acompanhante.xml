@@ -8,7 +8,7 @@
     android:orientation="vertical"
     tools:context=".PerfilAcompanhante">
 
-    <include layout="@layout/toolbar"/>
+    <include layout="@layout/toolbar_perfil_acompanhante"/>
     <include layout="@layout/fragment_perfil"/>
 
 </LinearLayout>
