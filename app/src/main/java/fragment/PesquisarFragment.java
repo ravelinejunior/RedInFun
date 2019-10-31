@@ -1,6 +1,7 @@
 package fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
@@ -11,6 +12,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -21,8 +24,10 @@ import java.util.List;
 import java.util.Objects;
 
 import adapter.AdapterPesquisar;
+import br.com.raveline.redinfunusers.PerfilAcompanhante;
 import br.com.raveline.redinfunusers.R;
 import helper.ConfiguracaoFirebase;
+import helper.RecyclerItemClickListener;
 import model.Usuario;
 
 /**
@@ -67,6 +72,33 @@ public class PesquisarFragment extends Fragment {
 
         adapterPesquisar= new AdapterPesquisar(listaUsuarios,getActivity());
         recyclerViewPesquisarFragment.setAdapter(adapterPesquisar);
+
+        //configurando evento de clique
+        recyclerViewPesquisarFragment.addOnItemTouchListener(new RecyclerItemClickListener(
+                getActivity(),
+                recyclerViewPesquisarFragment,
+                new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        //recuperando valores dos usuarios
+                        Usuario usuarioSelecionado = listaUsuarios.get(position);
+                        Intent i = new Intent(getActivity(), PerfilAcompanhante.class);
+                        i.putExtra("usuarioSelecionado",usuarioSelecionado);
+                        startActivity(i);
+                    }
+
+                    @Override
+                    public void onLongItemClick(View view, int position) {
+
+                    }
+
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                    }
+                }
+
+        ));
 
         //configurar searchview
         //usar metodo para começar pesquisa quando usuario começa a pesquisar na search view

@@ -15,7 +15,7 @@
         <!-- TODO: Update blank fragment layout -->
 
         <Button
-            android:id="@+id/botao_editar_perfil"
+            android:id="@+id/botao_acao_perfil"
             android:layout_width="0dp"
             android:layout_height="25dp"
             android:background="@drawable/shape_botao_perfil_fragment"

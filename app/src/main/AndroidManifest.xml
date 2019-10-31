@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="br.com.raveline.redinfunusers">
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    package="br.com.raveline.redinfunusers"
+
+    >
 
     <application
         android:allowBackup="true"
@@ -12,6 +15,7 @@
         <activity android:name=".AlterarDados"
             android:parentActivityName=".MainActivity"></activity>
         <activity android:name=".CadastrarUsuario" />
+        <activity android:name=".PerfilAcompanhante"/>
         <activity android:name=".HomeLauncher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
