@@ -8,6 +8,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +19,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
 import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -27,24 +29,31 @@ import model.Usuario;
 
 public class PerfilAcompanhante extends AppCompatActivity {
 
-    private Usuario usuarioSelecionado;
+
     private Button botaoSeguirAcompanhante;
     private CircleImageView imagemPerfilAcompanhante;
     private TextView fasPerfilAcompanhante;
     private TextView clientesPerfilAcompanhante;
     private TextView fotosPerfilAcompanhante;
 
+    //Usuarios
+    private Usuario usuarioSelecionado;
+    private Usuario usuarioLogado;
+    private String idUsuarioLogado;
+
+
     //firebase
     private DatabaseReference referenceFirebase;
     private DatabaseReference usuariosRef;
     private DatabaseReference usuarioAmigoRef;
     private DatabaseReference seguidoresRef;
+    private DatabaseReference usuarioLogadoRef;
 
     //para eventos
     private ValueEventListener valueEventListenerPerfilAcompanhante;
 
     //usuarios
-    private String idUsuarioLogado;
+
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -87,6 +96,18 @@ public class PerfilAcompanhante extends AppCompatActivity {
 
         }
 
+        botaoSeguirAcompanhante.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //salvando seguidores
+                salvarSeguidor(usuarioLogado,usuarioSelecionado);
+
+
+            }
+        });
+
+
+
 
     }
 
@@ -116,6 +137,24 @@ public class PerfilAcompanhante extends AppCompatActivity {
         });
     }
 
+    private void recuperarDadosUsuarioLogado(){
+        usuarioLogadoRef = usuariosRef.child(idUsuarioLogado);
+        usuarioLogadoRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                usuarioLogado = dataSnapshot.getValue(Usuario.class);
+
+                //verificar se usuario ja segue acompanhante selecionada
+                verificarSeSegueAcompanhante();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
     private void habilitarBotaoSeguir(boolean segueUsuario){
 
         if (segueUsuario){
@@ -126,10 +165,40 @@ public class PerfilAcompanhante extends AppCompatActivity {
 
     }
 
+    private void salvarSeguidor(Usuario usuLogado, Usuario usuAcompanhante){
+        //modelo estrutura de dados seguidores
+        /*
+            seguidor
+            id_usuario logado
+                id_seguindo de quem está sendo seguido
+                       dados de quem está sendo seguido
+
+         */
+        //recuperar valores no firebase para selecionar quais os valores eu quero
+        HashMap<String,Object> dadosAcompanhante = new HashMap<>();
+        dadosAcompanhante.put("nome",usuAcompanhante.getNome());
+        dadosAcompanhante.put("caminhoFoto",usuAcompanhante.getCaminhoFoto());
+
+        DatabaseReference seguidorRef = seguidoresRef.
+                child(usuLogado.getId()).
+                child(usuAcompanhante.getId());
+
+        seguidorRef.setValue(dadosAcompanhante);
+        botaoSeguirAcompanhante.setText("Seguindo "+usuAcompanhante.getNome());
+        botaoSeguirAcompanhante.setOnClickListener(null);
+
+
+
+
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
         recuperarDadosAcompanhante();
+
+        //recupera sempre os dados do usuario logado
+        recuperarDadosUsuarioLogado();
     }
 
     @Override
@@ -146,11 +215,12 @@ public class PerfilAcompanhante extends AppCompatActivity {
         fasPerfilAcompanhante = findViewById(R.id.fas_perfil_fragment);
         clientesPerfilAcompanhante = findViewById(R.id.clientes_perfil_fragment);
         fotosPerfilAcompanhante = findViewById(R.id.fotos_perfil_fragment);
-        botaoSeguirAcompanhante.setText("Seguir Acompanhante");
+        botaoSeguirAcompanhante.setText("Carregando");
 
         //configurando toolbar
         Toolbar toolbar = findViewById(R.id.toolbar_principal_main_activity);
         toolbar.setTitle("RedInFun");
+        toolbar.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         toolbar.setTitleTextColor(getColor(R.color.branco));
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

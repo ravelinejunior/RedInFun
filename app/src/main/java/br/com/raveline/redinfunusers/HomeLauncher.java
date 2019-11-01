@@ -18,6 +18,6 @@ public class HomeLauncher extends AppCompatActivity {
             public void run() {
                 startActivity(new Intent(HomeLauncher.this,LoginActivity.class));
             }
-        },2000);
+        },500);
     }
 }

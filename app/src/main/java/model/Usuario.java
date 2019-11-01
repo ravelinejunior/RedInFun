@@ -45,7 +45,7 @@ public class Usuario implements Serializable {
         hashMapUsuario.put("email",getEmail());
         hashMapUsuario.put("senha",getSenha());
         hashMapUsuario.put("caminhoFoto",getCaminhoFoto());
-        hashMapUsuario.put("nomePesquisa",getNomeUsuarioPesquisa());
+        hashMapUsuario.put("nomeUsuarioPesquisa",getNomeUsuarioPesquisa());
         hashMapUsuario.put("nome",getNome());
         hashMapUsuario.put("idade",getIdade());
         hashMapUsuario.put("id",getId());
