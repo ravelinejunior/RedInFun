@@ -185,7 +185,26 @@ public class PerfilAcompanhante extends AppCompatActivity {
 
         seguidorRef.setValue(dadosAcompanhante);
         botaoSeguirAcompanhante.setText("Seguindo "+usuAcompanhante.getNome());
+        //desabilitar evento onClick
         botaoSeguirAcompanhante.setOnClickListener(null);
+
+        //incrementar seguidores das acompanhantes
+        int seguidoresFas = usuAcompanhante.getFas()+1;
+        HashMap<String,Object> novoFa = new HashMap<>();
+        novoFa.put("fas",seguidoresFas);
+
+        DatabaseReference fasRef = usuariosRef.child(usuAcompanhante.getId());
+        fasRef.updateChildren(novoFa);
+
+        //incrementar seguindo do usuario logado
+        int seguindoClientes = usuLogado.getClientes() + 1;
+        HashMap<String,Object> novoCliente = new HashMap<>();
+        novoCliente.put("clientes",seguindoClientes);
+
+        //Acessando os valores do nó usuarios
+        DatabaseReference clientesRef = usuariosRef.child(usuLogado.getId());
+        //alterando os dados
+        clientesRef.updateChildren(novoCliente);
 
 
 

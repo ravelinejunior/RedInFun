@@ -28,6 +28,7 @@ import br.com.raveline.redinfunusers.PerfilAcompanhante;
 import br.com.raveline.redinfunusers.R;
 import helper.ConfiguracaoFirebase;
 import helper.RecyclerItemClickListener;
+import helper.UsuarioFirebase;
 import model.Usuario;
 
 /**
@@ -40,6 +41,7 @@ public class PesquisarFragment extends Fragment {
 
     //lista de usuarios
     private List<Usuario> listaUsuarios;
+    private String idUsuarioLogado;
 
     //atributo de referencia para usuarios
     private DatabaseReference usuariosReferencia;
@@ -59,7 +61,9 @@ public class PesquisarFragment extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_pesquisar, container, false);
         recyclerViewPesquisarFragment = view.findViewById(R.id.recyclerview_id_pesquisar_fragment);
         searchViewPesquisarFragment = view.findViewById(R.id.searchview_id_pesquisar_fragment);
-        //configurar adapter
+        //configurar usuario logado
+        idUsuarioLogado = UsuarioFirebase.getIdentificadorUsuario();
+
 
 
         //configurar lista
@@ -156,8 +160,14 @@ public class PesquisarFragment extends Fragment {
 
                     for (DataSnapshot ds: dataSnapshot.getChildren()){
                         //recuperar usuarios do firebase
-                        listaUsuarios.add(ds.getValue(Usuario.class));
-                        Log.d("Usuario", Objects.requireNonNull(ds.getValue(Usuario.class)).toString());
+                        Usuario usuario = ds.getValue(Usuario.class);
+                        //verificar se usuario pesquisado sou eu mesmo logado.
+                        if (idUsuarioLogado.equals(usuario.getId()))
+                            continue;
+
+                        //adicionar usuario no firebase
+                        listaUsuarios.add(usuario);
+                        //Log.d("Usuario", Objects.requireNonNull(ds.getValue(Usuario.class)).toString());
                     }
                     //notificando o adapter para exibir os dados
                     adapterPesquisar.notifyDataSetChanged();
