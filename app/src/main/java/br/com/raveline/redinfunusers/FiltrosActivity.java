@@ -15,9 +15,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.zomato.photofilters.FilterPack;
+import com.zomato.photofilters.imageprocessors.Filter;
+
 public class FiltrosActivity extends AppCompatActivity {
     private ImageView imagemSelecionadaFiltros;
     private Bitmap imagem;
+    private Bitmap imagemFiltro;
+
+    //bloco de inicialização de filtros
+    static
+    {
+        System.loadLibrary("NativeImageProcessor");
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -35,7 +45,6 @@ public class FiltrosActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_fechar);
 
-
         //recuperando imagem da tela de fragment
         Bundle bundle = getIntent().getExtras();
         if (bundle != null){
@@ -44,6 +53,10 @@ public class FiltrosActivity extends AppCompatActivity {
             imagem = BitmapFactory.decodeByteArray(dadosFoto,0,dadosFoto.length);
             imagemSelecionadaFiltros.setImageBitmap(imagem);
 
+            //configuração de imagem de filtro
+            imagemFiltro = imagem.copy(imagem.getConfig(),true);
+            Filter filter = FilterPack.getAmazonFilter(getApplicationContext());
+            imagemSelecionadaFiltros.setImageBitmap(filter.processFilter(imagemFiltro));
         }
     }
 
@@ -52,17 +65,17 @@ public class FiltrosActivity extends AppCompatActivity {
 
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_filtros_postar,menu);
+        menu.addSubMenu("Sair").setHeaderTitle("Loucura");
         return super.onCreateOptionsMenu(menu);
     }
 
     //definindo itens que foram selecionados
 
-
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.ic_salvar_postagem_menu_postar:
-                break;
+            break;
         }
         return super.onOptionsItemSelected(item);
     }
