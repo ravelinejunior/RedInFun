@@ -3,8 +3,11 @@ package fragment;
 
 import android.Manifest;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
@@ -13,6 +16,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import java.io.ByteArrayOutputStream;
+import java.util.Objects;
+
+import br.com.raveline.redinfunusers.FiltrosActivity;
 import br.com.raveline.redinfunusers.R;
 import helper.Permissao;
 
@@ -75,11 +82,46 @@ public class PostarFragment extends Fragment {
             }
         });
 
-
-
-
-
         return view;
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        Bitmap imagem = null;
+
+        //valida o tipo de seleção de imagem
+       try {
+
+           switch (requestCode){
+               case CODIGO_ABRIR_CAMERA:
+                   imagem = (Bitmap) Objects.requireNonNull(Objects.requireNonNull(data).getExtras()).get("data");
+                   break;
+               case CODIGO_ABRIR_GALERIA:
+                   Uri localImagemSelecionada = data.getData();
+                   imagem = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(),localImagemSelecionada);
+                   break;
+
+           }
+
+           //validar imagem selecionada
+           if (imagem != null){
+
+               //converter imagem em byte array
+               ByteArrayOutputStream baos = new ByteArrayOutputStream();
+               imagem.compress(Bitmap.CompressFormat.JPEG,80,baos);
+               byte[] dadosFoto = baos.toByteArray();
+
+               //enviar imagem para tela de filtros
+               Intent i = new Intent(getActivity(), FiltrosActivity.class);
+               i.putExtra("fotoSelecionada",dadosFoto);
+               startActivity(i);
+
+           }
+
+       }catch (Exception e){
+        e.printStackTrace();
+       }
+    }
 }
