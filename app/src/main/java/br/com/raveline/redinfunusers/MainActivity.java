@@ -19,7 +19,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
-import fragment.ContatoFragment;
+import fragment.PostarFragment;
 import fragment.HomeFragment;
 import fragment.PerfilFragment;
 import fragment.PesquisarFragment;
@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
                         return true;
 
                     case R.id.contato_bottom:
-                        fragmentTransaction.replace(R.id.frame_layout_main, new ContatoFragment()).commit();
+                        fragmentTransaction.replace(R.id.frame_layout_main, new PostarFragment()).commit();
                         return true;
 
                     case R.id.pesquisar_bottom:

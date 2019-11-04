@@ -27,6 +27,11 @@
             android:name=".MainActivity"
             android:theme="@style/AppThemeLogin"></activity>
     </application>
+
+    <uses-feature android:name="android.hardware.camera2"
+        android:required="true"
+        />
+
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.CAMERA"/>

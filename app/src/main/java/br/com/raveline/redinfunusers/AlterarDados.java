@@ -3,6 +3,8 @@ package br.com.raveline.redinfunusers;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.Manifest;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -27,6 +29,7 @@ import com.google.firebase.storage.UploadTask;
 import java.io.ByteArrayOutputStream;
 import java.util.Objects;
 import helper.ConfiguracaoFirebase;
+import helper.Permissao;
 import helper.UsuarioFirebase;
 import model.Usuario;
 
@@ -45,12 +48,19 @@ public class AlterarDados extends AppCompatActivity {
     private FirebaseAuth autenticacao;
     private StorageReference storageRef;
 
+    //lista de permissoes
+    private String[] listaPermissoesNecessarias = new String[]{
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+    };
+
+    private static final int CODIGO_REQUISICAO_GALERIA = 200;
+
     //classe Usuario
     Usuario usuarioLogado;
 
     //dados camera
     public static final int CODIGO_GALERIA_FOTO = 100;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +68,9 @@ public class AlterarDados extends AppCompatActivity {
         setContentView(R.layout.activity_alterar_dados);
         //carregar elementos
         carregarElementos();
+
+        //requisitar permissoes
+        Permissao.validarPermissoes(listaPermissoesNecessarias,this,1);
 
         //configurações iniciais do usuario
         usuarioLogado = UsuarioFirebase.getUsuarioLogado();

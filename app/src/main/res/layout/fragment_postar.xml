@@ -1,0 +1,31 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center|center_vertical|center_horizontal"
+    tools:context="fragment.PostarFragment">
+
+
+    <Button
+        android:id="@+id/botao_abrir_camera_postar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/shape_botao_perfil_fragment"
+        android:textColor="@color/branco"
+        android:text="Abrir Câmera" />
+
+    <Button
+        android:id="@+id/botao_abrir_galeria_postar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:textColor="@color/branco"
+        android:background="@drawable/shape_botao_perfil_fragment"
+        android:text="Abrir Galeria" />
+</LinearLayout>
