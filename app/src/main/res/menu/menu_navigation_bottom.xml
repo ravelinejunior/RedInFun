@@ -23,8 +23,8 @@
 
 
         <item android:id="@+id/contato_bottom"
-            android:icon="@drawable/ic_contato"
-            android:title="Contato"/>
+            android:icon="@drawable/ic_add_foto"
+            android:title="Postar"/>
 
 
 

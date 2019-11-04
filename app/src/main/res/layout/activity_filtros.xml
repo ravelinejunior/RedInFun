@@ -1,17 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".FiltrosActivity">
+    tools:context=".FiltrosActivity"
+    android:background="@drawable/background_degrade"
+    android:fillViewport="true"
+    >
 
-    <ImageView
-        android:id="@+id/imagem_foto_selecionada_filtro_activity"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="420dp"
-        android:scaleType="centerCrop"
-        app:srcCompat="@drawable/mulherdark" />
-</LinearLayout>
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+       >
+
+        <include layout="@layout/toolbar_filtros_layout" />
+
+        <ImageView
+            android:id="@+id/imagem_foto_selecionada_filtro_activity"
+            android:layout_width="match_parent"
+            android:layout_height="420dp"
+            android:scaleType="centerCrop"
+            android:layout_marginTop="2dp"
+            app:srcCompat="@drawable/mulherdark" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/descricao_input_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Descrição"
+            android:layout_margin="5dp"
+            android:textColorHint="@color/branco"
+            android:padding="4dp"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/descricao_id_input_edittext_filtros"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/branco"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_filtros_postar"
+            android:layout_width="match_parent"
+            android:layout_height="110dp" />
+    </LinearLayout>
+
+
+
+</ScrollView>

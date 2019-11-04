@@ -60,7 +60,6 @@ public class PerfilAcompanhante extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perfil_acompanhante);
-
         inicializarComponentes();
 
         //Configurações iniciais Firebase
@@ -69,8 +68,6 @@ public class PerfilAcompanhante extends AppCompatActivity {
         usuariosRef = referenceFirebase.child("usuarios");
         seguidoresRef = referenceFirebase.child("seguidores");
         idUsuarioLogado = UsuarioFirebase.getIdentificadorUsuario();
-
-
 
         //recuperar usuario selecionado
         Bundle bundle = getIntent().getExtras();
@@ -122,11 +119,11 @@ public class PerfilAcompanhante extends AppCompatActivity {
                 //verificar se existem dados dentro do DataSnapshot
                 if (dataSnapshot.exists()){
                     //Já segue usuario
-                    habilitarBotaoSeguir(true);
+                    habilitarBotaoSeguir(true,usuarioLogado,usuarioSelecionado);
                 }
                 else{
                     //Ainda não segue usuario
-                    habilitarBotaoSeguir(false);
+                    habilitarBotaoSeguir(false,usuarioLogado,usuarioSelecionado);
                 }
             }
 
@@ -155,12 +152,24 @@ public class PerfilAcompanhante extends AppCompatActivity {
         });
     }
 
-    private void habilitarBotaoSeguir(boolean segueUsuario){
+    private void habilitarBotaoSeguir(boolean segueUsuario,Usuario usuLogado,Usuario usuAcompanhante){
 
-        if (segueUsuario){
-            botaoSeguirAcompanhante.setText("Seguindo Acompanhante");
-        }else{
+        Usuario usuario = new Usuario();
+        if (!segueUsuario){
             botaoSeguirAcompanhante.setText("Seguir Acompanhante");
+        }
+        else{
+            botaoSeguirAcompanhante.setText("Seguindo acompanhante"+usuario.getNome());
+            HashMap<String,Object> dadosAcompanhante = new HashMap<>();
+            dadosAcompanhante.put("nome",usuAcompanhante.getNome());
+            dadosAcompanhante.put("caminhoFoto",usuAcompanhante.getCaminhoFoto());
+
+            DatabaseReference seguidorRef = seguidoresRef.
+                    child(usuLogado.getId()).
+                    child(usuAcompanhante.getId());
+
+            seguidorRef.setValue(dadosAcompanhante);
+            botaoSeguirAcompanhante.setText("Seguindo "+usuAcompanhante.getNome());
         }
 
     }
@@ -205,9 +214,6 @@ public class PerfilAcompanhante extends AppCompatActivity {
         DatabaseReference clientesRef = usuariosRef.child(usuLogado.getId());
         //alterando os dados
         clientesRef.updateChildren(novoCliente);
-
-
-
 
     }
 
