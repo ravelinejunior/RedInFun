@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -13,15 +15,27 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 
 import com.zomato.photofilters.FilterPack;
 import com.zomato.photofilters.imageprocessors.Filter;
+import com.zomato.photofilters.utils.ThumbnailItem;
+import com.zomato.photofilters.utils.ThumbnailsManager;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import adapter.FiltrosAdapterThumbnails;
+import helper.RecyclerItemClickListener;
 
 public class FiltrosActivity extends AppCompatActivity {
     private ImageView imagemSelecionadaFiltros;
     private Bitmap imagem;
     private Bitmap imagemFiltro;
+    private List<ThumbnailItem> listaFiltros;
+    private RecyclerView recyclerViewFiltros;
+    private FiltrosAdapterThumbnails adapterFiltros;
 
     //bloco de inicialização de filtros
     static
@@ -35,6 +49,12 @@ public class FiltrosActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filtros);
         imagemSelecionadaFiltros = findViewById(R.id.imagem_foto_selecionada_filtro_activity);
+        recyclerViewFiltros = findViewById(R.id.recycler_view_filtros_postar);
+
+
+        //configurações iniciais
+        listaFiltros = new ArrayList<>();
+
 
         //configurando toolbar
         Toolbar toolbar = findViewById(R.id.toolbar_principal_main_activity);
@@ -53,11 +73,77 @@ public class FiltrosActivity extends AppCompatActivity {
             imagem = BitmapFactory.decodeByteArray(dadosFoto,0,dadosFoto.length);
             imagemSelecionadaFiltros.setImageBitmap(imagem);
 
-            //configuração de imagem de filtro
-            imagemFiltro = imagem.copy(imagem.getConfig(),true);
-            Filter filter = FilterPack.getAmazonFilter(getApplicationContext());
-            imagemSelecionadaFiltros.setImageBitmap(filter.processFilter(imagemFiltro));
+
+
+           //configurando o RecyclerView
+            adapterFiltros = new FiltrosAdapterThumbnails(listaFiltros,this);
+            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
+            recyclerViewFiltros.setLayoutManager(layoutManager);
+            recyclerViewFiltros.setAdapter(adapterFiltros);
+
+
+            //adicionando evento de click ao recycler view
+            recyclerViewFiltros.addOnItemTouchListener(new RecyclerItemClickListener(
+                    this,
+                    recyclerViewFiltros,
+                    new RecyclerItemClickListener.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(View view, int position) {
+                        //configuração de imagem de filtro
+                        //recuperando item selecionado
+                          ThumbnailItem item = listaFiltros.get(position);
+
+                         imagemFiltro = imagem.copy(imagem.getConfig(),true);
+                         Filter filtro = item.filter;
+                         imagemSelecionadaFiltros.setImageBitmap(filtro.processFilter(imagemFiltro));
+
+                        }
+
+                        @Override
+                        public void onLongItemClick(View view, int position) {
+
+                        }
+
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                        }
+                    }
+
+            ));
+
+           //recuperando filtros
+           recuperarFiltros();
         }
+    }
+
+    private void recuperarFiltros(){
+        //limpando itens
+        ThumbnailsManager.clearThumbs();
+        listaFiltros.clear();
+
+        //configurando filtro normal
+        ThumbnailItem item = new ThumbnailItem();
+        item.image = imagem;
+        item.filterName = "Padrão";
+        ThumbnailsManager.addThumb(item);
+
+        //listando todos os filtros
+        List<Filter> filtros = FilterPack.getFilterPack(this);
+        for (Filter filtro:filtros){
+
+            ThumbnailItem itemFiltro = new ThumbnailItem();
+            itemFiltro.image = imagem;
+            itemFiltro.filter = filtro;
+            itemFiltro.filterName = filtro.getName();
+
+            //setando configuração dos filtros gerais
+            ThumbnailsManager.addThumb(itemFiltro);
+        }
+
+        //ThumbNailsManager processThumbs processa todas as miniaturas de filtros para layout que será criado
+        listaFiltros.addAll(ThumbnailsManager.processThumbs(this));
+        adapterFiltros.notifyDataSetChanged();
     }
 
     @Override

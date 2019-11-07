@@ -17,7 +17,8 @@
         android:orientation="vertical"
        >
 
-        <include layout="@layout/toolbar_filtros_layout" />
+        <include layout="@layout/toolbar_filtros_layout"
+            />
 
         <ImageView
             android:id="@+id/imagem_foto_selecionada_filtro_activity"
