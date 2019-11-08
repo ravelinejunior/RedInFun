@@ -36,6 +36,7 @@ import com.zomato.photofilters.utils.ThumbnailsManager;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import adapter.FiltrosAdapterThumbnails;
 import helper.ConfiguracaoFirebase;
@@ -170,7 +171,7 @@ public class FiltrosActivity extends AppCompatActivity {
     private void postarFoto(){
         final FotoPostada fotoPostada = new FotoPostada();
         fotoPostada.setIdUsuario(idUsuarioLogado);
-        fotoPostada.setDescricaoFotoPostada(descricaoFiltros.getText().toString());
+        fotoPostada.setDescricaoFotoPostada(Objects.requireNonNull(descricaoFiltros.getText()).toString());
 
         //recuperar dados da imagem para salvar no firebaseStorage para depois salvar no firebase
         ByteArrayOutputStream baos = new ByteArrayOutputStream();

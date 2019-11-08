@@ -3,6 +3,7 @@ package model;
 import com.google.firebase.database.DatabaseReference;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import helper.ConfiguracaoFirebase;
 
@@ -32,20 +33,30 @@ public class FotoPostada {
         //gerar identificador unitario dentro de foto postada
         String idFotoPostada = fotoPostadaRef.push().getKey();
         setIdFotoPostada(idFotoPostada);
+        converterToMap();
 
     }
 
-    public boolean salvarFotoPostada(){
+    public Map<String,Object> converterToMap(){
+        HashMap<String,Object> hashMapUsuario = new HashMap<>();
+        hashMapUsuario.put("idUsuario",getIdUsuario());
+        hashMapUsuario.put("idFotoPostada",getIdFotoPostada());
+        hashMapUsuario.put("caminhoFotoPostada",getCaminhoFotoPostada());
+        hashMapUsuario.put("descricao",getDescricaoFotoPostada());
+        return hashMapUsuario;
+
+    }
+
+    public boolean salvarFotoPostada() {
         DatabaseReference databaseRef = ConfiguracaoFirebase.getReferenciaDatabase();
         DatabaseReference fotosPostadasRef = databaseRef.child("fotosPostadas")
                 .child(getIdUsuario())
                 .child(getIdFotoPostada());
-                fotosPostadasRef.setValue(this)
-                ;
-
-                return true;
-
+        fotosPostadasRef.setValue(this);
+        converterToMap();
+        return true;
     }
+
 
 
 
