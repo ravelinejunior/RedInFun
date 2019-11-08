@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
@@ -17,17 +18,30 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.zomato.photofilters.FilterPack;
 import com.zomato.photofilters.imageprocessors.Filter;
 import com.zomato.photofilters.utils.ThumbnailItem;
 import com.zomato.photofilters.utils.ThumbnailsManager;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import adapter.FiltrosAdapterThumbnails;
+import helper.ConfiguracaoFirebase;
 import helper.RecyclerItemClickListener;
+import helper.UsuarioFirebase;
+import model.FotoPostada;
 
 public class FiltrosActivity extends AppCompatActivity {
     private ImageView imagemSelecionadaFiltros;
@@ -36,6 +50,11 @@ public class FiltrosActivity extends AppCompatActivity {
     private List<ThumbnailItem> listaFiltros;
     private RecyclerView recyclerViewFiltros;
     private FiltrosAdapterThumbnails adapterFiltros;
+    private TextInputEditText descricaoFiltros;
+    private ProgressBar progressBarFiltros;
+
+    //usuarios
+    private String idUsuarioLogado;
 
     //bloco de inicialização de filtros
     static
@@ -50,6 +69,9 @@ public class FiltrosActivity extends AppCompatActivity {
         setContentView(R.layout.activity_filtros);
         imagemSelecionadaFiltros = findViewById(R.id.imagem_foto_selecionada_filtro_activity);
         recyclerViewFiltros = findViewById(R.id.recycler_view_filtros_postar);
+        idUsuarioLogado = UsuarioFirebase.getIdentificadorUsuario();
+        descricaoFiltros = findViewById(R.id.descricao_id_input_edittext_filtros);
+        progressBarFiltros = findViewById(R.id.progressBar_id_filtros);
 
 
         //configurações iniciais
@@ -72,8 +94,7 @@ public class FiltrosActivity extends AppCompatActivity {
             //permitir editar byte array
             imagem = BitmapFactory.decodeByteArray(dadosFoto,0,dadosFoto.length);
             imagemSelecionadaFiltros.setImageBitmap(imagem);
-
-
+            imagemFiltro = imagem.copy(imagem.getConfig(),true);
 
            //configurando o RecyclerView
             adapterFiltros = new FiltrosAdapterThumbnails(listaFiltros,this);
@@ -146,6 +167,62 @@ public class FiltrosActivity extends AppCompatActivity {
         adapterFiltros.notifyDataSetChanged();
     }
 
+    private void postarFoto(){
+        final FotoPostada fotoPostada = new FotoPostada();
+        fotoPostada.setIdUsuario(idUsuarioLogado);
+        fotoPostada.setDescricaoFotoPostada(descricaoFiltros.getText().toString());
+
+        //recuperar dados da imagem para salvar no firebaseStorage para depois salvar no firebase
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        imagemFiltro.compress(Bitmap.CompressFormat.JPEG,80,baos);
+        byte[] dadosImagemPostada = baos.toByteArray();
+
+        //salvando no storage
+        StorageReference storageReference = ConfiguracaoFirebase.getStorageReference();
+
+        StorageReference imagemRef = storageReference.child("imagens")
+                .child("fotoPostada")
+                .child(fotoPostada.getIdFotoPostada()+".jpeg");
+
+        //passar um array de bytes no putbytes da imagem
+        UploadTask uploadTask = imagemRef.putBytes(dadosImagemPostada);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(FiltrosActivity.this, "Falha ao executar o comando para fazer upload da imagem.", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
+                progressBarFiltros.setVisibility(View.VISIBLE);
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(final UploadTask.TaskSnapshot taskSnapshot) {
+                //recuperar local da foto
+                taskSnapshot.getStorage().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        //recuperando local da foto postada
+                        fotoPostada.setCaminhoFotoPostada(uri.toString());
+
+                        //salvando a foto no banco de dados
+                        if (fotoPostada.salvarFotoPostada()){
+                            Toast.makeText(FiltrosActivity.this, "Foto postada com sucesso!", Toast.LENGTH_SHORT).show();
+                            progressBarFiltros.setVisibility(View.GONE);
+                            finish();
+                        } else{
+                            Toast.makeText(FiltrosActivity.this, "Erro ao postar foto. Verifique sua internet.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+                Toast.makeText(FiltrosActivity.this, "Realizado com sucesso.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -161,6 +238,7 @@ public class FiltrosActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.ic_salvar_postagem_menu_postar:
+                postarFoto();
             break;
         }
         return super.onOptionsItemSelected(item);
