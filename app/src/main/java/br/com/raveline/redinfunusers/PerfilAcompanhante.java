@@ -19,12 +19,15 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import helper.ConfiguracaoFirebase;
 import helper.UsuarioFirebase;
+import model.FotoPostada;
 import model.Usuario;
 
 public class PerfilAcompanhante extends AppCompatActivity {
@@ -48,6 +51,7 @@ public class PerfilAcompanhante extends AppCompatActivity {
     private DatabaseReference usuarioAmigoRef;
     private DatabaseReference seguidoresRef;
     private DatabaseReference usuarioLogadoRef;
+    private DatabaseReference fotoPostadaRef;
 
     //para eventos
     private ValueEventListener valueEventListenerPerfilAcompanhante;
@@ -68,7 +72,7 @@ public class PerfilAcompanhante extends AppCompatActivity {
         usuariosRef = referenceFirebase.child("usuarios");
         seguidoresRef = referenceFirebase.child("seguidores");
         idUsuarioLogado = UsuarioFirebase.getIdentificadorUsuario();
-
+        //
         //recuperar usuario selecionado
         Bundle bundle = getIntent().getExtras();
         if (bundle != null){
@@ -90,6 +94,9 @@ public class PerfilAcompanhante extends AppCompatActivity {
             } else{
                 Toast.makeText(this, "Erro ao recuperar imagem.", Toast.LENGTH_SHORT).show();
             }
+
+            //carregar fotos dos usuarios selecionados
+            carregarFotosPostadas();
 
         }
 
@@ -132,6 +139,43 @@ public class PerfilAcompanhante extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void carregarFotosPostadas(){
+       // recuperando dados do usuario selecionado para visualizar suas postagens
+        fotoPostadaRef = ConfiguracaoFirebase.getReferenciaDatabase()
+                .child("fotosPostadas")
+                .child(usuarioSelecionado.getId());
+
+
+
+        //Recupera fotos postadas
+        //Usar metodo para carregar as fotos uma unica vez para reduzir gastos de memoria
+        fotoPostadaRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                List<String> urlFotos = new ArrayList<>();
+
+                //percorrer objetos para verificar dados existentes
+                for (DataSnapshot ds:dataSnapshot.getChildren()){
+                    FotoPostada fotoPostada = ds.getValue(FotoPostada.class);
+                    //carregando lista de urls
+                    urlFotos.add(Objects.requireNonNull(fotoPostada).getCaminhoFotoPostada());
+
+                }
+                int quantidadeFotos = urlFotos.size();
+                fotosPerfilAcompanhante.setText(String.valueOf(quantidadeFotos));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+
     }
 
     private void recuperarDadosUsuarioLogado(){
@@ -271,12 +315,12 @@ public class PerfilAcompanhante extends AppCompatActivity {
                 Usuario usuario = dataSnapshot.getValue(Usuario.class);
 
                 //configurar valores da activity
-                String fotosPostadasAcompanhante = String.valueOf(Objects.requireNonNull(usuario).getFotos());
+                //String fotosPostadasAcompanhante = String.valueOf(Objects.requireNonNull(usuario).getFotos());
                 String fasAcompanhante = String.valueOf(usuario.getFas());
                 String clientesAcomphantes = String.valueOf(usuario.getClientes());
 
                 //configurar caixa de texto
-                fotosPerfilAcompanhante.setText(fotosPostadasAcompanhante);
+                //fotosPerfilAcompanhante.setText(fotosPostadasAcompanhante);
                 fasPerfilAcompanhante.setText(fasAcompanhante);
                 clientesPerfilAcompanhante.setText(clientesAcomphantes);
 

@@ -85,7 +85,7 @@ public class FiltrosActivity extends AppCompatActivity {
         toolbar.setTitleTextColor(getColor(R.color.branco));
         toolbar.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_fechar);
 
         //recuperando imagem da tela de fragment
@@ -93,7 +93,11 @@ public class FiltrosActivity extends AppCompatActivity {
         if (bundle != null){
             byte[] dadosFoto = bundle.getByteArray("fotoSelecionada");
             //permitir editar byte array
-            imagem = BitmapFactory.decodeByteArray(dadosFoto,0,dadosFoto.length);
+            if (dadosFoto != null) {
+                imagem = BitmapFactory.decodeByteArray(dadosFoto,0,dadosFoto.length);
+            } else {
+                Toast.makeText(this, "Dados foto vazio ou muito grande.", Toast.LENGTH_SHORT).show();
+            }
             imagemSelecionadaFiltros.setImageBitmap(imagem);
             imagemFiltro = imagem.copy(imagem.getConfig(),true);
 

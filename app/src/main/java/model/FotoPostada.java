@@ -33,7 +33,7 @@ public class FotoPostada {
         //gerar identificador unitario dentro de foto postada
         String idFotoPostada = fotoPostadaRef.push().getKey();
         setIdFotoPostada(idFotoPostada);
-        converterToMap();
+
 
     }
 
@@ -53,7 +53,6 @@ public class FotoPostada {
                 .child(getIdUsuario())
                 .child(getIdFotoPostada());
         fotosPostadasRef.setValue(this);
-        converterToMap();
         return true;
     }
 
