@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +25,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
+import adapter.AdapterGridFotosAcompanhante;
 import de.hdodenhof.circleimageview.CircleImageView;
 import helper.ConfiguracaoFirebase;
 import helper.UsuarioFirebase;
@@ -38,6 +40,8 @@ public class PerfilAcompanhante extends AppCompatActivity {
     private TextView fasPerfilAcompanhante;
     private TextView clientesPerfilAcompanhante;
     private TextView fotosPerfilAcompanhante;
+    private GridView gridViewPerfilAcompanhante;
+    private AdapterGridFotosAcompanhante adapterGridFotosAcompanhante;
 
     //Usuarios
     private Usuario usuarioSelecionado;
@@ -166,6 +170,10 @@ public class PerfilAcompanhante extends AppCompatActivity {
                 }
                 int quantidadeFotos = urlFotos.size();
                 fotosPerfilAcompanhante.setText(String.valueOf(quantidadeFotos));
+
+                //Configurar Adapter
+                adapterGridFotosAcompanhante = new AdapterGridFotosAcompanhante(getApplicationContext(),R.layout.grid_fotos_acompanhante,urlFotos);
+                gridViewPerfilAcompanhante.setAdapter(adapterGridFotosAcompanhante);
             }
 
             @Override
@@ -284,7 +292,9 @@ public class PerfilAcompanhante extends AppCompatActivity {
         fasPerfilAcompanhante = findViewById(R.id.fas_perfil_fragment);
         clientesPerfilAcompanhante = findViewById(R.id.clientes_perfil_fragment);
         fotosPerfilAcompanhante = findViewById(R.id.fotos_perfil_fragment);
+        gridViewPerfilAcompanhante = findViewById(R.id.grid_perfil_layout_fragment);
         botaoSeguirAcompanhante.setText("Carregando");
+
 
         //configurando toolbar
         Toolbar toolbar = findViewById(R.id.toolbar_principal_main_activity);
