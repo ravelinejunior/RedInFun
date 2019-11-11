@@ -40,13 +40,12 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:background="@drawable/shape_edit_text"
-        app:layout_constraintBottom_toBottomOf="@+id/imagem_alterar_perfil"
-        app:layout_constraintEnd_toStartOf="@+id/imagem_alterar_perfil"
-        app:layout_constraintHorizontal_bias="0.168"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/imagem_alterar_perfil"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.862"
+        app:layout_constraintStart_toEndOf="@+id/imagem_alterar_perfil"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.462"
-        app:srcCompat="@drawable/ic_voltar_back" />
+        app:srcCompat="@drawable/ic_close_fechar" />
 
     <ProgressBar
         android:id="@+id/progressBar_alterar_dados"

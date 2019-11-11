@@ -233,7 +233,6 @@ public class FiltrosActivity extends AppCompatActivity {
 
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_filtros_postar,menu);
-        menu.addSubMenu("Sair").setHeaderTitle("Loucura");
         return super.onCreateOptionsMenu(menu);
     }
 

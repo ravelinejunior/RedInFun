@@ -217,10 +217,6 @@ public class PerfilAcompanhante extends AppCompatActivity {
                 .build();
         ImageLoader.getInstance().init(configuration);
 
-
-
-
-
     }
 
     private void recuperarDadosUsuarioLogado(){

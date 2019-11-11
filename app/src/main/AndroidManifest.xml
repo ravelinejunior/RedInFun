@@ -21,7 +21,8 @@
         <activity android:name=".FiltrosActivity"></activity>
         <activity
             android:name=".AlterarDados"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".MainActivity"
+            />
         <activity android:name=".CadastrarUsuario" />
         <activity android:name=".PerfilAcompanhante" />
         <activity android:name=".HomeLauncher">

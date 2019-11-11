@@ -10,8 +10,6 @@
         android:layout_height="wrap_content"
         android:background="@drawable/shape_toolbar_filtros"
         android:minHeight="?attr/actionBarSize"
-        app:titleTextColor="@color/branco"
-        app:subtitleTextColor="@color/branco"
         android:theme="?attr/actionBarTheme" />
 
 </FrameLayout>

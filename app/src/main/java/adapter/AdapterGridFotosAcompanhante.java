@@ -86,7 +86,6 @@ public class AdapterGridFotosAcompanhante extends ArrayAdapter<String> {
             @Override
             public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
                 viewHolder.progressBar.setVisibility(View.GONE);
-                viewHolder.imagem.setImageResource(R.drawable.mulherlendo);
                 Toast.makeText(context, "Não foi possivel carregar imagem", Toast.LENGTH_SHORT).show();
 
             }
@@ -99,7 +98,7 @@ public class AdapterGridFotosAcompanhante extends ArrayAdapter<String> {
             @Override
             public void onLoadingCancelled(String imageUri, View view) {
                 viewHolder.progressBar.setVisibility(View.GONE);
-                Toast.makeText(context, "Carregamento interrompido.", Toast.LENGTH_SHORT).show();
+
             }
         });
 
