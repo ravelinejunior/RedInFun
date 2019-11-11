@@ -19,7 +19,14 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
+import com.nostra13.universalimageloader.cache.disc.naming.HashCodeFileNameGenerator;
+import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.utils.StorageUtils;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -99,6 +106,8 @@ public class PerfilAcompanhante extends AppCompatActivity {
                 Toast.makeText(this, "Erro ao recuperar imagem.", Toast.LENGTH_SHORT).show();
             }
 
+            //inicializa imagemLoader Universal para carregar fotos dos usuarios
+            inicializarImageLoader();
             //carregar fotos dos usuarios selecionados
             carregarFotosPostadas();
 
@@ -159,6 +168,13 @@ public class PerfilAcompanhante extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
+                //configurando tamanho do gridView
+                int tamanhoGridView = getResources().getDisplayMetrics().widthPixels;
+                //dividido por 3 por coloquei o numero de colunas = 3
+                int tamanhoImagemGrid = tamanhoGridView/3;
+                gridViewPerfilAcompanhante.setColumnWidth(tamanhoImagemGrid);
+
+
                 List<String> urlFotos = new ArrayList<>();
 
                 //percorrer objetos para verificar dados existentes
@@ -181,6 +197,27 @@ public class PerfilAcompanhante extends AppCompatActivity {
 
             }
         });
+
+
+
+    }
+
+    private void inicializarImageLoader(){
+
+        //carregando o ImageLoader,
+        File cacheDir = StorageUtils.getCacheDirectory(this);
+        ImageLoaderConfiguration configuration = new ImageLoaderConfiguration
+                .Builder(this)
+                .memoryCache(new LruMemoryCache(2*1024*1024))
+                .memoryCacheSize(2*1024*1024)
+                .diskCache(new UnlimitedDiskCache(cacheDir))
+                .diskCacheSize(50*1024*1024)
+                .diskCacheFileCount(100)
+                .diskCacheFileNameGenerator(new HashCodeFileNameGenerator())
+                .build();
+        ImageLoader.getInstance().init(configuration);
+
+
 
 
 
