@@ -174,7 +174,6 @@ public class PerfilAcompanhante extends AppCompatActivity {
                 int tamanhoImagemGrid = tamanhoGridView/3;
                 gridViewPerfilAcompanhante.setColumnWidth(tamanhoImagemGrid);
 
-
                 List<String> urlFotos = new ArrayList<>();
 
                 //percorrer objetos para verificar dados existentes
@@ -360,12 +359,12 @@ public class PerfilAcompanhante extends AppCompatActivity {
                 //configurar valores da activity
                 //String fotosPostadasAcompanhante = String.valueOf(Objects.requireNonNull(usuario).getFotos());
                 String fasAcompanhante = String.valueOf(usuario.getFas());
-                String clientesAcomphantes = String.valueOf(usuario.getClientes());
+                String clientesAcompanhantes = String.valueOf(usuario.getClientes());
 
                 //configurar caixa de texto
                 //fotosPerfilAcompanhante.setText(fotosPostadasAcompanhante);
                 fasPerfilAcompanhante.setText(fasAcompanhante);
-                clientesPerfilAcompanhante.setText(clientesAcomphantes);
+                clientesPerfilAcompanhante.setText(clientesAcompanhantes);
 
                 
 

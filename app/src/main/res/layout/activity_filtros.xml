@@ -40,6 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Descrição"
+            app:hintTextAppearance="@style/AppThemeToolbarFiltros"
             android:layout_margin="5dp"
             android:textColorHint="@color/branco"
             android:padding="4dp"
@@ -49,7 +50,7 @@
                 android:id="@+id/descricao_id_input_edittext_filtros"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="14sp"
+                android:textSize="15sp"
                 android:textStyle="bold"
                 android:textColor="@color/branco"
                 />
