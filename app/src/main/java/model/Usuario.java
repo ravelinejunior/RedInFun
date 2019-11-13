@@ -39,6 +39,15 @@ public class Usuario implements Serializable {
         usuariosRef.updateChildren(valoresMap);
     }
 
+
+    public void atualizarFotosPostadas(){
+        DatabaseReference firebaseRef = ConfiguracaoFirebase.getReferenciaDatabase();
+        DatabaseReference usuariosRef = firebaseRef.child("usuarios").child(getId());
+        HashMap<String,Object> fotosPostadas = new HashMap<>();
+        fotosPostadas.put("fotos",getFotos());
+        usuariosRef.updateChildren(fotosPostadas);
+    }
+
     public Map<String,Object> converterToMap(){
 
         HashMap<String,Object> hashMapUsuario = new HashMap<>();

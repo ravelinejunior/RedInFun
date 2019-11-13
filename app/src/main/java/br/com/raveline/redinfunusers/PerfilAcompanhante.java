@@ -140,6 +140,7 @@ public class PerfilAcompanhante extends AppCompatActivity {
                 if (dataSnapshot.exists()){
                     //Já segue usuario
                     habilitarBotaoSeguir(true,usuarioLogado,usuarioSelecionado);
+                    botaoSeguirAcompanhante.setOnClickListener(null);
                 }
                 else{
                     //Ainda não segue usuario
@@ -183,9 +184,6 @@ public class PerfilAcompanhante extends AppCompatActivity {
                     urlFotos.add(Objects.requireNonNull(fotoPostada).getCaminhoFotoPostada());
 
                 }
-                int quantidadeFotos = urlFotos.size();
-                fotosPerfilAcompanhante.setText(String.valueOf(quantidadeFotos));
-
                 //Configurar Adapter
                 adapterGridFotosAcompanhante = new AdapterGridFotosAcompanhante(getApplicationContext(),R.layout.grid_fotos_acompanhante,urlFotos);
                 gridViewPerfilAcompanhante.setAdapter(adapterGridFotosAcompanhante);
@@ -239,11 +237,11 @@ public class PerfilAcompanhante extends AppCompatActivity {
     private void habilitarBotaoSeguir(boolean segueUsuario,Usuario usuLogado,Usuario usuAcompanhante){
 
         Usuario usuario = new Usuario();
+
         if (!segueUsuario){
             botaoSeguirAcompanhante.setText("Seguir Acompanhante");
         }
         else{
-            botaoSeguirAcompanhante.setText("Seguindo acompanhante"+usuario.getNome());
             HashMap<String,Object> dadosAcompanhante = new HashMap<>();
             dadosAcompanhante.put("nome",usuAcompanhante.getNome());
             dadosAcompanhante.put("caminhoFoto",usuAcompanhante.getCaminhoFoto());
@@ -357,12 +355,12 @@ public class PerfilAcompanhante extends AppCompatActivity {
                 Usuario usuario = dataSnapshot.getValue(Usuario.class);
 
                 //configurar valores da activity
-                //String fotosPostadasAcompanhante = String.valueOf(Objects.requireNonNull(usuario).getFotos());
+                String fotosPostadasAcompanhante = String.valueOf(Objects.requireNonNull(usuario).getFotos());
                 String fasAcompanhante = String.valueOf(usuario.getFas());
                 String clientesAcompanhantes = String.valueOf(usuario.getClientes());
 
                 //configurar caixa de texto
-                //fotosPerfilAcompanhante.setText(fotosPostadasAcompanhante);
+                fotosPerfilAcompanhante.setText(fotosPostadasAcompanhante);
                 fasPerfilAcompanhante.setText(fasAcompanhante);
                 clientesPerfilAcompanhante.setText(clientesAcompanhantes);
 

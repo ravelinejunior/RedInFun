@@ -2,6 +2,7 @@ package fragment;
 
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -83,6 +84,9 @@ public class PerfilFragment extends Fragment {
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_perfil, container, false);
+
+        //deixando apenas como portrait (nao permitir tela virar)
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
 
         //CONFIGURAÇÕES INICIAIS
         firebaseAuth = ConfiguracaoFirebase.getFirebaseAutenticacao();
