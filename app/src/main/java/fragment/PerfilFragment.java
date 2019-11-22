@@ -1,13 +1,16 @@
 package fragment;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +28,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.StorageReference;
+import com.google.protobuf.StringValue;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.cache.disc.naming.HashCodeFileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
@@ -45,6 +49,8 @@ import helper.ConfiguracaoFirebase;
 import helper.UsuarioFirebase;
 import model.FotoPostada;
 import model.Usuario;
+
+import static java.util.Objects.*;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -78,6 +84,7 @@ public class PerfilFragment extends Fragment {
     }
 
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -86,7 +93,7 @@ public class PerfilFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_perfil, container, false);
 
         //deixando apenas como portrait (nao permitir tela virar)
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
+        requireNonNull(getActivity()).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
 
         //CONFIGURAÇÕES INICIAIS
         firebaseAuth = ConfiguracaoFirebase.getFirebaseAutenticacao();
@@ -108,7 +115,7 @@ public class PerfilFragment extends Fragment {
         String caminhoFoto = usuarioLogado.getCaminhoFoto();
         if( caminhoFoto != null){
             Uri url = Uri.parse(caminhoFoto);
-            Glide.with(Objects.requireNonNull(getActivity())).load(url)
+            Glide.with(requireNonNull(getActivity())).load(url)
                     .circleCrop()
                     .centerInside()
                     .into(fotoPerfil);
@@ -122,13 +129,7 @@ public class PerfilFragment extends Fragment {
 
 
 
-            botaoEditarPerfil.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivity(new Intent(getActivity(), AlterarDados.class));
-
-                }
-            });
+            botaoEditarPerfil.setOnClickListener(v -> startActivity(new Intent(getActivity(), AlterarDados.class)));
 
         //iniciaizar ImageLoader
         inicializarImageLoader();
@@ -140,6 +141,8 @@ public class PerfilFragment extends Fragment {
 
             return view;
         }
+
+
 
     private void carregarFotosPostadas(){
         // recuperando dados do usuario selecionado para visualizar suas postagens
@@ -167,14 +170,14 @@ public class PerfilFragment extends Fragment {
                 for (DataSnapshot ds:dataSnapshot.getChildren()){
                     FotoPostada fotoPostada = ds.getValue(FotoPostada.class);
                     //carregando lista de urls
-                    urlFotos.add(Objects.requireNonNull(fotoPostada).getCaminhoFotoPostada());
+                    urlFotos.add(requireNonNull(fotoPostada).getCaminhoFotoPostada());
 
                 }
                 int quantidadeFotos = urlFotos.size();
                 fotosPostadasPerfil.setText(String.valueOf(quantidadeFotos));
 
                 //Configurar Adapter
-                adapterGridFotosPerfil = new AdapterGridFotosAcompanhante(Objects.requireNonNull(getActivity()),R.layout.grid_fotos_acompanhante,urlFotos);
+                adapterGridFotosPerfil = new AdapterGridFotosAcompanhante(requireNonNull(getActivity()),R.layout.grid_fotos_acompanhante,urlFotos);
                 gridViewPerfil.setAdapter(adapterGridFotosPerfil);
             }
 
@@ -196,7 +199,7 @@ public class PerfilFragment extends Fragment {
                 .Builder(getActivity())
                 .memoryCache(new LruMemoryCache(2*1024*1024))
                 .memoryCacheSize(2*1024*1024)
-                .diskCache(new UnlimitedDiskCache(cacheDir))
+                .diskCache(new UnlimitedDiskCache(requireNonNull(cacheDir)))
                 .diskCacheSize(50*1024*1024)
                 .diskCacheFileCount(100)
                 .diskCacheFileNameGenerator(new HashCodeFileNameGenerator())
@@ -230,13 +233,17 @@ public class PerfilFragment extends Fragment {
 
                 //configurar valores da activity
                 //String fotosPostadasAcompanhante = String.valueOf(Objects.requireNonNull(usuario).getFotos());
-                String fasAcompanhante = String.valueOf(usuario.getFas());
-                String clientesAcompanhantes = String.valueOf(usuario.getClientes());
-
+                try {
+                    String fasAcompanhante = String.valueOf(requireNonNull(usuario).getFas());
+                    String clientesAcompanhantes = String.valueOf(usuario.getClientes());
                 //configurar caixa de texto
                 //fotosPerfilAcompanhante.setText(fotosPostadasAcompanhante);
                 fasPerfil.setText(fasAcompanhante);
                 clientesPerfil.setText(clientesAcompanhantes);
+                }catch (Exception e){
+                    e.getMessage();
+                }
+
 
             }
 

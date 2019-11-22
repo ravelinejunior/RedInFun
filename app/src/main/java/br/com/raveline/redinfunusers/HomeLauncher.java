@@ -13,11 +13,11 @@ public class HomeLauncher extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_launcher);
 
-        new Handler().postDelayed(new Runnable() {
+       /* new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 startActivity(new Intent(HomeLauncher.this,LoginActivity.class));
             }
-        },500);
+        },500);*/
     }
 }

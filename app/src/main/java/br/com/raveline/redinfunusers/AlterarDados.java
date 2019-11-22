@@ -87,7 +87,7 @@ public class AlterarDados extends AppCompatActivity {
                 if (nomeExibido.length() > 30){
                     editarEmailAlterarDados.setText("");
                 }
-                editarEmailAlterarDados.setText(firebaseUser.getEmail().toString());
+                editarEmailAlterarDados.setText(firebaseUser.getEmail());
             }catch (Exception e){
                 e.getStackTrace();
             }

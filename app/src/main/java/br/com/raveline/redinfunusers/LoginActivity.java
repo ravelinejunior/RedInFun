@@ -1,10 +1,6 @@
 package br.com.raveline.redinfunusers;
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
@@ -15,30 +11,25 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
+
 import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.HashMap;
 import java.util.Objects;
 
 import helper.ConfiguracaoFirebase;
-import helper.UsuarioFirebase;
+
 import model.Usuario;
 
 import static android.view.View.GONE;
@@ -71,23 +62,20 @@ public class LoginActivity extends AppCompatActivity {
         verificarUsuarioLogado();
         carregarElementos();
         progressBarLogin.setVisibility(GONE);
-        botaoLogarLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String emailDigitado = emailLogarLogin.getText().toString();
-                String senhaDigitada = senhaLogarLogin.getText().toString();
-                if (!emailDigitado.isEmpty()){
-                    if (!senhaDigitada.isEmpty()){
-                        usuario = new Usuario();
-                        usuario.setEmail(emailDigitado);
-                        usuario.setSenha(senhaDigitada);
-                        validarUsuario(usuario);
-                    }else{
-                        Toast.makeText(LoginActivity.this, "Campo SENHA está vazio.", Toast.LENGTH_SHORT).show();
-                    }
+        botaoLogarLogin.setOnClickListener(view -> {
+            String emailDigitado = emailLogarLogin.getText().toString();
+            String senhaDigitada = senhaLogarLogin.getText().toString();
+            if (!emailDigitado.isEmpty()){
+                if (!senhaDigitada.isEmpty()){
+                    usuario = new Usuario();
+                    usuario.setEmail(emailDigitado);
+                    usuario.setSenha(senhaDigitada);
+                    validarUsuario(usuario);
                 }else{
-                    Toast.makeText(LoginActivity.this, "Campo EMAIL está vazio.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Campo SENHA está vazio.", Toast.LENGTH_SHORT).show();
                 }
+            }else{
+                Toast.makeText(LoginActivity.this, "Campo EMAIL está vazio.", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -110,15 +98,12 @@ public class LoginActivity extends AppCompatActivity {
         mGoogleSignInClient = GoogleSignIn.getClient(this,gso);
 
         //cadastrando usuario atraves da conta Google
-        botaoGoogleLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        botaoGoogleLogin.setOnClickListener(view -> {
 
-                progressBarLogin.setVisibility(View.VISIBLE);
-                Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-                startActivityForResult(signInIntent, RC_SIGN_IN);
+            progressBarLogin.setVisibility(View.VISIBLE);
+            Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+            startActivityForResult(signInIntent, RC_SIGN_IN);
 
-            }
         });
 
 
@@ -143,21 +128,15 @@ public class LoginActivity extends AppCompatActivity {
         builder.setView(linearLayout);
 
         //botoes para recuperar
-        builder.setPositiveButton("Recuperar", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                String emailRecuperado = emailDigitadoNovo.getText().toString();
-                progressBarLogin.setVisibility(View.VISIBLE);
-                recuperarSenha(emailRecuperado);
+        builder.setPositiveButton("Recuperar", (dialogInterface, i) -> {
+            String emailRecuperado = emailDigitadoNovo.getText().toString();
+            progressBarLogin.setVisibility(View.VISIBLE);
+            recuperarSenha(emailRecuperado);
 
-            }
         });
 
         //botao para cancelar
-        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-            }
+        builder.setNegativeButton("Cancelar", (dialogInterface, i) -> {
         });
 
         builder.create().show();
@@ -165,28 +144,19 @@ public class LoginActivity extends AppCompatActivity {
 
     private void recuperarSenha(String email){
 
-        autenticacao.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
-
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()){
-                    progressBarLogin.setVisibility(GONE);
-                    Toast.makeText(LoginActivity.this, "Email enviado.", Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    progressBarLogin.setVisibility(GONE);
-                    Toast.makeText(LoginActivity.this, "Falha ao enviar.", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
+        autenticacao.sendPasswordResetEmail(email).addOnCompleteListener(task -> {
+            if (task.isSuccessful()){
                 progressBarLogin.setVisibility(GONE);
-                //mostrar o erro
-                Toast.makeText(LoginActivity.this, ""+e.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(LoginActivity.this, "Email enviado.", Toast.LENGTH_SHORT).show();
             }
+            else{
+                progressBarLogin.setVisibility(GONE);
+                Toast.makeText(LoginActivity.this, "Falha ao enviar.", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(e -> {
+            progressBarLogin.setVisibility(GONE);
+            //mostrar o erro
+            Toast.makeText(LoginActivity.this, ""+e.getMessage(), Toast.LENGTH_LONG).show();
         });
     }
 
@@ -226,49 +196,43 @@ public class LoginActivity extends AppCompatActivity {
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         autenticacao.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                           progressBarLogin.setVisibility(View.GONE);
-                            // Sign in success, update UI with the signed-in user's information
-                            FirebaseUser user = autenticacao.getCurrentUser();
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                       progressBarLogin.setVisibility(View.GONE);
+                        // Sign in success, update UI with the signed-in user's information
+                        FirebaseUser user = autenticacao.getCurrentUser();
 
-                            //se o usuario logar primeiro antes das informações carregarem
-                            if (task.getResult().getAdditionalUserInfo().isNewUser()) {
+                        //se o usuario logar primeiro antes das informações carregarem
+                        if (Objects.requireNonNull(Objects.requireNonNull(task.getResult()).getAdditionalUserInfo()).isNewUser()) {
 
-                                //recuperando valores e ids do usuario
-                                String emailUser = user.getEmail();
-                                 String uidUser = user.getUid();
+                            //recuperando valores e ids do usuario
+                            String emailUser = user.getEmail();
+                             String uidUser = user.getUid();
 
-                            }
-
-
-                            Toast.makeText(LoginActivity.this, "Usuario: "+user.getDisplayName()+" Logado.", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-                            startActivity(intent);
-                            finish();
-
-                            //updateUI(user);
-                        } else {
-                            progressBarLogin.setVisibility(GONE);
-                            // If sign in fails, display a message to the user.
-                            // updateUI(null);
-
-
-                            FirebaseAuth.getInstance().signOut();
                         }
 
-                        // ...
+
+                        Toast.makeText(LoginActivity.this, "Usuario: "+user.getDisplayName()+" Logado.", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                        startActivity(intent);
+                        finish();
+
+                        //updateUI(user);
+                    } else {
+                        progressBarLogin.setVisibility(GONE);
+                        // If sign in fails, display a message to the user.
+                        // updateUI(null);
+
+
+                        FirebaseAuth.getInstance().signOut();
                     }
-                }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                progressBarLogin.setVisibility(GONE);
-                autenticacao.signOut();
-                Toast.makeText(LoginActivity.this, "Erro: "+e.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
+
+                    // ...
+                }).addOnFailureListener(e -> {
+                    progressBarLogin.setVisibility(GONE);
+                    autenticacao.signOut();
+                    Toast.makeText(LoginActivity.this, "Erro: "+e.getMessage(), Toast.LENGTH_LONG).show();
+                });
 
 
     }
@@ -278,22 +242,16 @@ public class LoginActivity extends AppCompatActivity {
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
         //Logando com usuario digitado
         autenticacao.signInWithEmailAndPassword(usuario.getEmail(),usuario.getSenha()).
-                addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()){
+                addOnCompleteListener(task -> {
+                    if (task.isSuccessful()){
+                        progressBarLogin.setVisibility(GONE);
+                        startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                        finish();
+                    }
+                }).addOnFailureListener(e -> {
                     progressBarLogin.setVisibility(GONE);
-                    startActivity(new Intent(LoginActivity.this,MainActivity.class));
-                    finish();
-                }
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                progressBarLogin.setVisibility(GONE);
-                Toast.makeText(LoginActivity.this, "Erro "+e.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+                    Toast.makeText(LoginActivity.this, "Erro "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                });
     }
 
     public void abrirCadastro(View v) {

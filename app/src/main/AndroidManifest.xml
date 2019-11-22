@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="br.com.raveline.redinfunusers">
 
     <uses-feature
         android:name="android.hardware.camera2"
-        android:required="true" />
+        android:version="15"
+        android:required="true"
+        tools:targetApi="n" />
+    <supports-screens android:anyDensity="true"
+        android:resizeable="true"/>
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -25,14 +30,14 @@
             />
         <activity android:name=".CadastrarUsuario" />
         <activity android:name=".PerfilAcompanhante" />
-        <activity android:name=".HomeLauncher">
+        <activity android:name=".HomeLauncher"/>
+        <activity android:name=".LoginActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity" />
         <activity
             android:name=".MainActivity"
             android:theme="@style/AppThemeLogin" />

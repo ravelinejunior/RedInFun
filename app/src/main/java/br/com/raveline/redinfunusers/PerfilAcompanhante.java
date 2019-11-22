@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 
 import android.net.Uri;
 import android.os.Build;
@@ -118,8 +119,6 @@ public class PerfilAcompanhante extends AppCompatActivity {
             public void onClick(View v) {
                 //salvando seguidores
                 salvarSeguidor(usuarioLogado,usuarioSelecionado);
-
-
             }
         });
 
@@ -330,7 +329,7 @@ public class PerfilAcompanhante extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar_principal_main_activity);
         toolbar.setTitle("RedInFun");
         toolbar.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-        toolbar.setTitleTextColor(getColor(R.color.branco));
+        toolbar.setTitleTextColor(ContextCompat.getColor(getApplicationContext(),R.color.branco));
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_voltar_back);

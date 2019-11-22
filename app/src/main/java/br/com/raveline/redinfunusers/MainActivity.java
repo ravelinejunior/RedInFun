@@ -4,6 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -18,6 +21,8 @@ import android.widget.Toast;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
+
+import java.util.Objects;
 
 import fragment.PostarFragment;
 import fragment.HomeFragment;
@@ -39,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         //configurando toolbar
         Toolbar toolbar = findViewById(R.id.toolbar_principal_main_activity);
         toolbar.setTitle("RedInFun");
-        toolbar.setTitleTextColor(getColor(R.color.branco));
+        toolbar.setTitleTextColor(ContextCompat.getColor(getApplicationContext(),R.color.branco));
         setSupportActionBar(toolbar);
 
         //habilitando bottomNav
@@ -47,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frame_layout_main, new PerfilFragment()).commit();
+
 
         //instanciar usuario firebase
         auth = ConfiguracaoFirebase.getFirebaseAutenticacao();
@@ -89,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
 
                     case R.id.perfil_bottom:
                         fragmentTransaction.replace(R.id.frame_layout_main, new PerfilFragment()).commit();
+                        //fragmentTransaction.add(R.id.frame_layout_main, new PesquisarFragment().getParentFragment());
                         return true;
 
                     case R.id.usuarios_bottom:

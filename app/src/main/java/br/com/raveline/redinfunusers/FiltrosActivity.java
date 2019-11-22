@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -94,7 +95,7 @@ public class FiltrosActivity extends AppCompatActivity {
         //configurando toolbar
         Toolbar toolbar = findViewById(R.id.toolbar_principal_main_activity);
         toolbar.setTitle("Filtros");
-        toolbar.setTitleTextColor(getColor(R.color.branco));
+        toolbar.setTitleTextColor(ContextCompat.getColor(getApplicationContext(),R.color.branco));
         toolbar.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
@@ -254,33 +255,27 @@ public class FiltrosActivity extends AppCompatActivity {
                 public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
                     progressBarFiltros.setVisibility(View.VISIBLE);
                 }
-            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(final UploadTask.TaskSnapshot taskSnapshot) {
-                    //recuperar local da foto
-                    taskSnapshot.getStorage().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {
-                            //recuperando local da foto postada
-                            fotoPostada.setCaminhoFotoPostada(uri.toString());
+            }).addOnSuccessListener(taskSnapshot -> {
+                //recuperar local da foto
+                taskSnapshot.getStorage().getDownloadUrl().addOnSuccessListener(uri -> {
+                    //recuperando local da foto postada
+                    fotoPostada.setCaminhoFotoPostada(uri.toString());
 
-                            //salvando a foto no banco de dados
-                            if (fotoPostada.salvarFotoPostada()){
-                                //caso foto tenha sido postada com sucesso, atualizar numero de fotos postada
-                                int quantidadeFotosPostadas = usuarioLogado.getFotos() + 1;
-                                usuarioLogado.setFotos(quantidadeFotosPostadas);
-                                usuarioLogado.atualizarFotosPostadas();
+                    //salvando a foto no banco de dados
+                    if (fotoPostada.salvarFotoPostada()){
+                        //caso foto tenha sido postada com sucesso, atualizar numero de fotos postada
+                        int quantidadeFotosPostadas = usuarioLogado.getFotos() + 1;
+                        usuarioLogado.setFotos(quantidadeFotosPostadas);
+                        usuarioLogado.atualizarFotosPostadas();
 
-                                Toast.makeText(FiltrosActivity.this, "Foto postada com sucesso!", Toast.LENGTH_SHORT).show();
-                                progressBarFiltros.setVisibility(View.GONE);
-                                finish();
-                            } else{
-                                Toast.makeText(FiltrosActivity.this, "Erro ao postar foto. Verifique sua internet.", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
+                        Toast.makeText(FiltrosActivity.this, "Foto postada com sucesso!", Toast.LENGTH_SHORT).show();
+                        progressBarFiltros.setVisibility(View.GONE);
+                        finish();
+                    } else{
+                        Toast.makeText(FiltrosActivity.this, "Erro ao postar foto. Verifique sua internet.", Toast.LENGTH_SHORT).show();
+                    }
+                });
 
-                }
             });
         }
 
