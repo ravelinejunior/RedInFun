@@ -94,7 +94,7 @@ public class AlterarDados extends AppCompatActivity {
 
             Uri url = firebaseUser.getPhotoUrl();
             if (url !=null){
-                Glide.with(AlterarDados.this).load(url).fitCenter().into(fotoPerfilAlterarDados);
+                Glide.with(AlterarDados.this).load(url).into(fotoPerfilAlterarDados);
             } else{
                 fotoPerfilAlterarDados.setImageResource(R.drawable.ic_pessoa_usuario);
             }

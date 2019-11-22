@@ -2,12 +2,13 @@ package model;
 
 import com.google.firebase.database.DatabaseReference;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
 import helper.ConfiguracaoFirebase;
 
-public class FotoPostada {
+public class FotoPostada implements Serializable {
 
     /*
     MODELO DE BANCO DE DADOS E ESTRUTURA DA POSTAGEM

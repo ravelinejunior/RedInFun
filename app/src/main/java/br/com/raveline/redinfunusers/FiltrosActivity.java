@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
@@ -21,28 +20,21 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
-
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.zomato.photofilters.FilterPack;
 import com.zomato.photofilters.imageprocessors.Filter;
 import com.zomato.photofilters.utils.ThumbnailItem;
 import com.zomato.photofilters.utils.ThumbnailsManager;
-
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
 import adapter.FiltrosAdapterThumbnails;
 import helper.ConfiguracaoFirebase;
 import helper.RecyclerItemClickListener;
@@ -96,7 +88,6 @@ public class FiltrosActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar_principal_main_activity);
         toolbar.setTitle("Filtros");
         toolbar.setTitleTextColor(ContextCompat.getColor(getApplicationContext(),R.color.branco));
-        toolbar.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_fechar);
@@ -233,7 +224,7 @@ public class FiltrosActivity extends AppCompatActivity {
 
             //recuperar dados da imagem para salvar no firebaseStorage para depois salvar no firebase
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            imagemFiltro.compress(Bitmap.CompressFormat.JPEG,80,baos);
+            imagemFiltro.compress(Bitmap.CompressFormat.JPEG,100,baos);
             byte[] dadosImagemPostada = baos.toByteArray();
 
             //salvando no storage
@@ -245,17 +236,7 @@ public class FiltrosActivity extends AppCompatActivity {
 
             //passar um array de bytes no putbytes da imagem
             UploadTask uploadTask = imagemRef.putBytes(dadosImagemPostada);
-            uploadTask.addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(FiltrosActivity.this, "Falha ao executar o comando para fazer upload da imagem.", Toast.LENGTH_SHORT).show();
-                }
-            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
-                    progressBarFiltros.setVisibility(View.VISIBLE);
-                }
-            }).addOnSuccessListener(taskSnapshot -> {
+            uploadTask.addOnFailureListener(e -> Toast.makeText(FiltrosActivity.this, "Falha ao executar o comando para fazer upload da imagem.", Toast.LENGTH_SHORT).show()).addOnProgressListener(taskSnapshot -> progressBarFiltros.setVisibility(View.VISIBLE)).addOnSuccessListener(taskSnapshot -> {
                 //recuperar local da foto
                 taskSnapshot.getStorage().getDownloadUrl().addOnSuccessListener(uri -> {
                     //recuperando local da foto postada
@@ -264,13 +245,20 @@ public class FiltrosActivity extends AppCompatActivity {
                     //salvando a foto no banco de dados
                     if (fotoPostada.salvarFotoPostada()){
                         //caso foto tenha sido postada com sucesso, atualizar numero de fotos postada
-                        int quantidadeFotosPostadas = usuarioLogado.getFotos() + 1;
-                        usuarioLogado.setFotos(quantidadeFotosPostadas);
-                        usuarioLogado.atualizarFotosPostadas();
+                        try {
 
-                        Toast.makeText(FiltrosActivity.this, "Foto postada com sucesso!", Toast.LENGTH_SHORT).show();
-                        progressBarFiltros.setVisibility(View.GONE);
-                        finish();
+                            int quantidadeFotosPostadas = usuarioLogado.getFotos() + 1;
+                            usuarioLogado.setFotos(quantidadeFotosPostadas);
+                            usuarioLogado.atualizarFotosPostadas();
+
+                            Toast.makeText(FiltrosActivity.this, "Foto postada com sucesso!", Toast.LENGTH_SHORT).show();
+                            progressBarFiltros.setVisibility(View.GONE);
+                            finish();
+                        }catch (Exception e){
+                            finish();
+                            Toast.makeText(this, "Foto postada com sucesso!", Toast.LENGTH_SHORT).show();
+                            e.printStackTrace();
+                        }
                     } else{
                         Toast.makeText(FiltrosActivity.this, "Erro ao postar foto. Verifique sua internet.", Toast.LENGTH_SHORT).show();
                     }

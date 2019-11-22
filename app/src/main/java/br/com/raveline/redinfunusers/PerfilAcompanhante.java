@@ -6,10 +6,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
@@ -68,6 +70,9 @@ public class PerfilAcompanhante extends AppCompatActivity {
     //para eventos
     private ValueEventListener valueEventListenerPerfilAcompanhante;
 
+    //listas
+    private List<FotoPostada> fotoPostadaList;
+
     //usuarios
 
 
@@ -92,7 +97,7 @@ public class PerfilAcompanhante extends AppCompatActivity {
             usuarioSelecionado = (Usuario) bundle.getSerializable("usuarioSelecionado");
 
             //configura nome da toolbar nome do usuario
-            getSupportActionBar().setTitle(usuarioSelecionado.getNome());
+            Objects.requireNonNull(getSupportActionBar()).setTitle(usuarioSelecionado.getNome());
 
             //recuperar foto do usuario
             String caminhoFoto = usuarioSelecionado.getCaminhoFoto();
@@ -112,14 +117,22 @@ public class PerfilAcompanhante extends AppCompatActivity {
             //carregar fotos dos usuarios selecionados
             carregarFotosPostadas();
 
+            //abrir foto clicada
+            gridViewPerfilAcompanhante.setOnItemClickListener((parent, view, position, id) -> {
+                    FotoPostada fotoPostada = fotoPostadaList.get(position);
+                    Intent intent = new Intent(getApplicationContext(),VisualizarFotoPostada.class);
+
+                    //passando dados para outra activity
+                    intent.putExtra("fotoPostadaAcompanhante",fotoPostada);
+                    intent.putExtra("usuario",usuarioSelecionado);
+                    startActivity(intent);
+            });
+
         }
 
-        botaoSeguirAcompanhante.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //salvando seguidores
-                salvarSeguidor(usuarioLogado,usuarioSelecionado);
-            }
+        botaoSeguirAcompanhante.setOnClickListener(v -> {
+            //salvando seguidores
+            salvarSeguidor(usuarioLogado,usuarioSelecionado);
         });
 
 
@@ -155,6 +168,10 @@ public class PerfilAcompanhante extends AppCompatActivity {
     }
 
     private void carregarFotosPostadas(){
+
+        //inicializando um arrayList
+        fotoPostadaList = new ArrayList<>();
+
        // recuperando dados do usuario selecionado para visualizar suas postagens
         fotoPostadaRef = ConfiguracaoFirebase.getReferenciaDatabase()
                 .child("fotosPostadas")
@@ -180,6 +197,7 @@ public class PerfilAcompanhante extends AppCompatActivity {
                 for (DataSnapshot ds:dataSnapshot.getChildren()){
                     FotoPostada fotoPostada = ds.getValue(FotoPostada.class);
                     //carregando lista de urls
+                    fotoPostadaList.add(fotoPostada);
                     urlFotos.add(Objects.requireNonNull(fotoPostada).getCaminhoFotoPostada());
 
                 }

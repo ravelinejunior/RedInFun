@@ -61,24 +61,18 @@ public class PostarFragment extends Fragment {
         botaoAbrirGaleriaPostarFragment = view.findViewById(R.id.botao_abrir_galeria_postar_layout);
 
         //evento de click para camera
-        botaoAbrirCameraPostarFragment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                if (i.resolveActivity(getActivity().getPackageManager())!= null){
-                    startActivityForResult(i,CODIGO_ABRIR_CAMERA);
-                }
+        botaoAbrirCameraPostarFragment.setOnClickListener(v -> {
+            Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            if (i.resolveActivity(getActivity().getPackageManager())!= null){
+                startActivityForResult(i,CODIGO_ABRIR_CAMERA);
             }
         });
 
         //evento de on click para galeria
-        botaoAbrirGaleriaPostarFragment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                if (i.resolveActivity(getActivity().getPackageManager())!= null){
-                    startActivityForResult(i,CODIGO_ABRIR_GALERIA);
-                }
+        botaoAbrirGaleriaPostarFragment.setOnClickListener(v -> {
+            Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            if (i.resolveActivity(getActivity().getPackageManager())!= null){
+                startActivityForResult(i,CODIGO_ABRIR_GALERIA);
             }
         });
 
@@ -110,7 +104,7 @@ public class PostarFragment extends Fragment {
 
                //converter imagem em byte array
                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-               imagem.compress(Bitmap.CompressFormat.JPEG,80,baos);
+               imagem.compress(Bitmap.CompressFormat.JPEG,100,baos);
                byte[] dadosFoto = baos.toByteArray();
 
                //enviar imagem para tela de filtros

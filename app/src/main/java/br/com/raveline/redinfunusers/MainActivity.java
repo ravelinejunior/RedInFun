@@ -79,40 +79,37 @@ public class MainActivity extends AppCompatActivity {
 
     //metodo para habilitar e tratar eventos de clique no bottom navigation
     private void habilitarEventosBottomNav(BottomNavigationViewEx viewEx){
-        viewEx.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        viewEx.setOnNavigationItemSelectedListener(menuItem -> {
 
-                //criar objetos para carregar as fragments
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            //criar objetos para carregar as fragments
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-                //recuperando o item de menu que foi selecionado
-                switch (menuItem.getItemId()){
-                    case R.id.home_bottom:
-                        fragmentTransaction.replace(R.id.frame_layout_main, new HomeFragment()).commit();
-                        return true;
+            //recuperando o item de menu que foi selecionado
+            switch (menuItem.getItemId()){
+                case R.id.home_bottom:
+                    fragmentTransaction.replace(R.id.frame_layout_main, new HomeFragment()).commit();
+                    return true;
 
-                    case R.id.perfil_bottom:
-                        fragmentTransaction.replace(R.id.frame_layout_main, new PerfilFragment()).commit();
-                        //fragmentTransaction.add(R.id.frame_layout_main, new PesquisarFragment().getParentFragment());
-                        return true;
+                case R.id.perfil_bottom:
+                    fragmentTransaction.replace(R.id.frame_layout_main, new PerfilFragment()).commit();
+                    //fragmentTransaction.add(R.id.frame_layout_main, new PesquisarFragment().getParentFragment());
+                    return true;
 
-                    case R.id.usuarios_bottom:
-                        fragmentTransaction.replace(R.id.frame_layout_main, new UsuariosFragment()).commit();
-                        return true;
+                case R.id.usuarios_bottom:
+                    fragmentTransaction.replace(R.id.frame_layout_main, new UsuariosFragment()).commit();
+                    return true;
 
-                    case R.id.contato_bottom:
-                        fragmentTransaction.replace(R.id.frame_layout_main, new PostarFragment()).commit();
-                        return true;
+                case R.id.contato_bottom:
+                    fragmentTransaction.replace(R.id.frame_layout_main, new PostarFragment()).commit();
+                    return true;
 
-                    case R.id.pesquisar_bottom:
-                        fragmentTransaction.replace(R.id.frame_layout_main, new PesquisarFragment()).commit();
-                        return true;
+                case R.id.pesquisar_bottom:
+                    fragmentTransaction.replace(R.id.frame_layout_main, new PesquisarFragment()).commit();
+                    return true;
 
-                }
-                return false;
             }
+            return false;
         });
     }
 

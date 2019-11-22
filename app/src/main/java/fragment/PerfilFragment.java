@@ -232,14 +232,17 @@ public class PerfilFragment extends Fragment {
                 Usuario usuario = dataSnapshot.getValue(Usuario.class);
 
                 //configurar valores da activity
-                //String fotosPostadasAcompanhante = String.valueOf(Objects.requireNonNull(usuario).getFotos());
+
                 try {
                     String fasAcompanhante = String.valueOf(requireNonNull(usuario).getFas());
                     String clientesAcompanhantes = String.valueOf(usuario.getClientes());
+                    //String fotosPostadasAcompanhante = String.valueOf(Objects.requireNonNull(usuario).getFotos());
                 //configurar caixa de texto
                 //fotosPerfilAcompanhante.setText(fotosPostadasAcompanhante);
                 fasPerfil.setText(fasAcompanhante);
                 clientesPerfil.setText(clientesAcompanhantes);
+               // fotosPostadasPerfil.setText(fotosPostadasAcompanhante);
+
                 }catch (Exception e){
                     e.getMessage();
                 }
