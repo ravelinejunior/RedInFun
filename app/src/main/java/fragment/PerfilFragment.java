@@ -125,10 +125,6 @@ public class PerfilFragment extends Fragment {
         }
 
         //recuperar usuario logado
-
-
-
-
             botaoEditarPerfil.setOnClickListener(v -> startActivity(new Intent(getActivity(), AlterarDados.class)));
 
         //iniciaizar ImageLoader
@@ -136,8 +132,6 @@ public class PerfilFragment extends Fragment {
 
         //carregar fotos do usuario
         carregarFotosPostadas();
-
-
 
             return view;
         }

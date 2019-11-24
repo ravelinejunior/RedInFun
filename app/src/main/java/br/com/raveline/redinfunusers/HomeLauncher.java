@@ -12,12 +12,9 @@ public class HomeLauncher extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_launcher);
-
-       /* new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                startActivity(new Intent(HomeLauncher.this,LoginActivity.class));
-            }
-        },500);*/
+        new Handler().postDelayed(() -> {
+            startActivity(new Intent(HomeLauncher.this,LoginActivity.class));
+            finish();
+        },500);
     }
 }
