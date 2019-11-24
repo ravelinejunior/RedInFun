@@ -233,7 +233,7 @@ fotoPostada.setDescricaoFotoPostada(Objects.requireNonNull(descricaoFiltros.getT
 
 //recuperar dados da imagem para salvar no firebaseStorage para depois salvar no firebase
 ByteArrayOutputStream baos = new ByteArrayOutputStream();
-imagemFiltro.compress(Bitmap.CompressFormat.JPEG,100,baos);
+imagemFiltro.compress(Bitmap.CompressFormat.WEBP,80,baos);
 byte[] dadosImagemPostada = baos.toByteArray();
 
 //salvando no storage

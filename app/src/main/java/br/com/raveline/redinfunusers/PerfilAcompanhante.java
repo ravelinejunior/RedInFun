@@ -135,15 +135,12 @@ public class PerfilAcompanhante extends AppCompatActivity {
             salvarSeguidor(usuarioLogado,usuarioSelecionado);
         });
 
-
-
-
     }
 
     private void verificarSeSegueAcompanhante(){
         DatabaseReference seguidorRef = seguidoresRef.
-                child(idUsuarioLogado).
-                child(usuarioSelecionado.getId())
+                child(usuarioSelecionado.getId()).
+                child(idUsuarioLogado)
                 ;
         seguidorRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -276,22 +273,22 @@ public class PerfilAcompanhante extends AppCompatActivity {
     private void salvarSeguidor(Usuario usuLogado, Usuario usuAcompanhante){
         //modelo estrutura de dados seguidores
         /*
-            seguidor
-            id_usuario logado
-                id_seguindo de quem está sendo seguido
-                       dados de quem está sendo seguido
+            cliente
+            id_usuario_seguido (acompanhante)
+                id_seguindo de quem está  seguindo (usuario logado) seguidor
+                       dados de quem está sendo seguido (usuario logado) seguidor
 
          */
         //recuperar valores no firebase para selecionar quais os valores eu quero
-        HashMap<String,Object> dadosAcompanhante = new HashMap<>();
-        dadosAcompanhante.put("nome",usuAcompanhante.getNome());
-        dadosAcompanhante.put("caminhoFoto",usuAcompanhante.getCaminhoFoto());
+        HashMap<String,Object> dadosUsuarioLogado = new HashMap<>();
+        dadosUsuarioLogado.put("nome",usuLogado.getNome());
+        dadosUsuarioLogado.put("caminhoFoto",usuLogado.getCaminhoFoto());
 
         DatabaseReference seguidorRef = seguidoresRef.
-                child(usuLogado.getId()).
-                child(usuAcompanhante.getId());
+                child(usuAcompanhante.getId()).
+                child(usuLogado.getId());
 
-        seguidorRef.setValue(dadosAcompanhante);
+        seguidorRef.setValue(dadosUsuarioLogado);
         botaoSeguirAcompanhante.setText("Seguindo "+usuAcompanhante.getNome());
         //desabilitar evento onClick
         botaoSeguirAcompanhante.setOnClickListener(null);
