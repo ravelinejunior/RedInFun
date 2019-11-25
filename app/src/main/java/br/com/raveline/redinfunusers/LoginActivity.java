@@ -129,9 +129,15 @@ public class LoginActivity extends AppCompatActivity {
 
         //botoes para recuperar
         builder.setPositiveButton("Recuperar", (dialogInterface, i) -> {
-            String emailRecuperado = emailDigitadoNovo.getText().toString();
-            progressBarLogin.setVisibility(View.VISIBLE);
-            recuperarSenha(emailRecuperado);
+            if (emailDigitadoNovo == null){
+                Toast.makeText(this, "Não deixe o campo em branco!", Toast.LENGTH_SHORT).show();
+            }
+            else{
+                String emailRecuperado = emailDigitadoNovo.getText().toString();
+                progressBarLogin.setVisibility(View.VISIBLE);
+                recuperarSenha(emailRecuperado);
+            }
+
 
         });
 
@@ -143,6 +149,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void recuperarSenha(String email){
+try {
+
 
         autenticacao.sendPasswordResetEmail(email).addOnCompleteListener(task -> {
             if (task.isSuccessful()){
@@ -158,6 +166,11 @@ public class LoginActivity extends AppCompatActivity {
             //mostrar o erro
             Toast.makeText(LoginActivity.this, ""+e.getMessage(), Toast.LENGTH_LONG).show();
         });
+}catch (Exception e){
+    e.printStackTrace();
+    Toast.makeText(this, "Verifique se o campo email está digitado corretamente.", Toast.LENGTH_SHORT).show();
+    progressBarLogin.setVisibility(GONE);
+}
     }
 
 
