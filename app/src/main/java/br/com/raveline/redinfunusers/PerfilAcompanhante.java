@@ -148,12 +148,12 @@ public class PerfilAcompanhante extends AppCompatActivity {
                 //verificar se existem dados dentro do DataSnapshot
                 if (dataSnapshot.exists()){
                     //Já segue usuario
-                    habilitarBotaoSeguir(true,usuarioLogado,usuarioSelecionado);
+                    habilitarBotaoSeguir(true,usuarioSelecionado);
                     botaoSeguirAcompanhante.setOnClickListener(null);
                 }
                 else{
                     //Ainda não segue usuario
-                    habilitarBotaoSeguir(false,usuarioLogado,usuarioSelecionado);
+                    habilitarBotaoSeguir(false,usuarioSelecionado);
                 }
             }
 
@@ -248,15 +248,13 @@ public class PerfilAcompanhante extends AppCompatActivity {
         });
     }
 
-    private void habilitarBotaoSeguir(boolean segueUsuario,Usuario usuLogado,Usuario usuAcompanhante){
+    private void habilitarBotaoSeguir(boolean segueUsuario,Usuario usuAcompanhante){
 
-        Usuario usuario = new Usuario();
 
-        if (!segueUsuario){
-            botaoSeguirAcompanhante.setText("Seguir Acompanhante");
-        }
-        else{
-            HashMap<String,Object> dadosAcompanhante = new HashMap<>();
+        if (segueUsuario){
+            botaoSeguirAcompanhante.setText("Seguindo "+usuAcompanhante.getNome());
+
+           /* HashMap<String,Object> dadosAcompanhante = new HashMap<>();
             dadosAcompanhante.put("nome",usuAcompanhante.getNome());
             dadosAcompanhante.put("caminhoFoto",usuAcompanhante.getCaminhoFoto());
 
@@ -264,8 +262,15 @@ public class PerfilAcompanhante extends AppCompatActivity {
                     child(usuLogado.getId()).
                     child(usuAcompanhante.getId());
 
-            seguidorRef.setValue(dadosAcompanhante);
-            botaoSeguirAcompanhante.setText("Seguindo "+usuAcompanhante.getNome());
+            seguidorRef.setValue(dadosAcompanhante);*/
+
+        }
+        else{
+            botaoSeguirAcompanhante.setText("Seguir Acompanhante");
+            botaoSeguirAcompanhante.setOnClickListener(v ->
+                    salvarSeguidor(usuarioLogado,usuarioSelecionado));
+
+
         }
 
     }
@@ -287,8 +292,8 @@ public class PerfilAcompanhante extends AppCompatActivity {
         DatabaseReference seguidorRef = seguidoresRef.
                 child(usuAcompanhante.getId()).
                 child(usuLogado.getId());
-
         seguidorRef.setValue(dadosUsuarioLogado);
+
         botaoSeguirAcompanhante.setText("Seguindo "+usuAcompanhante.getNome());
         //desabilitar evento onClick
         botaoSeguirAcompanhante.setOnClickListener(null);
@@ -297,7 +302,6 @@ public class PerfilAcompanhante extends AppCompatActivity {
         int seguidoresFas = usuAcompanhante.getFas()+1;
         HashMap<String,Object> novoFa = new HashMap<>();
         novoFa.put("fas",seguidoresFas);
-
         DatabaseReference fasRef = usuariosRef.child(usuAcompanhante.getId());
         fasRef.updateChildren(novoFa);
 
@@ -305,7 +309,6 @@ public class PerfilAcompanhante extends AppCompatActivity {
         int seguindoClientes = usuLogado.getClientes() + 1;
         HashMap<String,Object> novoCliente = new HashMap<>();
         novoCliente.put("clientes",seguindoClientes);
-
         //Acessando os valores do nó usuarios
         DatabaseReference clientesRef = usuariosRef.child(usuLogado.getId());
         //alterando os dados
