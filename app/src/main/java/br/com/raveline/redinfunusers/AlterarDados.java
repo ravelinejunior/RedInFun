@@ -93,47 +93,38 @@ public class AlterarDados extends AppCompatActivity {
             }
 
             Uri url = firebaseUser.getPhotoUrl();
-            if (url !=null){
-                Glide.with(AlterarDados.this).load(url).into(fotoPerfilAlterarDados);
+            if (url != null){
+                Glide.with(AlterarDados.this).load(url).circleCrop().into(fotoPerfilAlterarDados);
             } else{
                 fotoPerfilAlterarDados.setImageResource(R.drawable.ic_pessoa_usuario);
             }
 
-        botaoAlterarDados.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //recuperar nome atualizado
-                String nomeAtualizado = editarNomeAlterarDados.getText().toString();
-                UsuarioFirebase.atualizarNomeUsuario(nomeAtualizado);
+        botaoAlterarDados.setOnClickListener(v -> {
+            //recuperar nome atualizado
+            String nomeAtualizado = editarNomeAlterarDados.getText().toString();
+            UsuarioFirebase.atualizarNomeUsuario(nomeAtualizado);
 
-                //atualizar o nome no Firebase
-                usuarioLogado.setNome(nomeAtualizado);
-                usuarioLogado.setNomeUsuarioPesquisa(nomeAtualizado);
-                usuarioLogado.atualizarDados();
-                Toast.makeText(AlterarDados.this, "Nome alterado", Toast.LENGTH_SHORT).show();
+            //atualizar o nome no Firebase
+            usuarioLogado.setNome(nomeAtualizado);
+            usuarioLogado.setNomeUsuarioPesquisa(nomeAtualizado);
+            usuarioLogado.atualizarDados();
+            Toast.makeText(AlterarDados.this, "Nome alterado", Toast.LENGTH_SHORT).show();
 
-            }
         });
 
             //alterar foto do usuario
-            editarFotoAlterarDados.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    if (intent.resolveActivity(getPackageManager())!=null){
-                        startActivityForResult(intent,CODIGO_GALERIA_FOTO);
-                    }
-
+            editarFotoAlterarDados.setOnClickListener(view -> {
+                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                if (intent.resolveActivity(getPackageManager())!=null){
+                    startActivityForResult(intent,CODIGO_GALERIA_FOTO);
                 }
+
             });
 
-        imagemBotaoVoltar.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivity(new Intent(AlterarDados.this,(MainActivity.class)));
-                    finish();
-                }
-            });
+        imagemBotaoVoltar.setOnClickListener(v -> {
+            startActivity(new Intent(AlterarDados.this,(MainActivity.class)));
+            finish();
+        });
 
     }
 
@@ -174,18 +165,10 @@ public class AlterarDados extends AppCompatActivity {
 
                     //passar um array de bytes no putbytes da imagem
                     UploadTask uploadTask = imagemRef.putBytes(dadosImagem);
-                    uploadTask.addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(AlterarDados.this, "Falha ao executar o comando para fazer upload da imagem.", Toast.LENGTH_SHORT).show();
-                            progressBarAlterarDados.setVisibility(View.GONE);
-                        }
-                    }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
-                            progressBarAlterarDados.setVisibility(View.VISIBLE);
-                        }
-                    }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    uploadTask.addOnFailureListener(e -> {
+                        Toast.makeText(AlterarDados.this, "Falha ao executar o comando para fazer upload da imagem.", Toast.LENGTH_SHORT).show();
+                        progressBarAlterarDados.setVisibility(View.GONE);
+                    }).addOnProgressListener(taskSnapshot -> progressBarAlterarDados.setVisibility(View.VISIBLE)).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             //recuperar local da foto

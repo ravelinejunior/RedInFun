@@ -19,7 +19,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.DataSnapshot;
@@ -57,6 +56,9 @@ private boolean dadosCarregadosUsuario;
 // firebase
 private DatabaseReference usuariosRef;
 private DatabaseReference usuarioLogadoRef;
+private DatabaseReference firebaseRef;
+private DataSnapshot seguidoresSnapshot;
+
 
 //usuarios
 private String idUsuarioLogado;
@@ -82,6 +84,7 @@ descricaoFiltros = findViewById(R.id.descricao_id_input_edittext_filtros);
 listaFiltros = new ArrayList<>();
 usuariosRef = ConfiguracaoFirebase.getReferenciaDatabase().child("usuarios");
 usuarioLogado = UsuarioFirebase.getUsuarioLogado();
+firebaseRef = ConfiguracaoFirebase.getReferenciaDatabase();
 
 //configurando toolbar
 Toolbar toolbar = findViewById(R.id.toolbar_principal_main_activity);
@@ -91,8 +94,8 @@ setSupportActionBar(toolbar);
 Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_fechar);
 
-//recuperando dados do usuario logado
-recuperarDadosUsuarioLogado();
+//recuperando dados da postagem
+recuperarDadosPostagem();
 
 //recuperando imagem da tela de fragment
 Bundle bundle = getIntent().getExtras();
@@ -171,7 +174,7 @@ private void abrirDialogCarregamento(String nomeDialog){
     dialog.show();
 }
 
-private void recuperarDadosUsuarioLogado(){
+private void recuperarDadosPostagem(){
 usuarioLogadoRef = usuariosRef.child(idUsuarioLogado);
 //assim que função é acionada, setar valor como true
 abrirDialogCarregamento("Carregando dados, aguarde!");
@@ -180,8 +183,28 @@ usuarioLogadoRef.addListenerForSingleValueEvent(new ValueEventListener() {
 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
     //recuperando valores de usuarios
     usuarioLogado = dataSnapshot.getValue(Usuario.class);
-    //depois de recuperar dados do usuario logado
-    dialog.cancel();
+
+    //recuperar dados do seguidor
+    DatabaseReference seguidoresRef = firebaseRef.child("seguidores")
+            .child(idUsuarioLogado);
+    seguidoresRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+            seguidoresSnapshot = dataSnapshot;
+
+            //depois de recuperar dados do usuario logado
+            dialog.cancel();
+
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+        }
+    });
+
+
 
 }
 
@@ -255,22 +278,18 @@ uploadTask.addOnFailureListener(e -> Toast.makeText(FiltrosActivity.this, "Falha
         //recuperando local da foto postada
         fotoPostada.setCaminhoFotoPostada(uri.toString());
 
+        //recuperar quantidade de postagens
+        int quantidadeFotosPostadas = usuarioLogado.getFotos() + 1;
+        usuarioLogado.setFotos(quantidadeFotosPostadas);
+        usuarioLogado.atualizarFotosPostadas();
+
         //salvando a foto no banco de dados
-        if (fotoPostada.salvarFotoPostada()){
+        if (fotoPostada.salvarFotoPostada(seguidoresSnapshot)){
             //caso foto tenha sido postada com sucesso, atualizar numero de fotos postada
-            try {
-
-                int quantidadeFotosPostadas = usuarioLogado.getFotos() + 1;
-                usuarioLogado.setFotos(quantidadeFotosPostadas);
-                usuarioLogado.atualizarFotosPostadas();
-
+                dialog.cancel();
                 Toast.makeText(FiltrosActivity.this, "Foto postada com sucesso!", Toast.LENGTH_SHORT).show();
                 finish();
-            }catch (Exception e){
-                finish();
-                Toast.makeText(this, "Foto postada com sucesso!", Toast.LENGTH_SHORT).show();
-                e.printStackTrace();
-            }
+
         } else{
             Toast.makeText(FiltrosActivity.this, "Erro ao postar foto. Verifique sua internet.", Toast.LENGTH_SHORT).show();
         }

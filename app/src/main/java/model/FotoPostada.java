@@ -1,5 +1,6 @@
 package model;
 
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 
 import java.io.Serializable;
@@ -7,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import helper.ConfiguracaoFirebase;
+import helper.UsuarioFirebase;
 
 public class FotoPostada implements Serializable {
 
@@ -48,12 +50,46 @@ public class FotoPostada implements Serializable {
 
     }
 
-    public boolean salvarFotoPostada() {
-        DatabaseReference databaseRef = ConfiguracaoFirebase.getReferenciaDatabase();
-        DatabaseReference fotosPostadasRef = databaseRef.child("fotosPostadas")
-                .child(getIdUsuario())
-                .child(getIdFotoPostada());
-        fotosPostadasRef.setValue(this);
+    //utilizar estratégia FenOut de espalhamento
+    public boolean salvarFotoPostada(DataSnapshot seguidoresSnapShot) {
+
+        //objeto para atualização
+        Map objeto = new HashMap();
+        Usuario usuarioLogado = UsuarioFirebase.getUsuarioLogado();
+
+        DatabaseReference firebaseRef = ConfiguracaoFirebase.getReferenciaDatabase();
+
+        //referencia postagens
+       // firebaseRef.child("postagens").child(getIdUsuario());
+        String combinacaodeId = "/"+getIdUsuario()+"/"+getIdFotoPostada();
+        objeto.put("/fotosPostadas"+combinacaodeId,this);
+        //exemplo "/postagens/idusuario/iddafotopostada cada barra separa cada filho
+
+     //referencia para o feed
+        for (DataSnapshot dsSeguidores:seguidoresSnapShot.getChildren()){
+             /*
+             exemplo da estrutura de feed
+                feed
+                    idSeguidor
+                        postagem (feita por)
+
+        montar objeto para salvar */
+             //recuperar chave id seguidor
+             String idSeguidor = dsSeguidores.getKey();
+             HashMap<String,Object> dadosSeguidor = new HashMap<>();
+             dadosSeguidor.put("fotoPostada",getCaminhoFotoPostada());
+             dadosSeguidor.put("descricaoFotoPostada",getDescricaoFotoPostada());
+             dadosSeguidor.put("idFotoPostada",getIdFotoPostada());
+             //dados do usuario necessarios
+             dadosSeguidor.put("nomeUsuario",usuarioLogado.getNome());
+             dadosSeguidor.put("caminhoFotoUsuario",usuarioLogado.getCaminhoFoto());
+             //salvar Objeto
+            String caminhoAtualizacao = "/"+idSeguidor+"/"+getIdFotoPostada();
+            objeto.put("/feed"+caminhoAtualizacao,dadosSeguidor);
+
+        }
+
+        firebaseRef.updateChildren(objeto);
         return true;
     }
 

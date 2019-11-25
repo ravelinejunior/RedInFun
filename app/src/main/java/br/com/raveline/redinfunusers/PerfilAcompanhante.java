@@ -66,6 +66,7 @@ public class PerfilAcompanhante extends AppCompatActivity {
     private DatabaseReference seguidoresRef;
     private DatabaseReference usuarioLogadoRef;
     private DatabaseReference fotoPostadaRef;
+    private DatabaseReference firebaseRef;
 
     //para eventos
     private ValueEventListener valueEventListenerPerfilAcompanhante;
@@ -89,6 +90,7 @@ public class PerfilAcompanhante extends AppCompatActivity {
         usuariosRef = referenceFirebase.child("usuarios");
         seguidoresRef = referenceFirebase.child("seguidores");
         idUsuarioLogado = UsuarioFirebase.getIdentificadorUsuario();
+        firebaseRef = ConfiguracaoFirebase.getReferenciaDatabase();
         //
         //recuperar usuario selecionado
         Bundle bundle = getIntent().getExtras();
@@ -380,8 +382,6 @@ public class PerfilAcompanhante extends AppCompatActivity {
                 fotosPerfilAcompanhante.setText(fotosPostadasAcompanhante);
                 fasPerfilAcompanhante.setText(fasAcompanhante);
                 clientesPerfilAcompanhante.setText(clientesAcompanhantes);
-
-                
 
             }
 
