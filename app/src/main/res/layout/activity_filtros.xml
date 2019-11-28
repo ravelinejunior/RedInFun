@@ -23,7 +23,7 @@
         <ImageView
             android:id="@+id/imagem_foto_selecionada_filtro_activity"
             android:layout_width="match_parent"
-            android:layout_height="420dp"
+            android:layout_height="520dp"
             android:scaleType="centerCrop"
             android:layout_marginTop="2dp"
              />

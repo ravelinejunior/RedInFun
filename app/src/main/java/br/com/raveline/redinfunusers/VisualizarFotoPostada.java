@@ -24,7 +24,7 @@ public class VisualizarFotoPostada extends AppCompatActivity {
     private TextView nomeUsuarioSelecionadoPostagem;
     private TextView numeroCurtidasPostagem;
     private TextView descricaoPostagem;
-    private TextView comentariosPostagem;
+    //private TextView comentariosPostagem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +68,7 @@ public class VisualizarFotoPostada extends AppCompatActivity {
         nomeUsuarioSelecionadoPostagem = findViewById(R.id.nome_usuario_visualizar_postagem);
         numeroCurtidasPostagem = findViewById(R.id.numero_curtidas_visualizar_postagem);
         descricaoPostagem = findViewById(R.id.descricao_foto_visualizar_postagem);
-        comentariosPostagem = findViewById(R.id.comentarios_visualizar_postagem);
+        //comentariosPostagem = findViewById(R.id.comentarios_visualizar_postagem);
 
         //configurando toolbar
         Toolbar toolbar = findViewById(R.id.toolbar_principal_main_activity);

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout"
+    android:background="@drawable/background_degrade"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/foto_perfil_usuario_visualizar_foto"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/perfilfoto"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/nome_usuario_visualizar_postagem"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
+        android:padding="4dp"
+        android:text="Default"
+        android:textColor="@color/branco"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/foto_perfil_usuario_visualizar_foto"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintStart_toEndOf="@+id/foto_perfil_usuario_visualizar_foto"
+        app:layout_constraintTop_toTopOf="@+id/foto_perfil_usuario_visualizar_foto" />
+
+    <ImageView
+        android:id="@+id/imagem_selecionada_visualizar_postagem"
+        android:layout_width="0dp"
+        android:layout_height="350dp"
+        android:layout_marginTop="4dp"
+        android:scaleType="fitXY"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/foto_perfil_usuario_visualizar_foto" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout_foto_menu"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imagem_selecionada_visualizar_postagem">
+
+
+        <com.like.LikeButton
+            app:icon_type="heart"
+            app:icon_size="30dp"
+            app:circle_start_color="@color/branco"
+            app:circle_end_color="@color/branco"
+            android:id="@+id/botao_like_home_adapter"
+            android:layout_width="30dp"
+            android:layout_height="30dp">
+
+        </com.like.LikeButton>
+
+        <ImageView
+            android:id="@+id/comentario_id_home_adapter"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="10dp"
+            app:srcCompat="@drawable/ic_comentario" />
+
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/numero_curtidas_visualizar_postagem"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:padding="4dp"
+        android:text="0 Curtidas"
+        android:textColor="@color/branco"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout_foto_menu" />
+
+    <TextView
+        android:id="@+id/descricao_foto_visualizar_postagem"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:padding="4dp"
+        android:text="Descrição Default"
+        android:textColor="@color/branco"
+        android:textStyle="italic|bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/numero_curtidas_visualizar_postagem" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

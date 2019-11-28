@@ -7,112 +7,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:fillViewport="true"
     >
-<androidx.constraintlayout.widget.ConstraintLayout
 
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/background_degrade"
-    tools:context=".VisualizarFotoPostada">
+    <LinearLayout
 
-    <include
-        android:id="@+id/include"
-        layout="@layout/toolbar_perfil_acompanhante"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background_degrade"
+        android:orientation="vertical"
+        tools:context=".VisualizarFotoPostada">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/foto_perfil_usuario_visualizar_foto"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:src="@drawable/perfilfoto"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include" />
+        <include
+            android:id="@+id/include"
+            layout="@layout/toolbar_perfil_acompanhante"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/nome_usuario_visualizar_postagem"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:padding="4dp"
-        android:text="Default"
-        android:textColor="@color/branco"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/foto_perfil_usuario_visualizar_foto"
-        app:layout_constraintEnd_toEndOf="@+id/include"
-        app:layout_constraintHorizontal_bias="0.49"
-        app:layout_constraintStart_toEndOf="@+id/foto_perfil_usuario_visualizar_foto"
-        app:layout_constraintTop_toBottomOf="@+id/include"
-        app:layout_constraintVertical_bias="0.614" />
-
-    <ImageView
-        android:id="@+id/imagem_selecionada_visualizar_postagem"
-        android:layout_width="0dp"
-        android:layout_height="300dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="16dp"
-        android:scaleType="centerCrop"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/foto_perfil_usuario_visualizar_foto"
-        />
-
-    <TextView
-        android:id="@+id/numero_curtidas_visualizar_postagem"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:padding="4dp"
-        android:text="0 Curtidas"
-        android:textColor="@color/branco"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imagem_selecionada_visualizar_postagem"
-        />
-
-    <TextView
-        android:id="@+id/descricao_foto_visualizar_postagem"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:padding="4dp"
-        android:text="Descrição Default"
-        android:textColor="@color/branco"
-        android:textStyle="italic"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/numero_curtidas_visualizar_postagem"
-        />
-
-    <TextView
-        android:id="@+id/comentarios_visualizar_postagem"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:padding="4dp"
-        android:text="Comentarios Default para uma foto"
-        android:textColor="@color/branco"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/descricao_foto_visualizar_postagem"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        />
+        <include layout="@layout/adapter_feed" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
 </ScrollView>

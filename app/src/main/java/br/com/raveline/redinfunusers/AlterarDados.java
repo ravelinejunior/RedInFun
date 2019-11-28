@@ -94,10 +94,18 @@ public class AlterarDados extends AppCompatActivity {
 
             Uri url = firebaseUser.getPhotoUrl();
             if (url != null){
-                Glide.with(AlterarDados.this).load(url).circleCrop().into(fotoPerfilAlterarDados);
+                Glide.with(AlterarDados.this).load(url).into(fotoPerfilAlterarDados);
             } else{
                 fotoPerfilAlterarDados.setImageResource(R.drawable.ic_pessoa_usuario);
             }
+
+            fotoPerfilAlterarDados.setOnClickListener(v -> {
+                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                if (intent.resolveActivity(getPackageManager())!= null){
+                    startActivityForResult(intent,CODIGO_GALERIA_FOTO);
+                }
+
+            });
 
         botaoAlterarDados.setOnClickListener(v -> {
             //recuperar nome atualizado

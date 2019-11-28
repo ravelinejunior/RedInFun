@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -49,51 +50,43 @@ public class CadastrarUsuario extends AppCompatActivity {
         carregarComponentes();
 
         progressBarCadastroUsuario.setVisibility(View.GONE);
-        botaoCadastroUsuario.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //exibir progressbar
-                String nomeUsuarioDigitado = nomeCadastroUsuario.getText().toString();
-                String emailUsuarioDigitado = emailCadastroUsuario.getText().toString();
-                String idadeUsuarioDigitado = idadeCadastroUsuario.getText().toString();
-                String senhaUsuarioDigitado = senhaCadastroUsuario.getText().toString();
+        botaoCadastroUsuario.setOnClickListener(view -> {
+            //exibir progressbar
+            String nomeUsuarioDigitado = nomeCadastroUsuario.getText().toString();
+            String emailUsuarioDigitado = emailCadastroUsuario.getText().toString();
+            String idadeUsuarioDigitado = idadeCadastroUsuario.getText().toString();
+            String senhaUsuarioDigitado = senhaCadastroUsuario.getText().toString();
 
-                //verificar condição dos campos
-                if(!nomeUsuarioDigitado.isEmpty()){
-                    if(!emailUsuarioDigitado.isEmpty()){
-                        if(!idadeUsuarioDigitado.isEmpty()){
-                            if(!senhaUsuarioDigitado.isEmpty()){
-                                usuario = new Usuario();
-                                usuario.setNome(nomeUsuarioDigitado);
-                                usuario.setEmail(emailUsuarioDigitado);
-                                usuario.setSenha(senhaUsuarioDigitado);
-                                usuario.setIdade(idadeUsuarioDigitado);
-                                //metodo Cadastrar
-                                cadastrarUsuario(usuario);
+            //verificar condição dos campos
+            if(!nomeUsuarioDigitado.isEmpty()){
+                if(!emailUsuarioDigitado.isEmpty()){
+                    if(!idadeUsuarioDigitado.isEmpty()){
+                        if(!senhaUsuarioDigitado.isEmpty()){
+                            usuario = new Usuario();
+                            usuario.setNome(nomeUsuarioDigitado);
+                            usuario.setEmail(emailUsuarioDigitado);
+                            usuario.setSenha(senhaUsuarioDigitado);
+                            usuario.setIdade(idadeUsuarioDigitado);
+                            //metodo Cadastrar
+                            cadastrarUsuario(usuario);
 
-                            }else{
-                                Toast.makeText(CadastrarUsuario.this, "Campo SENHA está vazio.\nFavor digitar seu nome.", Toast.LENGTH_SHORT).show();
-                                progressBarCadastroUsuario.setVisibility(View.GONE);
-                            }
                         }else{
-                            Toast.makeText(CadastrarUsuario.this, "Campo IDADE está vazio.\nFavor digitar sua idade.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(CadastrarUsuario.this, "Campo SENHA está vazio.\nFavor digitar seu nome.", Toast.LENGTH_SHORT).show();
                             progressBarCadastroUsuario.setVisibility(View.GONE);
                         }
                     }else{
-                        Toast.makeText(CadastrarUsuario.this, "Campo EMAIL está vazio.\nFavor digitar seu email.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CadastrarUsuario.this, "Campo IDADE está vazio.\nFavor digitar sua idade.", Toast.LENGTH_SHORT).show();
                         progressBarCadastroUsuario.setVisibility(View.GONE);
                     }
                 }else{
-                    Toast.makeText(CadastrarUsuario.this, "Campo NOME está vazio.\nFavor digitar seu nome.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CadastrarUsuario.this, "Campo EMAIL está vazio.\nFavor digitar seu email.", Toast.LENGTH_SHORT).show();
                     progressBarCadastroUsuario.setVisibility(View.GONE);
                 }
+            }else{
+                Toast.makeText(CadastrarUsuario.this, "Campo NOME está vazio.\nFavor digitar seu nome.", Toast.LENGTH_SHORT).show();
+                progressBarCadastroUsuario.setVisibility(View.GONE);
             }
-
-
         });
-
-
-
 
     }
 
@@ -115,54 +108,50 @@ public class CadastrarUsuario extends AppCompatActivity {
             //criando autenticação via email e senha
             autenticacao.createUserWithEmailAndPassword(
                     usuario.getEmail(),usuario.getSenha()
-            ).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful()){
-                        Toast.makeText(CadastrarUsuario.this, "Usuario "+usuario.getNome().toUpperCase()+" cadastrado.", Toast.LENGTH_SHORT).show();
-                        //caso usuario tenha sido cadastrado , sucesso.
-                        progressBarCadastroUsuario.setVisibility(View.GONE);
+            ).addOnCompleteListener(task -> {
+                if (task.isSuccessful()){
+                    Toast.makeText(CadastrarUsuario.this, "Usuario "+usuario.getNome().toUpperCase()+" cadastrado.", Toast.LENGTH_SHORT).show();
+                    //caso usuario tenha sido cadastrado , sucesso.
+                    progressBarCadastroUsuario.setVisibility(View.GONE);
 
-                        //Cadastrando e configurando os dados na Firebase
-                        String idUsuario =  Objects.requireNonNull(Objects.requireNonNull(task.getResult()).getUser()).getUid();
-                        usuario.setId(idUsuario);
-                        usuario.salvarDados();
+                    //Cadastrando e configurando os dados na Firebase
+                    String idUsuario =  Objects.requireNonNull(Objects.requireNonNull(task.getResult()).getUser()).getUid();
+                    usuario.setId(idUsuario);
+                    usuario.salvarDados();
 
-                        //Salvar os dados no cadastro no profile do Firebase
-                        UsuarioFirebase.atualizarNomeUsuario(usuario.getNome());
-
-                        Intent intent = new Intent(CadastrarUsuario.this,MainActivity.class);
-                        startActivity(intent);
-                        finish();
+                    //Salvar os dados no cadastro no profile do Firebase
+                    UsuarioFirebase.atualizarNomeUsuario(usuario.getNome());
+                    Intent intent = new Intent(CadastrarUsuario.this,MainActivity.class);
+                    startActivity(intent);
+                    finish();
 
 
-                    }else {
-                        progressBarCadastroUsuario.setVisibility(View.GONE);
-                        //tratando os erros
-                        String erro = "";
-                        try {
-                            throw Objects.requireNonNull(task.getException());
+                }else {
+                    progressBarCadastroUsuario.setVisibility(View.GONE);
+                    //tratando os erros
+                    String erro = "";
+                    try {
+                        throw Objects.requireNonNull(task.getException());
 
-                        }catch (FirebaseAuthEmailException e){
-                            erro = "Autenticação falhou.";
+                    }catch (FirebaseAuthEmailException e){
+                        erro = "Autenticação falhou.";
 
-                        } catch (FirebaseAuthWeakPasswordException e){
-                            erro = "Senha fraca.";
+                    } catch (FirebaseAuthWeakPasswordException e){
+                        erro = "Senha fraca.";
 
-                        } catch (FirebaseAuthInvalidCredentialsException e){
-                            erro = "Digite um email válido.";
+                    } catch (FirebaseAuthInvalidCredentialsException e){
+                        erro = "Digite um email válido.";
 
-                        } catch (FirebaseAuthUserCollisionException e){
-                            erro = "Usuario já cadastrado.";
-                        }
-                        catch (Exception e){
-                            erro = "Erro de autenticação: "+e.getMessage();
-                            e.printStackTrace();
-                        }
-
-                        Toast.makeText(CadastrarUsuario.this, "Erro: "+erro, Toast.LENGTH_LONG).show();
-
+                    } catch (FirebaseAuthUserCollisionException e){
+                        erro = "Usuario já cadastrado.";
                     }
+                    catch (Exception e){
+                        erro = "Erro de autenticação: "+e.getMessage();
+                        e.printStackTrace();
+                    }
+
+                    Toast.makeText(CadastrarUsuario.this, "Erro: "+erro, Toast.LENGTH_LONG).show();
+
                 }
             });
         }catch (Exception e){
