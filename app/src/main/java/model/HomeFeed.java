@@ -2,10 +2,10 @@ package model;
 
 public class HomeFeed {
     private String nomeUsuario;
-    private String fotoUsuario;
+    private String caminhoFotoUsuario;
     private String idUsuario;
-    private String descricaoPostagem;
-    private String fotoPostagem;
+    private String descricaoFotoPostada;
+    private String fotoPostada;
 
     public HomeFeed() {
 
@@ -19,12 +19,12 @@ public class HomeFeed {
         this.nomeUsuario = nomeUsuario;
     }
 
-    public String getFotoUsuario() {
-        return fotoUsuario;
+    public String getCaminhoFotoUsuario() {
+        return caminhoFotoUsuario;
     }
 
-    public void setFotoUsuario(String fotoUsuario) {
-        this.fotoUsuario = fotoUsuario;
+    public void setCaminhoFotoUsuario(String caminhoFotoUsuario) {
+        this.caminhoFotoUsuario = caminhoFotoUsuario;
     }
 
     public String getIdUsuario() {
@@ -35,19 +35,19 @@ public class HomeFeed {
         this.idUsuario = idUsuario;
     }
 
-    public String getDescricaoPostagem() {
-        return descricaoPostagem;
+    public String getDescricaoFotoPostada() {
+        return descricaoFotoPostada;
     }
 
-    public void setDescricaoPostagem(String descricaoPostagem) {
-        this.descricaoPostagem = descricaoPostagem;
+    public void setDescricaoFotoPostada(String descricaoFotoPostada) {
+        this.descricaoFotoPostada = descricaoFotoPostada;
     }
 
-    public String getFotoPostagem() {
-        return fotoPostagem;
+    public String getFotoPostada() {
+        return fotoPostada;
     }
 
-    public void setFotoPostagem(String fotoPostagem) {
-        this.fotoPostagem = fotoPostagem;
+    public void setFotoPostada(String fotoPostada) {
+        this.fotoPostada = fotoPostada;
     }
 }

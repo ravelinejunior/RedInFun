@@ -31,11 +31,6 @@ public class AdapterHome extends RecyclerView.Adapter<AdapterHome.myViewHolder> 
         this.context = context;
     }
 
-
-
-
-
-
     @NonNull
     @Override
     public myViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -48,17 +43,19 @@ public class AdapterHome extends RecyclerView.Adapter<AdapterHome.myViewHolder> 
 
         HomeFeed homeFeed = listaHome.get(position);
 
+        holder.descricaoFoto.setText(homeFeed.getDescricaoFotoPostada());
+        holder.nomeUsuario.setText(homeFeed.getNomeUsuario());
+        holder.likeButton.setVisibility(View.VISIBLE);
+
         //carregando dados no home
 
-            Uri uriFotoUsuario = Uri.parse(homeFeed.getFotoUsuario());
-            Uri uriFotoPostada = Uri.parse(homeFeed.getFotoPostagem());
+            Uri uriFotoUsuario = Uri.parse(homeFeed.getCaminhoFotoUsuario());
+            Uri uriFotoPostada = Uri.parse(homeFeed.getFotoPostada());
 
             //carregando foto
             Glide.with(context).load(uriFotoUsuario).into(holder.fotoPerfilUsuario);
             Glide.with(context).load(uriFotoPostada).into(holder.fotoPostada);
 
-            holder.descricaoFoto.setText(homeFeed.getDescricaoPostagem());
-            holder.nomeUsuario.setText(homeFeed.getNomeUsuario());
         }
 
     @Override
