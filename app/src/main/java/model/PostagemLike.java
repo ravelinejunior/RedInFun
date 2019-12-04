@@ -26,7 +26,6 @@ public class PostagemLike {
         dadosUsuarios.put("nome",usuario.getNome());
         dadosUsuarios.put("caminhoFoto",usuario.getCaminhoFoto());
 
-
         //objeto para referenciar o no de postagens like
         DatabaseReference postLikeRef = fireBaseRef.child("postagem-curtidas")
                 .child(homeFeed.getIdFotoPostada()) //idpostagem
@@ -37,6 +36,22 @@ public class PostagemLike {
         atualizarQtLikes(1);
     }
 
+    public void removerLikes(){
+        //Referenciar o nó principal
+        DatabaseReference fireBaseRef = ConfiguracaoFirebase.getReferenciaDatabase();
+
+        //criar objeto para referenciar a quantidade de curtidas
+        DatabaseReference postLikeRef = fireBaseRef.child("postagem-curtidas")
+                .child(homeFeed.getIdFotoPostada())
+                .child(usuario.getId());
+
+        //removendo valores
+        postLikeRef.removeValue();
+
+        //atualizar quantidade de curtidas
+        atualizarQtLikes(-1);
+    }
+
     public void atualizarQtLikes(int valorLikes){
         //referenciar nó principal (geralzão)
         DatabaseReference fireBaseRef = ConfiguracaoFirebase.getReferenciaDatabase();
@@ -45,7 +60,7 @@ public class PostagemLike {
                 .child(homeFeed.getIdFotoPostada()) //idpostagem
                 .child("qtdLikes"); //QUANTIDADE DE LIKES
 
-        setQtdLikes(valorLikes+getQtdLikes());
+        setQtdLikes(getQtdLikes() + valorLikes);
         //recuperando quantidade de curtidas
         postLikeRef.setValue(getQtdLikes());
 }

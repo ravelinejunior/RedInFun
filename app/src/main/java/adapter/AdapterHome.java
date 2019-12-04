@@ -92,29 +92,45 @@ public class AdapterHome extends RecyclerView.Adapter<AdapterHome.myViewHolder> 
                     qtdLikes = postagemLike.getQtdLikes();
 
                 }
+                //verificar se ja foi clicado por usuario x
+                if (dataSnapshot.hasChild(usuarioLogado.getId())){
+                    holder.likeButton.setLiked(true);
+                } else{
+                    holder.likeButton.setLiked(false);
+                }
 
                 //motando objeto postagem curtida
-                PostagemLike like = new PostagemLike();
+                final PostagemLike like = new PostagemLike();
                 like.setHomeFeed(homeFeed);
                 like.setUsuario(usuarioLogado);
                 like.setQtdLikes(qtdLikes);
+
 
 
                 //eventos para o likebutton
                 holder.likeButton.setOnLikeListener(new OnLikeListener() {
                     @Override
                     public void liked(LikeButton likeButton) {
-                        Log.i("idFotoPostada",homeFeed.getIdFotoPostada());
-                        Log.i("likeButton","Like");
+
                         like.salvarLikes();
+                        holder.qtCurtidas.setText(like.getQtdLikes()+" curtida(s)");
+                        Log.i("idUsuario",usuarioLogado.getId());
+                        Log.i("likeButton","Like");
+                        Log.i("qtdLikes", String.valueOf(like.getQtdLikes()));
 
                     }
 
                     @Override
                     public void unLiked(LikeButton likeButton) {
+
+                        like.removerLikes();
+                        holder.qtCurtidas.setText(like.getQtdLikes()+" curtida(s)");
                         Log.i("likeButton","Unlike");
+                        Log.i("unqtdLikes", String.valueOf(like.getQtdLikes()));
+
                     }
                 });
+                holder.qtCurtidas.setText(like.getQtdLikes()+" curtida(s)");
 
             }
 
