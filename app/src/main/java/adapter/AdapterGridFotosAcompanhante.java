@@ -19,13 +19,14 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import java.util.List;
+import java.util.Objects;
 
 import br.com.raveline.redinfunusers.R;
 
 public class AdapterGridFotosAcompanhante extends ArrayAdapter<String> {
-    private Context context;
-    private List<String> urlFotos;
-    private int layoutResource;
+    private final Context context;
+    private final List<String> urlFotos;
+    private final int layoutResource;
     private ImageView imagemGridFotos;
     private ProgressBar progressBarAdapterGridFotos;
 
@@ -40,7 +41,7 @@ public class AdapterGridFotosAcompanhante extends ArrayAdapter<String> {
     }
 
     //Cria classe View Holder
-    public class ViewHolder {
+    class ViewHolder {
         ImageView imagem;
         ProgressBar progressBar;
     }
@@ -63,7 +64,7 @@ public class AdapterGridFotosAcompanhante extends ArrayAdapter<String> {
                 }
             };*/
             LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = layoutInflater.inflate(layoutResource,parent,false);
+            convertView = Objects.requireNonNull(layoutInflater).inflate(layoutResource,parent,false);
             viewHolder.imagem = convertView.findViewById(R.id.imagem_icone_id_grid_acompanhante);
             viewHolder.progressBar = convertView.findViewById(R.id.progressBar_id_grid_acompanhante);
 

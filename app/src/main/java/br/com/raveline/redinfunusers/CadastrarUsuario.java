@@ -37,7 +37,7 @@ public class CadastrarUsuario extends AppCompatActivity {
     private ProgressBar progressBarCadastroUsuario;
 
     //classe de Usuario
-    public Usuario usuario;
+    private Usuario usuario;
 
     //atributos Firebase
     private FirebaseAuth autenticacao;
@@ -90,7 +90,7 @@ public class CadastrarUsuario extends AppCompatActivity {
 
     }
 
-    public void carregarComponentes(){
+    private void carregarComponentes(){
         botaoCadastroUsuario = findViewById(R.id.botao_cadastro_cadastrar);
         emailCadastroUsuario = findViewById(R.id.email_id_cadastrar);
         idadeCadastroUsuario = findViewById(R.id.idade_id_cadastrar);
@@ -99,7 +99,7 @@ public class CadastrarUsuario extends AppCompatActivity {
         progressBarCadastroUsuario = findViewById(R.id.progressBar_cadastro);
     }
 
-    public void cadastrarUsuario(final Usuario usuario) {
+    private void cadastrarUsuario(final Usuario usuario) {
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
 
         try {

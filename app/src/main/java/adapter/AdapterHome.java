@@ -3,6 +3,7 @@ package adapter;
 import android.content.Context;
 import android.net.Uri;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,18 +14,28 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 import com.like.LikeButton;
+import com.like.OnLikeListener;
+
 import java.util.List;
 
 import br.com.raveline.redinfunusers.R;
 import de.hdodenhof.circleimageview.CircleImageView;
+import helper.ConfiguracaoFirebase;
+import helper.UsuarioFirebase;
 import model.HomeFeed;
+import model.PostagemLike;
+import model.Usuario;
 
 
 public class AdapterHome extends RecyclerView.Adapter<AdapterHome.myViewHolder> {
 
-    private List<HomeFeed> listaHome;
-    private Context context;
+    private final List<HomeFeed> listaHome;
+    private final Context context;
 
     public AdapterHome(List<HomeFeed> listaHome, Context context) {
         this.listaHome = listaHome;
@@ -42,6 +53,7 @@ public class AdapterHome extends RecyclerView.Adapter<AdapterHome.myViewHolder> 
     public void onBindViewHolder(@NonNull myViewHolder holder, int position) {
 
         HomeFeed homeFeed = listaHome.get(position);
+        Usuario usuarioLogado = UsuarioFirebase.getUsuarioLogado();
 
         holder.descricaoFoto.setText(homeFeed.getDescricaoFotoPostada());
         holder.nomeUsuario.setText(homeFeed.getNomeUsuario());
@@ -56,6 +68,63 @@ public class AdapterHome extends RecyclerView.Adapter<AdapterHome.myViewHolder> 
             Glide.with(context).load(uriFotoUsuario).into(holder.fotoPerfilUsuario);
             Glide.with(context).load(uriFotoPostada).into(holder.fotoPostada);
 
+            /*
+
+            postagem_Curtida
+	idPostagem
+		idUsuarioQueCurtiu		- nomeUsuario
+								- caminhoFoto
+		qtCurtidas - valor
+
+                     */
+            //recuperar Quantidade de curtidas
+        DatabaseReference postLikesRef = ConfiguracaoFirebase.getReferenciaDatabase()
+                .child("postagem-likes")
+                .child(homeFeed.getIdFotoPostada());
+
+        postLikesRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                //verificando se existe o nó de curtidas
+                int qtdLikes = 0;
+                if (dataSnapshot.hasChild("qtdLikes")){
+                    PostagemLike postagemLike = dataSnapshot.getValue(PostagemLike.class);
+                    qtdLikes = postagemLike.getQtdLikes();
+
+                }
+
+                //motando objeto postagem curtida
+                PostagemLike like = new PostagemLike();
+                like.setHomeFeed(homeFeed);
+                like.setUsuario(usuarioLogado);
+                like.setQtdLikes(qtdLikes);
+
+
+                //eventos para o likebutton
+                holder.likeButton.setOnLikeListener(new OnLikeListener() {
+                    @Override
+                    public void liked(LikeButton likeButton) {
+                        Log.i("idFotoPostada",homeFeed.getIdFotoPostada());
+                        Log.i("likeButton","Like");
+                        like.salvarLikes();
+
+                    }
+
+                    @Override
+                    public void unLiked(LikeButton likeButton) {
+                        Log.i("likeButton","Unlike");
+                    }
+                });
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
         }
 
     @Override
@@ -65,16 +134,16 @@ public class AdapterHome extends RecyclerView.Adapter<AdapterHome.myViewHolder> 
 
     public class myViewHolder extends RecyclerView.ViewHolder{
 
-        CircleImageView fotoPerfilUsuario;
-        TextView nomeUsuario;
-        TextView descricaoFoto;
-        TextView qtCurtidas;
-        ImageView visualizarComentario;
-        ImageView fotoPostada;
-        LikeButton likeButton;
+        final CircleImageView fotoPerfilUsuario;
+        final TextView nomeUsuario;
+        final TextView descricaoFoto;
+        final TextView qtCurtidas;
+        final ImageView visualizarComentario;
+        final ImageView fotoPostada;
+        final LikeButton likeButton;
 
 
-        public myViewHolder(@NonNull View itemView) {
+        myViewHolder(@NonNull View itemView) {
             super(itemView);
             fotoPerfilUsuario = itemView.findViewById(R.id.foto_perfil_usuario_visualizar_foto);
             fotoPostada = itemView.findViewById(R.id.imagem_selecionada_visualizar_postagem);

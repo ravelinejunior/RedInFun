@@ -61,7 +61,7 @@ public class VisualizarFotoPostada extends AppCompatActivity {
     }
 
 
-    public void inicializarComponentes(){
+    private void inicializarComponentes(){
 
         fotoUsuarioPostagem = findViewById(R.id.foto_perfil_usuario_visualizar_foto);
         imagemPostadaPostagem = findViewById(R.id.imagem_selecionada_visualizar_postagem);

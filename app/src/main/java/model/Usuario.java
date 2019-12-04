@@ -48,7 +48,7 @@ public class Usuario implements Serializable {
         usuariosRef.updateChildren(fotosPostadas);
     }
 
-    public Map<String,Object> converterToMap(){
+    private Map<String,Object> converterToMap(){
 
         HashMap<String,Object> hashMapUsuario = new HashMap<>();
         hashMapUsuario.put("email",getEmail());
@@ -105,7 +105,7 @@ public class Usuario implements Serializable {
         this.nome = nome;
     }
 
-    public String getNomeUsuarioPesquisa() {
+    private String getNomeUsuarioPesquisa() {
         nomeUsuarioPesquisa = getNome().toUpperCase();
         return nomeUsuarioPesquisa;
     }
@@ -140,7 +140,7 @@ public class Usuario implements Serializable {
         this.caminhoFoto = caminhoFoto;
     }
 
-    public String getIdade() {
+    private String getIdade() {
         return idade;
     }
 

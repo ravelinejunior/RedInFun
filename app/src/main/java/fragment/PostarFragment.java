@@ -35,7 +35,7 @@ public class PostarFragment extends Fragment {
     private final static int CODIGO_ABRIR_GALERIA = 200;
 
     //lista de permissões
-    private String[] listaPermissoesNecessarias = new String[]{
+    private final String[] listaPermissoesNecessarias = new String[]{
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.CAMERA
@@ -63,7 +63,7 @@ public class PostarFragment extends Fragment {
         //evento de click para camera
         botaoAbrirCameraPostarFragment.setOnClickListener(v -> {
             Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            if (i.resolveActivity(getActivity().getPackageManager())!= null){
+            if (i.resolveActivity(Objects.requireNonNull(getActivity()).getPackageManager())!= null){
                 startActivityForResult(i,CODIGO_ABRIR_CAMERA);
             }
         });
@@ -71,7 +71,7 @@ public class PostarFragment extends Fragment {
         //evento de on click para galeria
         botaoAbrirGaleriaPostarFragment.setOnClickListener(v -> {
             Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            if (i.resolveActivity(getActivity().getPackageManager())!= null){
+            if (i.resolveActivity(Objects.requireNonNull(getActivity()).getPackageManager())!= null){
                 startActivityForResult(i,CODIGO_ABRIR_GALERIA);
             }
         });
@@ -93,8 +93,8 @@ public class PostarFragment extends Fragment {
                    imagem = (Bitmap) Objects.requireNonNull(Objects.requireNonNull(data).getExtras()).get("data");
                    break;
                case CODIGO_ABRIR_GALERIA:
-                   Uri localImagemSelecionada = data.getData();
-                   imagem = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(),localImagemSelecionada);
+                   Uri localImagemSelecionada = Objects.requireNonNull(data).getData();
+                   imagem = MediaStore.Images.Media.getBitmap(Objects.requireNonNull(getActivity()).getContentResolver(),localImagemSelecionada);
                    break;
 
            }

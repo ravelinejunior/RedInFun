@@ -100,11 +100,11 @@ public class FotoPostada implements Serializable {
         return idFotoPostada;
     }
 
-    public void setIdFotoPostada(String idFotoPostada) {
+    private void setIdFotoPostada(String idFotoPostada) {
         this.idFotoPostada = idFotoPostada;
     }
 
-    public String getIdUsuario() {
+    private String getIdUsuario() {
         return idUsuario;
     }
 

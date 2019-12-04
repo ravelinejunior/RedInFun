@@ -18,8 +18,8 @@ import br.com.raveline.redinfunusers.R;
 
 public class FiltrosAdapterThumbnails extends RecyclerView.Adapter<FiltrosAdapterThumbnails.MyViewHolder> {
 
-    private List<ThumbnailItem> listaFiltros;
-    private Context context;
+    private final List<ThumbnailItem> listaFiltros;
+    private final Context context;
 
     public FiltrosAdapterThumbnails(List<ThumbnailItem> listaFiltros, Context context) {
         this.listaFiltros = listaFiltros;
@@ -50,10 +50,10 @@ public class FiltrosAdapterThumbnails extends RecyclerView.Adapter<FiltrosAdapte
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
 
-        ImageView imagem;
-        TextView nomeFiltro;
+        final ImageView imagem;
+        final TextView nomeFiltro;
 
-        public MyViewHolder(@NonNull View itemView) {
+        MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
             imagem = itemView.findViewById(R.id.imagem_id_filtro_adapter);

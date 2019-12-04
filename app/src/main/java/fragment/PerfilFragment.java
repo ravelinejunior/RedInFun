@@ -76,7 +76,7 @@ private Usuario usuarioLogado;
 private AdapterGridFotosAcompanhante adapterGridFotosPerfil;
 
 //events
-ValueEventListener valueEventListenerPerfilUsuario;
+private ValueEventListener valueEventListenerPerfilUsuario;
 private DatabaseReference fotoPostadaRef;
 
 public PerfilFragment() {

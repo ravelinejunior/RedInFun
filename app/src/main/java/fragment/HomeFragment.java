@@ -33,7 +33,7 @@ import model.HomeFeed;
 public class HomeFragment extends Fragment {
     private RecyclerView recyclerViewHome;
     private AdapterHome adapterHomeFeed;
-    private List<HomeFeed> listaHomeFeed = new ArrayList<>();
+    private final List<HomeFeed> listaHomeFeed = new ArrayList<>();
     private ValueEventListener valueEventListenerHomeFeed;
     private DatabaseReference homeFeedRef;
     private String idUsuarioLogado;
@@ -70,7 +70,7 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
-    public void listarHomeFeed(){
+    private void listarHomeFeed(){
             valueEventListenerHomeFeed = homeFeedRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

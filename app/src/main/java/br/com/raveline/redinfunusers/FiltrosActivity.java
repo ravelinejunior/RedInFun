@@ -123,7 +123,7 @@ recyclerViewFiltros.addOnItemTouchListener(new RecyclerItemClickListener(
         recyclerViewFiltros,
         new RecyclerItemClickListener.OnItemClickListener() {
             @Override
-            public void onItemClick(View view, int position) {
+            public void onItemClick(int position) {
             //configuração de imagem de filtro
             //recuperando item selecionado
               ThumbnailItem item = listaFiltros.get(position);
@@ -135,7 +135,7 @@ recyclerViewFiltros.addOnItemTouchListener(new RecyclerItemClickListener(
             }
 
             @Override
-            public void onLongItemClick(View view, int position) {
+            public void onLongItemClick() {
 
             }
 

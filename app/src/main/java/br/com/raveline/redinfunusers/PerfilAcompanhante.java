@@ -335,7 +335,7 @@ public class PerfilAcompanhante extends AppCompatActivity {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
-    public void inicializarComponentes(){
+    private void inicializarComponentes(){
         imagemPerfilAcompanhante = findViewById(R.id.perfil_foto_perfil_fragment);
         botaoSeguirAcompanhante = findViewById(R.id.botao_acao_perfil);
         fasPerfilAcompanhante = findViewById(R.id.fas_perfil_fragment);
@@ -351,7 +351,7 @@ public class PerfilAcompanhante extends AppCompatActivity {
         toolbar.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         toolbar.setTitleTextColor(ContextCompat.getColor(getApplicationContext(),R.color.branco));
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_voltar_back);
     }
 

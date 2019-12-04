@@ -49,7 +49,7 @@ public class AlterarDados extends AppCompatActivity {
     private StorageReference storageRef;
 
     //lista de permissoes
-    private String[] listaPermissoesNecessarias = new String[]{
+    private final String[] listaPermissoesNecessarias = new String[]{
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
@@ -57,10 +57,10 @@ public class AlterarDados extends AppCompatActivity {
     private static final int CODIGO_REQUISICAO_GALERIA = 200;
 
     //classe Usuario
-    Usuario usuarioLogado;
+    private Usuario usuarioLogado;
 
     //dados camera
-    public static final int CODIGO_GALERIA_FOTO = 100;
+    private static final int CODIGO_GALERIA_FOTO = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,7 +149,7 @@ public class AlterarDados extends AppCompatActivity {
                 //selecionar apenas da galeria
                 switch (requestCode){
                     case CODIGO_GALERIA_FOTO:
-                        Uri localImagemSelecionada = data.getData();
+                        Uri localImagemSelecionada = Objects.requireNonNull(data).getData();
                         bitmapImagem = MediaStore.Images.Media.getBitmap(getContentResolver(),localImagemSelecionada);
                     break;
                 }
@@ -215,7 +215,7 @@ public class AlterarDados extends AppCompatActivity {
         return false;
     }
 
-    public void carregarElementos(){
+    private void carregarElementos(){
         editarEmailAlterarDados = findViewById(R.id.email_alterar_perfil);
         editarNomeAlterarDados = findViewById(R.id.nome_alterar_perfil);
         editarFotoAlterarDados = findViewById(R.id.alterar_foto_perfil);

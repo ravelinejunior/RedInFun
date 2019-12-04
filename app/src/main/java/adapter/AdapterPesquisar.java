@@ -20,8 +20,8 @@ import model.Usuario;
 
 public class AdapterPesquisar extends RecyclerView.Adapter<AdapterPesquisar.myViewHolder> {
 
-    private List<Usuario> listaUsuarios;
-    private Context context;
+    private final List<Usuario> listaUsuarios;
+    private final Context context;
 
     public AdapterPesquisar(List<Usuario> lista, Context c) {
         this.listaUsuarios = lista;
@@ -60,11 +60,11 @@ public class AdapterPesquisar extends RecyclerView.Adapter<AdapterPesquisar.myVi
 
     public class myViewHolder extends RecyclerView.ViewHolder{
 
-        CircleImageView foto;
-        TextView nome;
+        final CircleImageView foto;
+        final TextView nome;
 
 
-        public myViewHolder(@NonNull View itemView) {
+        myViewHolder(@NonNull View itemView) {
 
             super(itemView);
             foto = itemView.findViewById(R.id.foto_perfil_id_adapter_pesquisar_layout);

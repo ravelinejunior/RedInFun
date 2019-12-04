@@ -24,7 +24,7 @@ public class Permissao {
             verificando uma a uma
             * se já tem a permissao liberada */
             for ( String permissao : permissoes ){
-                Boolean temPermissao = ContextCompat.checkSelfPermission(activity, permissao) == PackageManager.PERMISSION_GRANTED;
+                boolean temPermissao = ContextCompat.checkSelfPermission(activity, permissao) == PackageManager.PERMISSION_GRANTED;
                 if ( !temPermissao ) listaPermissoes.add(permissao);
             }
 

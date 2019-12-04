@@ -25,7 +25,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".VisualizarFotoPostada"></activity>
+        <activity android:name=".VisualizarFotoPostada" />
         <activity android:name=".FiltrosActivity" />
         <activity
             android:name=".AlterarDados"

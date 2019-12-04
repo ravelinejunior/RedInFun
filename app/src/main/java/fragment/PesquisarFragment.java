@@ -83,7 +83,7 @@ public class PesquisarFragment extends Fragment {
                 recyclerViewPesquisarFragment,
                 new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
-                    public void onItemClick(View view, int position) {
+                    public void onItemClick(int position) {
                         //recuperando valores dos usuarios
                         Usuario usuarioSelecionado = listaUsuarios.get(position);
                         Intent i = new Intent(getActivity(), PerfilAcompanhante.class);
@@ -92,7 +92,7 @@ public class PesquisarFragment extends Fragment {
                     }
 
                     @Override
-                    public void onLongItemClick(View view, int position) {
+                    public void onLongItemClick() {
 
                     }
 
@@ -162,7 +162,7 @@ public class PesquisarFragment extends Fragment {
                         //recuperar usuarios do firebase
                         Usuario usuario = ds.getValue(Usuario.class);
                         //verificar se usuario pesquisado sou eu mesmo logado.
-                        if (idUsuarioLogado.equals(usuario.getId()))
+                        if (idUsuarioLogado.equals(Objects.requireNonNull(usuario).getId()))
                             continue;
 
                         //adicionar usuario no firebase

@@ -44,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
 
     //login google
     private static final int RC_SIGN_IN = 100;
-    GoogleSignInClient mGoogleSignInClient;
+    private GoogleSignInClient mGoogleSignInClient;
     private TextView esqueceuSenhaLogin;
 
     //Firebase
@@ -52,7 +52,7 @@ public class LoginActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
 
     //Usuario
-    public Usuario usuario;
+    private Usuario usuario;
 
 
     @Override
@@ -175,7 +175,7 @@ try {
 
 
     //verificar se usuario está logado
-    public void verificarUsuarioLogado(){
+    private void verificarUsuarioLogado(){
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
         if(autenticacao.getCurrentUser() != null){
             startActivity(new Intent(LoginActivity.this,MainActivity.class));
@@ -195,7 +195,7 @@ try {
             try {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = task.getResult(ApiException.class);
-                firebaseAuthWithGoogle(account);
+                firebaseAuthWithGoogle(Objects.requireNonNull(account));
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
                 // ...
@@ -219,13 +219,13 @@ try {
                         if (Objects.requireNonNull(Objects.requireNonNull(task.getResult()).getAdditionalUserInfo()).isNewUser()) {
 
                             //recuperando valores e ids do usuario
-                            String emailUser = user.getEmail();
+                            String emailUser = Objects.requireNonNull(user).getEmail();
                              String uidUser = user.getUid();
 
                         }
 
 
-                        Toast.makeText(LoginActivity.this, "Usuario: "+user.getDisplayName()+" Logado.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "Usuario: "+ Objects.requireNonNull(user).getDisplayName()+" Logado.", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(LoginActivity.this,MainActivity.class);
                         startActivity(intent);
                         finish();
@@ -250,7 +250,7 @@ try {
 
     }
 
-    public void validarUsuario(Usuario usuario) {
+    private void validarUsuario(Usuario usuario) {
         progressBarLogin.setVisibility(View.VISIBLE);
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
         //Logando com usuario digitado
@@ -273,7 +273,7 @@ try {
 
     }
 
-    public void carregarElementos(){
+    private void carregarElementos(){
         botaoLogarLogin = findViewById(R.id.botao_logar_login);
         cadastrarTextoLogin = findViewById(R.id.cadastrar_text_login);
         emailLogarLogin = findViewById(R.id.email_id_login);
