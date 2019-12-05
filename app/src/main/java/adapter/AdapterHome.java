@@ -54,7 +54,6 @@ public class AdapterHome extends RecyclerView.Adapter<AdapterHome.myViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull myViewHolder holder, int position) {
-
         final HomeFeed homeFeed = listaHome.get(position);
       final Usuario usuarioLogado = UsuarioFirebase.getUsuarioLogado();
 
@@ -73,6 +72,8 @@ public class AdapterHome extends RecyclerView.Adapter<AdapterHome.myViewHolder> 
             //Levando para tela de comentarios
             holder.visualizarComentario.setOnClickListener(v -> {
                 Intent intent = new Intent(context, VisualizarComentarioActivity.class);
+                intent.putExtra("idFotoPostada",homeFeed.getIdFotoPostada());
+
                 context.startActivity(intent);
             });
 
