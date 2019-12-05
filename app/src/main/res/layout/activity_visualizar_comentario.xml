@@ -14,7 +14,7 @@
     android:orientation="vertical"
     tools:context=".VisualizarComentarioActivity">
 
-    <include layout="@layout/toolbar"/>
+    <include layout="@layout/toolbar_perfil_acompanhante"/>
 
     <LinearLayout
         android:layout_width="match_parent"

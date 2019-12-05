@@ -40,7 +40,6 @@ public class VisualizarComentarioActivity extends AppCompatActivity {
         //configurando toolbar
         toolbarVisualizarComentario = findViewById(R.id.toolbar_principal_main_activity);
         toolbarVisualizarComentario.setTitle("Comentarios");
-        //toolbarVisualizarComentario.setTitleTextColor(ContextCompat.getColor(getApplicationContext(),R.color.branco));
         setSupportActionBar(toolbarVisualizarComentario);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_fechar);
