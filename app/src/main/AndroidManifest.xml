@@ -25,6 +25,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".VisualizarComentarioActivity"></activity>
         <activity android:name=".VisualizarFotoPostada" />
         <activity android:name=".FiltrosActivity" />
         <activity
@@ -32,15 +33,14 @@
             android:parentActivityName=".MainActivity" />
         <activity android:name=".CadastrarUsuario" />
         <activity android:name=".PerfilAcompanhante" />
-        <activity android:name=".HomeLauncher" >
+        <activity android:name=".HomeLauncher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity">
-
-        </activity>
+        <activity android:name=".LoginActivity"></activity>
         <activity
             android:name=".MainActivity"
             android:theme="@style/AppThemeLogin" />

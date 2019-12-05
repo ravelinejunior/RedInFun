@@ -1,6 +1,7 @@
 package adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 
 import android.util.Log;
@@ -24,6 +25,8 @@ import com.like.OnLikeListener;
 import java.util.List;
 
 import br.com.raveline.redinfunusers.R;
+import br.com.raveline.redinfunusers.VisualizarComentarioActivity;
+import br.com.raveline.redinfunusers.VisualizarFotoPostada;
 import de.hdodenhof.circleimageview.CircleImageView;
 import helper.ConfiguracaoFirebase;
 import helper.UsuarioFirebase;
@@ -66,6 +69,12 @@ public class AdapterHome extends RecyclerView.Adapter<AdapterHome.myViewHolder> 
             //carregando foto
             Glide.with(context).load(uriFotoUsuario).into(holder.fotoPerfilUsuario);
             Glide.with(context).load(uriFotoPostada).into(holder.fotoPostada);
+
+            //Levando para tela de comentarios
+            holder.visualizarComentario.setOnClickListener(v -> {
+                Intent intent = new Intent(context, VisualizarComentarioActivity.class);
+                context.startActivity(intent);
+            });
 
             /*
 
@@ -113,9 +122,6 @@ public class AdapterHome extends RecyclerView.Adapter<AdapterHome.myViewHolder> 
 
                         like.salvarLikes();
                         holder.qtCurtidas.setText(like.getQtdLikes()+" curtida(s)");
-                        Log.i("idUsuario",usuarioLogado.getId());
-                        Log.i("likeButton","Like");
-                        Log.i("qtdLikes", String.valueOf(like.getQtdLikes()));
 
                     }
 
@@ -124,8 +130,6 @@ public class AdapterHome extends RecyclerView.Adapter<AdapterHome.myViewHolder> 
 
                         like.removerLikes();
                         holder.qtCurtidas.setText(like.getQtdLikes()+" curtida(s)");
-                        Log.i("likeButton","Unlike");
-                        Log.i("unqtdLikes", String.valueOf(like.getQtdLikes()));
 
                     }
                 });
