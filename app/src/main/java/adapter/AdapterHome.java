@@ -52,12 +52,11 @@ public class AdapterHome extends RecyclerView.Adapter<AdapterHome.myViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull myViewHolder holder, int position) {
 
-        HomeFeed homeFeed = listaHome.get(position);
-        Usuario usuarioLogado = UsuarioFirebase.getUsuarioLogado();
+        final HomeFeed homeFeed = listaHome.get(position);
+      final Usuario usuarioLogado = UsuarioFirebase.getUsuarioLogado();
 
         holder.descricaoFoto.setText(homeFeed.getDescricaoFotoPostada());
         holder.nomeUsuario.setText(homeFeed.getNomeUsuario());
-        holder.likeButton.setVisibility(View.VISIBLE);
 
         //carregando dados no home
 
