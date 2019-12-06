@@ -3,32 +3,36 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingHorizontal="16dp"
-    android:paddingVertical="8dp">
+    android:paddingBottom="8dp"
+    android:paddingStart="4dp"
+    android:paddingEnd="4dp"
+    android:paddingTop="4dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/shape_botao_perfil_fragment"
         android:orientation="horizontal"
-        android:paddingVertical="10dp">
+        android:paddingBottom="5dp"
+       >
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/foto_perfil_id_adapter_pesquisar_layout"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:paddingHorizontal="8dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp"
             android:src="@drawable/ic_pessoa_usuario" />
 
         <TextView
             android:id="@+id/nome_usuario_id_adapter_pesquisar_layout"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center|left"
             android:textColor="@color/branco"
             android:textSize="18sp"
-            android:paddingLeft="8dp"
+            android:paddingStart="8dp"
             android:textStyle="bold"
             android:text="Nome Usuario" />
     </LinearLayout>

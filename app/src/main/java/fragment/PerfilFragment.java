@@ -151,28 +151,31 @@ private void carregarFotosPostadas(){
 
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            try {
+                //configurando tamanho do gridView
+                int tamanhoGridView = getResources().getDisplayMetrics().widthPixels;
+                //dividido por 3 por coloquei o numero de colunas = 3
+                int tamanhoImagemGrid = tamanhoGridView / 3;
+                gridViewPerfil.setColumnWidth(tamanhoImagemGrid);
 
-            //configurando tamanho do gridView
-            int tamanhoGridView = getResources().getDisplayMetrics().widthPixels;
-            //dividido por 3 por coloquei o numero de colunas = 3
-            int tamanhoImagemGrid = tamanhoGridView/3;
-            gridViewPerfil.setColumnWidth(tamanhoImagemGrid);
+                List<String> urlFotos = new ArrayList<>();
 
-            List<String> urlFotos = new ArrayList<>();
+                //percorrer objetos para verificar dados existentes
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    FotoPostada fotoPostada = ds.getValue(FotoPostada.class);
+                    //carregando lista de urls
+                    urlFotos.add(requireNonNull(fotoPostada).getCaminhoFotoPostada());
 
-            //percorrer objetos para verificar dados existentes
-            for (DataSnapshot ds:dataSnapshot.getChildren()){
-                FotoPostada fotoPostada = ds.getValue(FotoPostada.class);
-                //carregando lista de urls
-                urlFotos.add(requireNonNull(fotoPostada).getCaminhoFotoPostada());
+                }
+                int quantidadeFotos = urlFotos.size();
+                fotosPostadasPerfil.setText(String.valueOf(quantidadeFotos));
 
+                //Configurar Adapter
+                adapterGridFotosPerfil = new AdapterGridFotosAcompanhante(requireNonNull(getActivity()), R.layout.grid_fotos_acompanhante, urlFotos);
+                gridViewPerfil.setAdapter(adapterGridFotosPerfil);
+            }catch (Exception e){
+                e.printStackTrace();
             }
-            int quantidadeFotos = urlFotos.size();
-            fotosPostadasPerfil.setText(String.valueOf(quantidadeFotos));
-
-            //Configurar Adapter
-            adapterGridFotosPerfil = new AdapterGridFotosAcompanhante(requireNonNull(getActivity()),R.layout.grid_fotos_acompanhante,urlFotos);
-            gridViewPerfil.setAdapter(adapterGridFotosPerfil);
         }
 
         @Override
