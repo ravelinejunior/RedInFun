@@ -1,6 +1,6 @@
 package br.com.raveline.redinfunusers;
 
-import androidx.annotation.NonNull;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -19,11 +19,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnFailureListener;
+
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.storage.OnProgressListener;
+
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import java.io.ByteArrayOutputStream;
@@ -45,7 +45,6 @@ public class AlterarDados extends AppCompatActivity {
 
     //Firebase
     private FirebaseUser firebaseUser;
-    private FirebaseAuth autenticacao;
     private StorageReference storageRef;
 
     //lista de permissoes
@@ -54,7 +53,6 @@ public class AlterarDados extends AppCompatActivity {
             Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
 
-    private static final int CODIGO_REQUISICAO_GALERIA = 200;
 
     //classe Usuario
     private Usuario usuarioLogado;
@@ -66,8 +64,6 @@ public class AlterarDados extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alterar_dados);
-        //carregar elementos
-        carregarElementos();
 
         //requisitar permissoes
         Permissao.validarPermissoes(listaPermissoesNecessarias,this,1);
@@ -77,11 +73,15 @@ public class AlterarDados extends AppCompatActivity {
         storageRef = ConfiguracaoFirebase.getStorageReference();
         identificadorUsuario = UsuarioFirebase.getIdentificadorUsuario();
 
-        //atualizando nome do usuario no banco de dados
-        usuarioLogado.salvarDados();
+        //carregar elementos
+        carregarElementos();
+
+        //carregando usuario do firebase
+        firebaseUser = UsuarioFirebase.getUsuarioAtual();
+
         //usuario do firebase ja foi carregado no metodo carregarElementos()
             try {
-
+                firebaseUser = UsuarioFirebase.getUsuarioAtual();
                 editarNomeAlterarDados.setText(Objects.requireNonNull(firebaseUser.getDisplayName()));
                 String nomeExibido = editarNomeAlterarDados.getText().toString();
                 if (nomeExibido.length() > 30){
@@ -91,6 +91,8 @@ public class AlterarDados extends AppCompatActivity {
             }catch (Exception e){
                 e.getStackTrace();
             }
+
+
 
             Uri url = firebaseUser.getPhotoUrl();
             if (url != null){
@@ -201,7 +203,7 @@ public class AlterarDados extends AppCompatActivity {
 
     private void atualizarFoto(Uri uri) {
             //atualizar foto no perfil
-                UsuarioFirebase.atualizarFotoUsuario(uri);
+         UsuarioFirebase.atualizarFotoUsuario(uri);
 
         //atualizar foto no firebase
         usuarioLogado.setCaminhoFoto(uri.toString());
@@ -225,9 +227,6 @@ public class AlterarDados extends AppCompatActivity {
         imagemBotaoVoltar = findViewById(R.id.voltar_tela_topo_alterar_dados);
         editarEmailAlterarDados.setFocusable(false);
 
-        //carregando usuario do firebase
-        autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
-        firebaseUser = UsuarioFirebase.getUsuarioAtual();
     }
 
     @Override

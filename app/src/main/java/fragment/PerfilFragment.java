@@ -1,16 +1,12 @@
 package fragment;
 
-
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,14 +17,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.StorageReference;
-import com.google.protobuf.StringValue;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.cache.disc.naming.HashCodeFileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
@@ -64,9 +56,6 @@ private TextView fasPerfil;
 private CircleImageView fotoPerfil;
 
 //Firebse
-private FirebaseAuth firebaseAuth;
-private FirebaseUser firebaseUser;
-private StorageReference storageReference;
 private DatabaseReference usuariosRef;
 private DatabaseReference usuarioLogadoRef;
 private DatabaseReference firebaseRef;
@@ -96,7 +85,6 @@ public View onCreateView(LayoutInflater inflater, ViewGroup container,
     requireNonNull(getActivity()).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
 
     //CONFIGURAÇÕES INICIAIS
-    firebaseAuth = ConfiguracaoFirebase.getFirebaseAutenticacao();
     usuarioLogado = UsuarioFirebase.getUsuarioLogado();
     firebaseRef = ConfiguracaoFirebase.getReferenciaDatabase();
     usuariosRef = firebaseRef.child("usuarios");
@@ -106,23 +94,12 @@ public View onCreateView(LayoutInflater inflater, ViewGroup container,
             .child("fotosPostadas")
             .child(usuarioLogado.getId());
 
-
-
     //inicializando componentes
     inicializarComponentes(view);
 
     //Recuperando foto usuario logado
-    String caminhoFoto = usuarioLogado.getCaminhoFoto();
-    if( caminhoFoto != null){
-        Uri url = Uri.parse(caminhoFoto);
-        Glide.with(requireNonNull(getActivity())).load(url)
-                .circleCrop()
-                .centerInside()
-                .into(fotoPerfil);
 
-    } else{
-        Toast.makeText(getActivity(), "Erro ao recuperar imagem.", Toast.LENGTH_SHORT).show();
-    }
+    recuperarFotoUsuario();
 
     //recuperar usuario logado
         botaoEditarPerfil.setOnClickListener(v -> startActivity(new Intent(getActivity(), AlterarDados.class)));
@@ -167,8 +144,8 @@ private void carregarFotosPostadas(){
                     urlFotos.add(requireNonNull(fotoPostada).getCaminhoFotoPostada());
 
                 }
-                int quantidadeFotos = urlFotos.size();
-                fotosPostadasPerfil.setText(String.valueOf(quantidadeFotos));
+               // int quantidadeFotos = urlFotos.size();
+                // fotosPostadasPerfil.setText(String.valueOf(quantidadeFotos));
 
                 //Configurar Adapter
                 adapterGridFotosPerfil = new AdapterGridFotosAcompanhante(requireNonNull(getActivity()), R.layout.grid_fotos_acompanhante, urlFotos);
@@ -205,6 +182,21 @@ private void inicializarImageLoader(){
 
 }
 
+private void recuperarFotoUsuario(){
+    usuarioLogado = UsuarioFirebase.getUsuarioLogado();
+    String caminhoFoto = usuarioLogado.getCaminhoFoto();
+    if( caminhoFoto != null){
+        Uri url = Uri.parse(caminhoFoto);
+        Glide.with(requireNonNull(getActivity())).load(url)
+                .circleCrop()
+                .centerInside()
+                .into(fotoPerfil);
+
+    } else{
+        Toast.makeText(getActivity(), "Erro ao recuperar imagem.", Toast.LENGTH_SHORT).show();
+    }
+}
+
 private void inicializarComponentes(View view){
         botaoEditarPerfil = view.findViewById(R.id.botao_acao_perfil);
         gridViewPerfil = view.findViewById(R.id.grid_perfil_layout_fragment);
@@ -212,8 +204,7 @@ private void inicializarComponentes(View view){
         fotosPostadasPerfil = view.findViewById(R.id.fotos_perfil_fragment);
         clientesPerfil = view.findViewById(R.id.clientes_perfil_fragment);
         fotoPerfil = view.findViewById(R.id.perfil_foto_perfil_fragment);
-        firebaseAuth = ConfiguracaoFirebase.getFirebaseAutenticacao();
-        firebaseUser = UsuarioFirebase.getUsuarioAtual();
+
     }
 
 private void recuperarDadosUsuarioLogado(){
@@ -233,12 +224,12 @@ private void recuperarDadosUsuarioLogado(){
             try {
                 String fasAcompanhante = String.valueOf(requireNonNull(usuario).getFas());
                 String clientesAcompanhantes = String.valueOf(usuario.getClientes());
-                //String fotosPostadasAcompanhante = String.valueOf(Objects.requireNonNull(usuario).getFotos());
-            //configurar caixa de texto
-            //fotosPerfilAcompanhante.setText(fotosPostadasAcompanhante);
+                String fotosPostadasAcompanhante = String.valueOf(Objects.requireNonNull(usuario).getFotos());
+                //configurar caixa de texto
+
             fasPerfil.setText(fasAcompanhante);
             clientesPerfil.setText(clientesAcompanhantes);
-           // fotosPostadasPerfil.setText(fotosPostadasAcompanhante);
+            fotosPostadasPerfil.setText(fotosPostadasAcompanhante);
 
             }catch (Exception e){
                 e.getMessage();
@@ -263,6 +254,7 @@ public void onStop() {
 @Override
 public void onStart() {
     super.onStart();
+    recuperarFotoUsuario();
     //recuperando dados do usuario logado
     recuperarDadosUsuarioLogado();
 
