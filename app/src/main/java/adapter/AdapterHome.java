@@ -23,6 +23,7 @@ import com.like.LikeButton;
 import com.like.OnLikeListener;
 
 import java.util.List;
+import java.util.Objects;
 
 import br.com.raveline.redinfunusers.R;
 import br.com.raveline.redinfunusers.VisualizarComentarioActivity;
@@ -98,7 +99,7 @@ public class AdapterHome extends RecyclerView.Adapter<AdapterHome.myViewHolder> 
                 int qtdLikes = 0;
                 if (dataSnapshot.hasChild("qtdLikes")){
                     PostagemLike postagemLike = dataSnapshot.getValue(PostagemLike.class);
-                    qtdLikes = postagemLike.getQtdLikes();
+                    qtdLikes = Objects.requireNonNull(postagemLike).getQtdLikes();
 
                 }
                 //verificar se ja foi clicado por usuario x

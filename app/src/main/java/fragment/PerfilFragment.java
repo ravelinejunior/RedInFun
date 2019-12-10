@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.cache.MemoryCache;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -177,6 +178,8 @@ private void inicializarImageLoader(){
             .diskCacheSize(50*1024*1024)
             .diskCacheFileCount(100)
             .diskCacheFileNameGenerator(new HashCodeFileNameGenerator())
+            .memoryCacheSizePercentage(99)
+            .memoryCacheSize(99)
             .build();
     ImageLoader.getInstance().init(configuration);
 
