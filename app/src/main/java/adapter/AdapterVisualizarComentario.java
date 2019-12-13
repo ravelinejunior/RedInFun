@@ -19,7 +19,6 @@ import model.Comentarios;
 import model.Usuario;
 
 public class AdapterVisualizarComentario extends RecyclerView.Adapter<AdapterVisualizarComentario.MyViewHolder> {
-    private Usuario usuarioLogado;
     private List<Comentarios> listaComentarios;
     private Context context;
 

@@ -4,8 +4,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="1dp"
-    android:background="?attr/divider"
-    android:layout_marginStart="105dp"
+    android:background="@color/cardview_shadow_start_color"
+    android:layout_marginStart="75dp"
     android:scaleType="fitXY"
     />
 

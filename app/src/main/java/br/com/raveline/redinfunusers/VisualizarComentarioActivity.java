@@ -20,6 +20,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.core.RunLoop;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -92,6 +93,7 @@ public class VisualizarComentarioActivity extends AppCompatActivity {
                 comentariosList.clear();
                 for (DataSnapshot ds:dataSnapshot.getChildren()){
                     comentariosList.add(ds.getValue(Comentarios.class));
+                    adapterVisualizarComentario.notifyItemChanged(ds.hashCode());
                 }
                 adapterVisualizarComentario.notifyDataSetChanged();
 
