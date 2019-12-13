@@ -16,9 +16,10 @@ import java.util.List;
 import br.com.raveline.redinfunusers.R;
 import de.hdodenhof.circleimageview.CircleImageView;
 import model.Comentarios;
+import model.Usuario;
 
 public class AdapterVisualizarComentario extends RecyclerView.Adapter<AdapterVisualizarComentario.MyViewHolder> {
-
+    private Usuario usuarioLogado;
     private List<Comentarios> listaComentarios;
     private Context context;
 
@@ -26,6 +27,8 @@ public class AdapterVisualizarComentario extends RecyclerView.Adapter<AdapterVis
         this.listaComentarios = listaComentarios;
         this.context = context;
     }
+
+
 
     @NonNull
     @Override
@@ -40,7 +43,6 @@ public class AdapterVisualizarComentario extends RecyclerView.Adapter<AdapterVis
         holder.nomeUsuario.setText(comentario.getNome());
         holder.comentario.setText(comentario.getComentario());
         Glide.with(context).load(comentario.getCaminhoFoto()).into(holder.imagemPerfil);
-
 
     }
 

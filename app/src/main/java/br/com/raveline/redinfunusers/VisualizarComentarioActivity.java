@@ -7,12 +7,15 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -27,6 +30,8 @@ import helper.ConfiguracaoFirebase;
 import helper.UsuarioFirebase;
 import model.Comentarios;
 import model.Usuario;
+
+import static java.util.Objects.requireNonNull;
 
 public class VisualizarComentarioActivity extends AppCompatActivity {
     private RecyclerView recyclerViewVisualizarComentario;
@@ -89,6 +94,7 @@ public class VisualizarComentarioActivity extends AppCompatActivity {
                     comentariosList.add(ds.getValue(Comentarios.class));
                 }
                 adapterVisualizarComentario.notifyDataSetChanged();
+
             }
 
             @Override
@@ -99,6 +105,7 @@ public class VisualizarComentarioActivity extends AppCompatActivity {
 
 
     }
+
 
     @Override
     protected void onStart() {

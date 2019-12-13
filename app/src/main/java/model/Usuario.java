@@ -33,13 +33,23 @@ public class Usuario implements Serializable {
 
     public void atualizarDados(){
         DatabaseReference firebaseRef = ConfiguracaoFirebase.getReferenciaDatabase();
+        DatabaseReference usuariosRef = firebaseRef.child("usuarios").child(getId());
         Map objetoHash = new HashMap();
-        objetoHash.put("/usuarios/"+getId()+"nome",getNome());
-        objetoHash.put("/usuarios/"+getId()+"caminhoFoto",getCaminhoFoto());
+        objetoHash.put("id",getId());
+        objetoHash.put("nome",getNome());
+        objetoHash.put("nomeUsuarioPesquisa",getNomeUsuarioPesquisa());
+        objetoHash.put("caminhoFoto",getCaminhoFoto());
 
-        firebaseRef.updateChildren(objetoHash);
+        usuariosRef.updateChildren(objetoHash);
     }
 
+
+    public void atualizarDados1(){
+        DatabaseReference firebaseRef = ConfiguracaoFirebase.getReferenciaDatabase();
+        DatabaseReference usuariosRef = firebaseRef.child("usuarios").child(getId());
+        Map<String,Object> valoresMap = converterToMap();
+        usuariosRef.updateChildren(valoresMap);
+    }
 
     public void atualizarFotosPostadas(){
         DatabaseReference firebaseRef = ConfiguracaoFirebase.getReferenciaDatabase();

@@ -44,7 +44,6 @@ public class AlterarDados extends AppCompatActivity {
     private String identificadorUsuario;
 
     //Firebase
-    private FirebaseUser firebaseUser;
     private StorageReference storageRef;
 
     //lista de permissoes
@@ -77,7 +76,7 @@ public class AlterarDados extends AppCompatActivity {
         carregarElementos();
 
         //carregando usuario do firebase
-        firebaseUser = UsuarioFirebase.getUsuarioAtual();
+        FirebaseUser firebaseUser = UsuarioFirebase.getUsuarioAtual();
 
         //usuario do firebase ja foi carregado no metodo carregarElementos()
             try {
@@ -91,8 +90,6 @@ public class AlterarDados extends AppCompatActivity {
             }catch (Exception e){
                 e.getStackTrace();
             }
-
-
 
             Uri url = firebaseUser.getPhotoUrl();
             if (url != null){

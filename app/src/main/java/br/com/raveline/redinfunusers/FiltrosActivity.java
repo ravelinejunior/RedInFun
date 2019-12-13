@@ -51,7 +51,6 @@ private RecyclerView recyclerViewFiltros;
 private FiltrosAdapterThumbnails adapterFiltros;
 private TextInputEditText descricaoFiltros;
 private AlertDialog dialog;
-private boolean dadosCarregadosUsuario;
 
 // firebase
 private DatabaseReference usuariosRef;
@@ -151,12 +150,12 @@ recyclerViewFiltros.addOnItemTouchListener(new RecyclerItemClickListener(
 recuperarFiltros();
 }
 }
-
 /*//verificando se dados do usuario foram carregados
 private void carregadoUsuario(boolean carregado){
 if (carregado){
 dadosCarregadosUsuario = true;
-progressBarFiltros.setVisibility(View.VISIBLE);
+progressBarFi
+ltros.setVisibility(View.VISIBLE);
 }else{
 dadosCarregadosUsuario = false;
 progressBarFiltros.setVisibility(View.GONE);

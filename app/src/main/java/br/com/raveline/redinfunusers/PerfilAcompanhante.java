@@ -116,8 +116,13 @@ public class PerfilAcompanhante extends AppCompatActivity {
 
             //inicializa imagemLoader Universal para carregar fotos dos usuarios
             inicializarImageLoader();
-            //carregar fotos dos usuarios selecionados
-            carregarFotosPostadas();
+            try {
+                //carregar fotos dos usuarios selecionados
+                carregarFotosPostadas();
+
+            } catch (Exception e){
+                e.printStackTrace();
+            }
 
             //abrir foto clicada
             gridViewPerfilAcompanhante.setOnItemClickListener((parent, view, position, id) -> {
@@ -175,8 +180,6 @@ public class PerfilAcompanhante extends AppCompatActivity {
         fotoPostadaRef = ConfiguracaoFirebase.getReferenciaDatabase()
                 .child("fotosPostadas")
                 .child(usuarioSelecionado.getId());
-
-
 
         //Recupera fotos postadas
         //Usar metodo para carregar as fotos uma unica vez para reduzir gastos de memoria
