@@ -27,7 +27,8 @@
         android:id="@+id/recyclerview_id_pesquisar_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginHorizontal="15dp"
+        android:layout_marginLeft="7dp"
+        android:layout_marginRight="7dp"
         android:layout_marginBottom="15dp"/>
 
 </LinearLayout>

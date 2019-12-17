@@ -15,10 +15,10 @@
         android:background="@drawable/shape_botao_perfil_fragment"
         android:orientation="horizontal"
         android:paddingBottom="5dp"
-       >
+        >
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/foto_perfil_id_adapter_pesquisar_layout"
+            android:id="@+id/foto_perfil_id_adapter_usuarios_layout"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:paddingStart="4dp"
@@ -26,7 +26,7 @@
             android:src="@drawable/ic_pessoa_usuario" />
 
         <TextView
-            android:id="@+id/nome_usuario_id_adapter_pesquisar_layout"
+            android:id="@+id/nome_usuario_id_adapter_usuarios_layout"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"

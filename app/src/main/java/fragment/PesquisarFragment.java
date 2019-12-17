@@ -64,8 +64,6 @@ public class PesquisarFragment extends Fragment {
         //configurar usuario logado
         idUsuarioLogado = UsuarioFirebase.getIdentificadorUsuario();
 
-
-
         //configurar lista
         listaUsuarios = new ArrayList<>();
         usuariosReferencia = ConfiguracaoFirebase.getReferenciaDatabase().child("usuarios");
@@ -74,7 +72,7 @@ public class PesquisarFragment extends Fragment {
         recyclerViewPesquisarFragment.setHasFixedSize(true);
         recyclerViewPesquisarFragment.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        adapterPesquisar= new AdapterPesquisar(listaUsuarios,getActivity());
+        adapterPesquisar = new AdapterPesquisar(listaUsuarios,getActivity());
         recyclerViewPesquisarFragment.setAdapter(adapterPesquisar);
 
         //configurando evento de clique
