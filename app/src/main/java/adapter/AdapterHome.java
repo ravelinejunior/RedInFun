@@ -3,17 +3,15 @@ package adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,7 +25,6 @@ import java.util.Objects;
 
 import br.com.raveline.redinfunusers.R;
 import br.com.raveline.redinfunusers.VisualizarComentarioActivity;
-import br.com.raveline.redinfunusers.VisualizarFotoPostada;
 import de.hdodenhof.circleimageview.CircleImageView;
 import helper.ConfiguracaoFirebase;
 import helper.UsuarioFirebase;
@@ -56,7 +53,7 @@ public class AdapterHome extends RecyclerView.Adapter<AdapterHome.myViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull myViewHolder holder, int position) {
         final HomeFeed homeFeed = listaHome.get(position);
-      final Usuario usuarioLogado = UsuarioFirebase.getUsuarioLogado();
+        final Usuario usuarioLogado = UsuarioFirebase.getUsuarioLogado();
 
         holder.descricaoFoto.setText(homeFeed.getDescricaoFotoPostada());
         holder.nomeUsuario.setText(homeFeed.getNomeUsuario());
