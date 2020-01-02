@@ -1,5 +1,9 @@
 package model;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Exclude;
 
@@ -17,6 +21,12 @@ public class Usuario implements Serializable {
     private String caminhoFoto;
     private String idade;
     private String nomeUsuarioPesquisa;
+    private String telefoneUsuario;
+    private String localUsuario;
+    private String pesoUsuario;
+    private String descricaoUsuario;
+    private String alturaUsuario;
+    private String senhaConfirmadaUsuario;
     private int fotos = 0;
     private int clientes = 0;
     private int fas = 0;
@@ -31,6 +41,7 @@ public class Usuario implements Serializable {
         usuariosRef.setValue(this);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public void atualizarDados(){
         DatabaseReference firebaseRef = ConfiguracaoFirebase.getReferenciaDatabase();
         DatabaseReference usuariosRef = firebaseRef.child("usuarios").child(getId());
@@ -157,5 +168,53 @@ public class Usuario implements Serializable {
 
     public void setIdade(String idade) {
         this.idade = idade;
+    }
+
+    public String getTelefoneUsuario() {
+        return telefoneUsuario;
+    }
+
+    public void setTelefoneUsuario(String telefoneUsuario) {
+        this.telefoneUsuario = telefoneUsuario;
+    }
+
+    public String getLocalUsuario() {
+        return localUsuario;
+    }
+
+    public void setLocalUsuario(String localUsuario) {
+        this.localUsuario = localUsuario;
+    }
+
+    public String getPesoUsuario() {
+        return pesoUsuario;
+    }
+
+    public void setPesoUsuario(String pesoUsuario) {
+        this.pesoUsuario = pesoUsuario;
+    }
+
+    public String getDescricaoUsuario() {
+        return descricaoUsuario;
+    }
+
+    public void setDescricaoUsuario(String descricaoUsuario) {
+        this.descricaoUsuario = descricaoUsuario;
+    }
+
+    public String getAlturaUsuario() {
+        return alturaUsuario;
+    }
+
+    public void setAlturaUsuario(String alturaUsuario) {
+        this.alturaUsuario = alturaUsuario;
+    }
+
+    public String getSenhaConfirmadaUsuario() {
+        return senhaConfirmadaUsuario;
+    }
+
+    public void setSenhaConfirmadaUsuario(String senhaConfirmadaUsuario) {
+        this.senhaConfirmadaUsuario = senhaConfirmadaUsuario;
     }
 }

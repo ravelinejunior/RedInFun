@@ -75,6 +75,13 @@ public class AdapterHome extends RecyclerView.Adapter<AdapterHome.myViewHolder> 
                 context.startActivity(intent);
             });
 
+        holder.textoComentario.setOnClickListener(v -> {
+            Intent intent = new Intent(context, VisualizarComentarioActivity.class);
+            intent.putExtra("idFotoPostada", homeFeed.getIdFotoPostada());
+
+            context.startActivity(intent);
+        });
+
             /*
 
             postagem_Curtida
@@ -142,7 +149,6 @@ public class AdapterHome extends RecyclerView.Adapter<AdapterHome.myViewHolder> 
             }
         });
 
-
         }
 
     @Override
@@ -159,6 +165,8 @@ public class AdapterHome extends RecyclerView.Adapter<AdapterHome.myViewHolder> 
         final ImageView visualizarComentario;
         final ImageView fotoPostada;
         final LikeButton likeButton;
+        TextView textoComentario;
+        TextView textoLike;
 
 
         myViewHolder(@NonNull View itemView) {
@@ -170,6 +178,8 @@ public class AdapterHome extends RecyclerView.Adapter<AdapterHome.myViewHolder> 
             descricaoFoto = itemView.findViewById(R.id.descricao_foto_visualizar_postagem);
             visualizarComentario = itemView.findViewById(R.id.comentario_id_home_adapter);
             likeButton = itemView.findViewById(R.id.botao_like_home_adapter);
+            textoLike = itemView.findViewById(R.id.like_texto_id_home_adapter);
+            textoComentario = itemView.findViewById(R.id.comentario_texto_id_home_adapter);
 
 
         }

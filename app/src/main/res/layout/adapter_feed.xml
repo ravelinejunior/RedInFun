@@ -83,6 +83,7 @@
             android:id="@+id/botao_like_home_adapter"
             android:layout_width="30dp"
             android:layout_height="30dp"
+            android:layout_marginStart="30dp"
             app:circle_end_color="@color/branco"
             app:circle_start_color="@color/branco"
             app:icon_size="30dp"
@@ -90,12 +91,33 @@
 
         </com.like.LikeButton>
 
+        <TextView
+            android:id="@+id/like_texto_id_home_adapter"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginStart="7dp"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:hint="Gostei"
+            android:textColorHint="@color/branco" />
+
         <ImageView
             android:id="@+id/comentario_id_home_adapter"
-            android:layout_width="30dp"
+            android:layout_width="wrap_content"
             android:layout_height="30dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="70dp"
             app:srcCompat="@drawable/ic_comentario" />
+
+        <TextView
+            android:id="@+id/comentario_texto_id_home_adapter"
+            style="@style/Widget.AppCompat.TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginStart="7dp"
+            android:hint="Comentar"
+            android:textColorHint="@color/branco"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
 
     </LinearLayout>

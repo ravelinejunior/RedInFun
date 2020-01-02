@@ -1,15 +1,5 @@
 package br.com.raveline.redinfunusers;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,16 +8,21 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
-import java.util.Objects;
-
-import fragment.PostarFragment;
 import fragment.HomeFragment;
 import fragment.PerfilFragment;
 import fragment.PesquisarFragment;
+import fragment.PostarFragment;
 import fragment.UsuariosFragment;
 import helper.ConfiguracaoFirebase;
 
@@ -51,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         configurarBottomNav();
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frame_layout_main, new PerfilFragment()).commit();
+        fragmentTransaction.replace(R.id.frame_layout_main, new HomeFragment()).commit();
 
 
         //instanciar usuario firebase
@@ -71,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
         //configurar menu inicial quando tela for carrega ou houver algum impacto na rede
         Menu menu = bottomNavigationViewEx.getMenu();
-        MenuItem menuItem = menu.getItem(1);
+        MenuItem menuItem = menu.getItem(0);
         menuItem.setChecked(true);
 
 
