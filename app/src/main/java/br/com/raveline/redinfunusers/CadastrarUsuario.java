@@ -1,20 +1,15 @@
 package br.com.raveline.redinfunusers;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthEmailException;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
@@ -34,6 +29,12 @@ public class CadastrarUsuario extends AppCompatActivity {
     private EditText idadeCadastroUsuario;
     private EditText nomeCadastroUsuario;
     private EditText senhaCadastroUsuario;
+    private EditText alturaCadastroUsuario;
+    private EditText pesoCadastroUsuario;
+    private EditText localCadastroUsuario;
+    private EditText descricaoCadastroUsuario;
+    private EditText telefoneCadastroUsuario;
+    private EditText confirmarSenhaCadastroUsuario;
     private ProgressBar progressBarCadastroUsuario;
 
     //classe de Usuario
@@ -97,65 +98,78 @@ public class CadastrarUsuario extends AppCompatActivity {
         nomeCadastroUsuario = findViewById(R.id.nome_id_cadastrar);
         senhaCadastroUsuario = findViewById(R.id.senha_id_cadastrar);
         progressBarCadastroUsuario = findViewById(R.id.progressBar_cadastro);
+        alturaCadastroUsuario = findViewById(R.id.altura_id_cadastrar);
+        pesoCadastroUsuario = findViewById(R.id.peso_id_cadastrar);
+        descricaoCadastroUsuario = findViewById(R.id.descricao_id_cadastrar);
+        localCadastroUsuario = findViewById(R.id.local_id_cadastrar);
+        confirmarSenhaCadastroUsuario = findViewById(R.id.confirmar_senha_id_cadastrar);
+        telefoneCadastroUsuario = findViewById(R.id.telefone_id_cadastrar);
+
     }
 
     private void cadastrarUsuario(final Usuario usuario) {
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
-
-        try {
-            progressBarCadastroUsuario.setVisibility(View.VISIBLE);
-
-            //criando autenticação via email e senha
-            autenticacao.createUserWithEmailAndPassword(
-                    usuario.getEmail(),usuario.getSenha()
-            ).addOnCompleteListener(task -> {
-                if (task.isSuccessful()){
-                    Toast.makeText(CadastrarUsuario.this, "Usuario "+usuario.getNome().toUpperCase()+" cadastrado.", Toast.LENGTH_SHORT).show();
-                    //caso usuario tenha sido cadastrado , sucesso.
-                    progressBarCadastroUsuario.setVisibility(View.GONE);
-
-                    //Cadastrando e configurando os dados na Firebase
-                    String idUsuario =  Objects.requireNonNull(Objects.requireNonNull(task.getResult()).getUser()).getUid();
-                    usuario.setId(idUsuario);
-                    usuario.salvarDados();
-
-                    //Salvar os dados no cadastro no profile do Firebase
-                    UsuarioFirebase.atualizarNomeUsuario(usuario.getNome());
-                    Intent intent = new Intent(CadastrarUsuario.this,MainActivity.class);
-                    startActivity(intent);
-                    finish();
+        String confirmaSenha = confirmarSenhaCadastroUsuario.getText().toString();
+        if (confirmaSenha.equals(usuario.getSenha())) {
 
 
-                }else {
-                    progressBarCadastroUsuario.setVisibility(View.GONE);
-                    //tratando os erros
-                    String erro = "";
-                    try {
-                        throw Objects.requireNonNull(task.getException());
+            try {
+                progressBarCadastroUsuario.setVisibility(View.VISIBLE);
 
-                    }catch (FirebaseAuthEmailException e){
-                        erro = "Autenticação falhou.";
+                //criando autenticação via email e senha
+                autenticacao.createUserWithEmailAndPassword(
+                        usuario.getEmail(), usuario.getSenha()
+                ).addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(CadastrarUsuario.this, "Usuario " + usuario.getNome().toUpperCase() + " cadastrado.", Toast.LENGTH_SHORT).show();
+                        //caso usuario tenha sido cadastrado , sucesso.
+                        progressBarCadastroUsuario.setVisibility(View.GONE);
 
-                    } catch (FirebaseAuthWeakPasswordException e){
-                        erro = "Senha fraca.";
+                        //Cadastrando e configurando os dados na Firebase
+                        String idUsuario = Objects.requireNonNull(Objects.requireNonNull(task.getResult()).getUser()).getUid();
+                        usuario.setId(idUsuario);
+                        usuario.salvarDados();
 
-                    } catch (FirebaseAuthInvalidCredentialsException e){
-                        erro = "Digite um email válido.";
+                        //Salvar os dados no cadastro no profile do Firebase
+                        UsuarioFirebase.atualizarNomeUsuario(usuario.getNome());
+                        Intent intent = new Intent(CadastrarUsuario.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
 
-                    } catch (FirebaseAuthUserCollisionException e){
-                        erro = "Usuario já cadastrado.";
+
+                    } else {
+                        progressBarCadastroUsuario.setVisibility(View.GONE);
+                        //tratando os erros
+                        String erro = "";
+                        try {
+                            throw Objects.requireNonNull(task.getException());
+
+                        } catch (FirebaseAuthEmailException e) {
+                            erro = "Autenticação falhou.";
+
+                        } catch (FirebaseAuthWeakPasswordException e) {
+                            erro = "Senha fraca.";
+
+                        } catch (FirebaseAuthInvalidCredentialsException e) {
+                            erro = "Digite um email válido.";
+
+                        } catch (FirebaseAuthUserCollisionException e) {
+                            erro = "Usuario já cadastrado.";
+                        } catch (Exception e) {
+                            erro = "Erro de autenticação: " + e.getMessage();
+                            e.printStackTrace();
+                        }
+
+                        Toast.makeText(CadastrarUsuario.this, "Erro: " + erro, Toast.LENGTH_LONG).show();
+
                     }
-                    catch (Exception e){
-                        erro = "Erro de autenticação: "+e.getMessage();
-                        e.printStackTrace();
-                    }
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
-                    Toast.makeText(CadastrarUsuario.this, "Erro: "+erro, Toast.LENGTH_LONG).show();
-
-                }
-            });
-        }catch (Exception e){
-            e.printStackTrace();
+        } else {
+            Toast.makeText(this, "Senhas divergentes, favor digitar senhas iguais.", Toast.LENGTH_SHORT).show();
         }
 
 

@@ -8,11 +8,11 @@
     <color name="primaryDarkColor">#550101</color>
     <color name="secondaryColor">#d50000</color>
     <color name="secondaryLightColor">#ff5131</color>
-    <color name="secondaryDarkColor">#9b0000</color>
+    <color name="secondaryDarkColor">#B12602</color>
     <color name="branco">#ffffff</color>
     <color name="laranja">#e64a19</color>
     <color name="laranjaClaro">#ff7d47</color>
-    <color name="laranjaEscuro">#ac0800</color>
+    <color name="roxo">#250A44</color>
     <color name="cinza">#772D0C58</color>
     <color name="cinzaClaro">#4f5b62</color>
     <color name="cinzaEscuro">#000a12</color>
