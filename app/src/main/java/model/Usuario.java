@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
+import br.com.raveline.redinfunusers.R;
 import helper.ConfiguracaoFirebase;
 
 public class Usuario implements Serializable {
@@ -41,6 +42,12 @@ public class Usuario implements Serializable {
         usuariosRef.setValue(this);
     }
 
+    public void salvarDadosAnonimo(){
+        DatabaseReference firebaseRef = ConfiguracaoFirebase.getReferenciaDatabase();
+        DatabaseReference usuariosRef = firebaseRef.child("usuarios");
+        usuariosRef.setValue(this);
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void atualizarDados(){
         DatabaseReference firebaseRef = ConfiguracaoFirebase.getReferenciaDatabase();
@@ -50,6 +57,11 @@ public class Usuario implements Serializable {
         objetoHash.put("nome",getNome());
         objetoHash.put("nomeUsuarioPesquisa",getNomeUsuarioPesquisa());
         objetoHash.put("caminhoFoto",getCaminhoFoto());
+        objetoHash.put("telefoneUsuario",getTelefoneUsuario());
+        objetoHash.put("localUsuario",getLocalUsuario());
+        objetoHash.put("alturaUsuario",getAlturaUsuario());
+        objetoHash.put("pesoUsuario",getPesoUsuario());
+        objetoHash.put("descricaoUsuario",getDescricaoUsuario());
 
         usuariosRef.updateChildren(objetoHash);
     }

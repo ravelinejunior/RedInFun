@@ -78,7 +78,6 @@ public class AdapterHome extends RecyclerView.Adapter<AdapterHome.myViewHolder> 
         holder.textoComentario.setOnClickListener(v -> {
             Intent intent = new Intent(context, VisualizarComentarioActivity.class);
             intent.putExtra("idFotoPostada", homeFeed.getIdFotoPostada());
-
             context.startActivity(intent);
         });
 

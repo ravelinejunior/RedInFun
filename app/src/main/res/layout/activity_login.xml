@@ -79,15 +79,13 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/progressBar_login"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/shape_edit_text"
+        android:layout_marginStart="32dp"
 
+        android:background="@drawable/shape_edit_text"
         android:foreground="@drawable/shape_edit_text"
         app:buttonSize="standard"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/progressBar_login"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/progressBar_login" />
 
     <TextView
         android:id="@+id/esqueceu_senha_login"
@@ -132,7 +130,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
         android:progressBackgroundTintMode="screen"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -162,6 +159,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/email_id_login" />
+
+    <Button
+        android:id="@+id/botao_logar_anonimamente_id"
+        android:layout_width="237dp"
+        android:layout_height="45dp"
+        android:layout_below="@id/progressBar_login"
+        android:layout_margin="8dp"
+        android:background="@drawable/shape_botao_perfil_fragment"
+        android:padding="8dp"
+        android:text="Anonimo"
+        android:textColor="@color/branco"
+        app:layout_constraintStart_toEndOf="@+id/botao_logar_google_login"
+        app:layout_constraintTop_toBottomOf="@+id/progressBar_login" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

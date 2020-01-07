@@ -62,11 +62,15 @@ public class PostarFragment extends Fragment {
 
         //evento de click para camera
         botaoAbrirCameraPostarFragment.setOnClickListener(v -> {
+
+
             Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             if (i.resolveActivity(Objects.requireNonNull(getActivity()).getPackageManager())!= null){
                 startActivityForResult(i,CODIGO_ABRIR_CAMERA);
             }
         });
+
+
 
         //evento de on click para galeria
         botaoAbrirGaleriaPostarFragment.setOnClickListener(v -> {
