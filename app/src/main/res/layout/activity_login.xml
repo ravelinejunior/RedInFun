@@ -79,11 +79,13 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/progressBar_login"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="16dp"
 
+        android:layout_marginEnd="32dp"
         android:background="@drawable/shape_edit_text"
         android:foreground="@drawable/shape_edit_text"
         app:buttonSize="standard"
+        app:layout_constraintEnd_toStartOf="@+id/botao_logar_anonimamente_id"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/progressBar_login" />
 
@@ -162,16 +164,21 @@
 
     <Button
         android:id="@+id/botao_logar_anonimamente_id"
-        android:layout_width="237dp"
-        android:layout_height="45dp"
+        style="@style/FirebaseUI.Button.AccountChooser.EmailButton"
+        android:layout_width="201dp"
+        android:layout_height="0dp"
         android:layout_below="@id/progressBar_login"
         android:layout_margin="8dp"
-        android:background="@drawable/shape_botao_perfil_fragment"
+        android:layout_marginStart="64dp"
+        android:background="#F8DD0A0A"
         android:padding="8dp"
         android:text="Anonimo"
         android:textColor="@color/branco"
+        app:layout_constraintBottom_toBottomOf="@+id/botao_logar_google_login"
+        app:layout_constraintEnd_toEndOf="@+id/cadastrar_text_login"
         app:layout_constraintStart_toEndOf="@+id/botao_logar_google_login"
-        app:layout_constraintTop_toBottomOf="@+id/progressBar_login" />
+        app:layout_constraintTop_toBottomOf="@+id/progressBar_login"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

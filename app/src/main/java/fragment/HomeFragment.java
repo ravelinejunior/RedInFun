@@ -2,19 +2,20 @@ package fragment;
 
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -35,8 +36,9 @@ public class HomeFragment extends Fragment {
     private AdapterHome adapterHomeFeed;
     private final List<HomeFeed> listaHomeFeed = new ArrayList<>();
     private ValueEventListener valueEventListenerHomeFeed;
-    private DatabaseReference homeFeedRef;
+    private DatabaseReference homeFeedReferencia;
     private String idUsuarioLogado;
+    Query homeFeedRef;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -52,9 +54,11 @@ public class HomeFragment extends Fragment {
         //Configurações Iniciais
         idUsuarioLogado = UsuarioFirebase.getIdentificadorUsuario();
         //recuperando o feed para o usuario que está logado
-        homeFeedRef = ConfiguracaoFirebase.getReferenciaDatabase()
-                .child("feed")
-                .child(idUsuarioLogado);
+        homeFeedReferencia = ConfiguracaoFirebase.getReferenciaDatabase()
+                .child("feed");
+
+        this.homeFeedRef = homeFeedReferencia.child(idUsuarioLogado);
+
 
         //inicializar componentes
         recyclerViewHome = view.findViewById(R.id.recyclerView_home_id);
@@ -71,10 +75,13 @@ public class HomeFragment extends Fragment {
     }
 
     private void listarHomeFeed(){
+        try {
+
+
             valueEventListenerHomeFeed = homeFeedRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    for (DataSnapshot ds: dataSnapshot.getChildren()){
+                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
                         //recuperar listagem de home feed
                         listaHomeFeed.add(ds.getValue(HomeFeed.class));
                     }
@@ -88,6 +95,10 @@ public class HomeFragment extends Fragment {
 
                 }
             });
+        } catch (Exception e) {
+            e.printStackTrace();
+            Snackbar.make(getView(), e.getMessage(), Snackbar.LENGTH_LONG).show();
+        }
     }
 
     @Override

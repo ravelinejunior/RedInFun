@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -39,14 +40,14 @@ public class UsuariosFragment extends Fragment {
     private String idUsuarioLogado;
 
     //atributo de referencia para usuarios
-    private DatabaseReference usuariosReferencia;
+    private Query usuariosReferencia;
 
     //event listenener
     private ValueEventListener valueEventListenerUsuariosFragment;
 
     //adapter
     private AdapterUsuarios adapterUsuarios;
-
+    private DatabaseReference usuariosReferenciaCriada;
 
 
     public UsuariosFragment() {
@@ -66,7 +67,7 @@ public class UsuariosFragment extends Fragment {
         recyclerViewUsuarios = view.findViewById(R.id.recyclerView_usuarios_id);
         listaUsuarios = new ArrayList<>();
         idUsuarioLogado = UsuarioFirebase.getIdentificadorUsuario();
-        usuariosReferencia = ConfiguracaoFirebase.getReferenciaDatabase().child("usuarios");
+        usuariosReferenciaCriada = ConfiguracaoFirebase.getReferenciaDatabase().child("usuarios");
 
         recyclerViewUsuarios.setHasFixedSize(true);
         recyclerViewUsuarios.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -107,7 +108,7 @@ public class UsuariosFragment extends Fragment {
 
     public void exibirUsuarios(){
 
-
+        usuariosReferencia = usuariosReferenciaCriada.orderByChild("nomeUsuarioPesquisa");
         valueEventListenerUsuariosFragment = usuariosReferencia.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

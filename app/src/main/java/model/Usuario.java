@@ -11,7 +11,6 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-import br.com.raveline.redinfunusers.R;
 import helper.ConfiguracaoFirebase;
 
 public class Usuario implements Serializable {
@@ -41,6 +40,7 @@ public class Usuario implements Serializable {
         DatabaseReference usuariosRef = firebaseRef.child("usuarios").child(getId());
         usuariosRef.setValue(this);
     }
+
 
     public void salvarDadosAnonimo(){
         DatabaseReference firebaseRef = ConfiguracaoFirebase.getReferenciaDatabase();
