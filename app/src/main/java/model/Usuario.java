@@ -10,10 +10,13 @@ import com.google.firebase.database.Exclude;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import helper.ConfiguracaoFirebase;
 
 public class Usuario implements Serializable {
+
+    Random random = new Random();
     private String id;
     private String nome;
     private String email;
@@ -28,8 +31,8 @@ public class Usuario implements Serializable {
     private String alturaUsuario;
     private String senhaConfirmadaUsuario;
     private int fotos = 0;
-    private int clientes = 0;
-    private int fas = 0;
+    private int clientes = random.nextInt(3500);
+    private int fas = random.nextInt(3500);
 
 
     public Usuario() {
@@ -44,8 +47,21 @@ public class Usuario implements Serializable {
 
     public void salvarDadosAnonimo(){
         DatabaseReference firebaseRef = ConfiguracaoFirebase.getReferenciaDatabase();
-        DatabaseReference usuariosRef = firebaseRef.child("usuarios");
-        usuariosRef.setValue(this);
+        DatabaseReference usuariosRef = firebaseRef.child("usuarios").child("YhVs2lK8A0NThq5JIm94OiPXCHm1");
+        HashMap<String, Object> usuarioAnonimo = new HashMap<>();
+        usuarioAnonimo.put("fotos", 0);
+        usuarioAnonimo.put("nome", "Anonimo");
+        usuarioAnonimo.put("clientes", 0);
+        usuarioAnonimo.put("fas", 0);
+        usuarioAnonimo.put("id", "YhVs2lK8A0NThq5JIm94OiPXCHm1");
+        usuariosRef.setValue(usuarioAnonimo);
+
+//        setNome("Usuario Anonimo");
+//        setEmail("anonimo123@gmail.com");
+//        setFas(0);
+//        setFotos(0);
+//        setClientes(0);
+//        usuariosRef.setValue(this);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -57,11 +73,11 @@ public class Usuario implements Serializable {
         objetoHash.put("nome",getNome());
         objetoHash.put("nomeUsuarioPesquisa",getNomeUsuarioPesquisa());
         objetoHash.put("caminhoFoto",getCaminhoFoto());
-        objetoHash.put("telefoneUsuario",getTelefoneUsuario());
-        objetoHash.put("localUsuario",getLocalUsuario());
-        objetoHash.put("alturaUsuario",getAlturaUsuario());
-        objetoHash.put("pesoUsuario",getPesoUsuario());
-        objetoHash.put("descricaoUsuario",getDescricaoUsuario());
+//        objetoHash.put("telefoneUsuario",getTelefoneUsuario());
+//        objetoHash.put("localUsuario",getLocalUsuario());
+//        objetoHash.put("alturaUsuario",getAlturaUsuario());
+//        objetoHash.put("pesoUsuario",getPesoUsuario());
+//        objetoHash.put("descricaoUsuario",getDescricaoUsuario());
 
         usuariosRef.updateChildren(objetoHash);
     }
@@ -95,6 +111,7 @@ public class Usuario implements Serializable {
         hashMapUsuario.put("fotos",getFotos());
         hashMapUsuario.put("clientes",getClientes());
         hashMapUsuario.put("fas",getFas());
+
         return hashMapUsuario;
 
     }

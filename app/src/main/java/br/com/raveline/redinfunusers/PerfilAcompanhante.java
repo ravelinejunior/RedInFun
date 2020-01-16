@@ -1,21 +1,20 @@
 package br.com.raveline.redinfunusers;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.database.DataSnapshot;
@@ -257,7 +256,7 @@ public class PerfilAcompanhante extends AppCompatActivity {
 
 
         if (segueUsuario){
-            botaoSeguirAcompanhante.setText("Seguindo "+usuAcompanhante.getNome());
+            botaoSeguirAcompanhante.setText("Curtindo " + usuAcompanhante.getNome());
 
            /* HashMap<String,Object> dadosAcompanhante = new HashMap<>();
             dadosAcompanhante.put("nome",usuAcompanhante.getNome());
@@ -271,7 +270,7 @@ public class PerfilAcompanhante extends AppCompatActivity {
 
         }
         else{
-            botaoSeguirAcompanhante.setText("Seguir Acompanhante");
+            botaoSeguirAcompanhante.setText("Curtir Acompanhante");
             botaoSeguirAcompanhante.setOnClickListener(v ->
                     salvarSeguidor(usuarioLogado,usuarioSelecionado));
 
@@ -299,9 +298,9 @@ public class PerfilAcompanhante extends AppCompatActivity {
                 child(usuLogado.getId());
         seguidorRef.setValue(dadosUsuarioLogado);
 
-        botaoSeguirAcompanhante.setText("Seguindo "+usuAcompanhante.getNome());
+        botaoSeguirAcompanhante.setText("Curtindo " + usuAcompanhante.getNome());
         //desabilitar evento onClick
-        botaoSeguirAcompanhante.setOnClickListener(null);
+        //botaoSeguirAcompanhante.setOnClickListener(null);
 
         //incrementar seguidores das acompanhantes
         int seguidoresFas = usuAcompanhante.getFas()+1;
