@@ -1,6 +1,5 @@
 package br.com.raveline.redinfunusers;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,23 +11,19 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthCredential;
-
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
@@ -37,7 +32,6 @@ import com.google.firebase.database.DatabaseReference;
 import java.util.Objects;
 
 import helper.ConfiguracaoFirebase;
-
 import model.Usuario;
 
 import static android.view.View.GONE;
@@ -58,6 +52,7 @@ public class LoginActivity extends AppCompatActivity {
 
     //Firebase
     private FirebaseAuth autenticacao;
+    private FirebaseUser user;
     private DatabaseReference databaseReference;
 
 
@@ -91,56 +86,19 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         botaoLogarAnonimo.setOnClickListener(v -> {
-            progressBarLogin.setVisibility(View.VISIBLE);
-                Task<AuthResult> resultTask = autenticacao.signInAnonymously();
-              resultTask.addOnSuccessListener(authResult -> {
-                if (resultTask.isSuccessful()){
-                    progressBarLogin.setVisibility(GONE);
 
-                    Usuario usuarioAnonimo = new Usuario();
-                    String senhaUsuario = "senha123";
-                    String emailUsuario = "anonimo@gmail.com";
-
-                    usuarioAnonimo.setNome("Anonimo");
-                    usuarioAnonimo.setId("nigNxH9XW8g8nWPiUZo8NBjROHB3");
-                    usuarioAnonimo.setEmail(emailUsuario);
-                    usuarioAnonimo.setSenha(senhaUsuario);
-                    usuarioAnonimo.setCaminhoFoto("https://firebasestorage.googleapis.com/v0/b/redinfunusers.appspot.com/o/imagens%2Fperfil%2FjJjpUdfqAQZeXljnq1cKUkdD9yr2.jpeg?alt=media&token=0e135679-ad62-478d-b796-02e328412187");
+            usuario = new Usuario();
+            usuario.setEmail("anonimo123@redinfun.com");
+            usuario.setSenha("senha123");
+            usuario.setFas(0);
+            usuario.setClientes(0);
+            validarUsuario(usuario);
+            Snackbar.make(v, "BEM VINDO", BaseTransientBottomBar.LENGTH_LONG).show();
 
 
-                    AuthCredential credential = EmailAuthProvider.getCredential(emailUsuario,senhaUsuario);
-                    String usuarioIdAnonimo = Objects.requireNonNull(authResult.getAdditionalUserInfo()).getProviderId();
-
-                    String finalUsuarioIdAnonimo = usuarioIdAnonimo;
-                    autenticacao.getCurrentUser().linkWithCredential(credential).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                        @Override
-                        public void onSuccess(AuthResult authResult) {
-                            progressBarLogin.setVisibility(GONE);
-                            Snackbar.make(v,"Usuario "+ finalUsuarioIdAnonimo,Snackbar.LENGTH_LONG).show();
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Snackbar.make(v,"Erro",Snackbar.LENGTH_LONG).show();
-                        }
-                    });
-
-
-
-
-
-                    Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(i);
-                }
-              }).addOnFailureListener(e -> {
-
-                  Snackbar.make(v, "Erro ao entrar anonimamente.", Snackbar.LENGTH_LONG).show();
-                  progressBarLogin.setVisibility(GONE);
-              }
-
-
-              );
         });
+
+
 
         //configurando botao para reenviar recuperação de senha
         esqueceuSenhaLogin.setOnClickListener(v -> esqueceuSenha());
@@ -206,6 +164,7 @@ public class LoginActivity extends AppCompatActivity {
         builder.create().show();
     }
 
+
     private void recuperarSenha(String email){
 try {
 
@@ -231,6 +190,11 @@ try {
 }
     }
 
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
 
     //verificar se usuario está logado
     private void verificarUsuarioLogado(){

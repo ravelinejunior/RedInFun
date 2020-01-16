@@ -15,6 +15,7 @@ import com.google.firebase.auth.FirebaseAuthEmailException;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
+import com.google.firebase.database.DatabaseReference;
 
 import java.util.Objects;
 
@@ -42,6 +43,7 @@ public class CadastrarUsuario extends AppCompatActivity {
 
     //atributos Firebase
     private FirebaseAuth autenticacao;
+    private DatabaseReference firebaseRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +52,9 @@ public class CadastrarUsuario extends AppCompatActivity {
         //carrega componentes R
         carregarComponentes();
 
+        //carrega a referencia de Firebase
+        firebaseRef = ConfiguracaoFirebase.getReferenciaDatabase();
+
         progressBarCadastroUsuario.setVisibility(View.GONE);
         botaoCadastroUsuario.setOnClickListener(view -> {
             //exibir progressbar
@@ -57,6 +62,11 @@ public class CadastrarUsuario extends AppCompatActivity {
             String emailUsuarioDigitado = emailCadastroUsuario.getText().toString();
             String idadeUsuarioDigitado = idadeCadastroUsuario.getText().toString();
             String senhaUsuarioDigitado = senhaCadastroUsuario.getText().toString();
+            String telefoneUsuarioDigitado = telefoneCadastroUsuario.getText().toString();
+            String alturaUsuarioDigitado = alturaCadastroUsuario.getText().toString();
+            String pesoUsuarioDigitado = pesoCadastroUsuario.getText().toString();
+            String descricaoUsuarioDigitado = descricaoCadastroUsuario.getText().toString();
+            String localUsuarioDigitado = localCadastroUsuario.getText().toString();
 
             //verificar condição dos campos
             if(!nomeUsuarioDigitado.isEmpty()){
@@ -68,6 +78,11 @@ public class CadastrarUsuario extends AppCompatActivity {
                             usuario.setEmail(emailUsuarioDigitado);
                             usuario.setSenha(senhaUsuarioDigitado);
                             usuario.setIdade(idadeUsuarioDigitado);
+                            usuario.setTelefoneUsuario(telefoneUsuarioDigitado);
+                            usuario.setLocalUsuario(localUsuarioDigitado);
+                            usuario.setDescricaoUsuario(descricaoUsuarioDigitado);
+                            usuario.setPesoUsuario(pesoUsuarioDigitado);
+                            usuario.setAlturaUsuario(alturaUsuarioDigitado);
                             //metodo Cadastrar
                             cadastrarUsuario(usuario);
 
@@ -174,6 +189,7 @@ public class CadastrarUsuario extends AppCompatActivity {
 
 
     }
+
 
     @Override
     public void onBackPressed() {
