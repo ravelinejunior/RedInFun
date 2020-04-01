@@ -1,4 +1,4 @@
-package br.com.raveline.redinfunusers;
+package br.com.raveline.redinfunusers.activities.usuario;
 
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -31,6 +31,8 @@ import com.google.firebase.database.DatabaseReference;
 
 import java.util.Objects;
 
+import br.com.raveline.redinfunusers.R;
+import br.com.raveline.redinfunusers.activities.view.MainActivity;
 import helper.ConfiguracaoFirebase;
 import model.Usuario;
 
@@ -200,7 +202,7 @@ try {
     private void verificarUsuarioLogado(){
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
         if(autenticacao.getCurrentUser() != null){
-            startActivity(new Intent(LoginActivity.this,MainActivity.class));
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
             finish();
         }
     }

@@ -1,4 +1,4 @@
-package br.com.raveline.redinfunusers;
+package br.com.raveline.redinfunusers.activities.view;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -39,6 +39,7 @@ import java.util.List;
 import java.util.Objects;
 
 import adapter.FiltrosAdapterThumbnails;
+import br.com.raveline.redinfunusers.R;
 import helper.ConfiguracaoFirebase;
 import helper.RecyclerItemClickListener;
 import helper.UsuarioFirebase;

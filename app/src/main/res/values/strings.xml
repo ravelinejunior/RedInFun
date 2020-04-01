@@ -1,7 +1,6 @@
 <resources>
-    <string name="app_name">RedInFun</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="app_name">Petgram</string>
 
     <string name="publicar" formatted="true">Publicar</string>
+    <string name="petgram">PetGram</string>
 </resources>

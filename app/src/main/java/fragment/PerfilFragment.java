@@ -4,10 +4,6 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +12,10 @@ import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.cache.MemoryCache;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,15 +33,15 @@ import java.util.List;
 import java.util.Objects;
 
 import adapter.AdapterGridFotosAcompanhante;
-import br.com.raveline.redinfunusers.AlterarDados;
 import br.com.raveline.redinfunusers.R;
+import br.com.raveline.redinfunusers.activities.usuario.AlterarDados;
 import de.hdodenhof.circleimageview.CircleImageView;
 import helper.ConfiguracaoFirebase;
 import helper.UsuarioFirebase;
 import model.FotoPostada;
 import model.Usuario;
 
-import static java.util.Objects.*;
+import static java.util.Objects.requireNonNull;
 
 /**
 * A simple {@link Fragment} subclass.
@@ -149,7 +147,9 @@ private void carregarFotosPostadas(){
                 // fotosPostadasPerfil.setText(String.valueOf(quantidadeFotos));
 
                 //Configurar Adapter
-                adapterGridFotosPerfil = new AdapterGridFotosAcompanhante(requireNonNull(getActivity()), R.layout.grid_fotos_acompanhante, urlFotos);
+                adapterGridFotosPerfil = new AdapterGridFotosAcompanhante(requireNonNull(getActivity()),
+                        R.layout.grid_fotos_acompanhante,
+                        urlFotos);
                 gridViewPerfil.setAdapter(adapterGridFotosPerfil);
             }catch (Exception e){
                 e.printStackTrace();

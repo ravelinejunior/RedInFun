@@ -24,8 +24,8 @@ import java.util.List;
 import java.util.Objects;
 
 import adapter.AdapterUsuarios;
-import br.com.raveline.redinfunusers.PerfilAcompanhante;
 import br.com.raveline.redinfunusers.R;
+import br.com.raveline.redinfunusers.activities.usuario.PerfilAcompanhante;
 import helper.ConfiguracaoFirebase;
 import helper.RecyclerItemClickListener;
 import helper.UsuarioFirebase;

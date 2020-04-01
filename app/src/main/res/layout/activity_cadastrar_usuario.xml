@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    tools:context=".CadastrarUsuario"
+    tools:context=".activities.usuario.CadastrarUsuario"
 
     >
 
@@ -15,7 +15,7 @@
         android:layout_height="729dp"
         android:background="@drawable/background_degrade"
         android:backgroundTintMode="add"
-        tools:context=".CadastrarUsuario"
+        tools:context=".activities.usuario.CadastrarUsuario"
         tools:layout_editor_absoluteY="1dp">
 
         <ImageView

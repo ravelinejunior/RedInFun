@@ -1,8 +1,4 @@
-package br.com.raveline.redinfunusers;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
+package br.com.raveline.redinfunusers.activities.view;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,10 +6,15 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+
 import com.bumptech.glide.Glide;
 
 import java.util.Objects;
 
+import br.com.raveline.redinfunusers.R;
 import de.hdodenhof.circleimageview.CircleImageView;
 import model.FotoPostada;
 import model.Usuario;

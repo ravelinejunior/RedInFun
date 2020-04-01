@@ -1,38 +1,32 @@
-package br.com.raveline.redinfunusers;
+package br.com.raveline.redinfunusers.activities.view;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.google.firebase.database.ChildEventListener;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.database.core.RunLoop;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import adapter.AdapterVisualizarComentario;
+import br.com.raveline.redinfunusers.R;
 import helper.ConfiguracaoFirebase;
 import helper.UsuarioFirebase;
 import model.Comentarios;
 import model.Usuario;
-
-import static java.util.Objects.requireNonNull;
 
 public class VisualizarComentarioActivity extends AppCompatActivity {
     private RecyclerView recyclerViewVisualizarComentario;

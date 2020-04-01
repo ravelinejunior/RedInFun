@@ -1,4 +1,4 @@
-package br.com.raveline.redinfunusers;
+package br.com.raveline.redinfunusers.activities.usuario;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -35,6 +35,8 @@ import java.util.List;
 import java.util.Objects;
 
 import adapter.AdapterGridFotosAcompanhante;
+import br.com.raveline.redinfunusers.R;
+import br.com.raveline.redinfunusers.activities.view.VisualizarFotoPostada;
 import de.hdodenhof.circleimageview.CircleImageView;
 import helper.ConfiguracaoFirebase;
 import helper.UsuarioFirebase;
@@ -126,7 +128,7 @@ public class PerfilAcompanhante extends AppCompatActivity {
             //abrir foto clicada
             gridViewPerfilAcompanhante.setOnItemClickListener((parent, view, position, id) -> {
                     FotoPostada fotoPostada = fotoPostadaList.get(position);
-                    Intent intent = new Intent(getApplicationContext(),VisualizarFotoPostada.class);
+                Intent intent = new Intent(getApplicationContext(), VisualizarFotoPostada.class);
 
                     //passando dados para outra activity
                     intent.putExtra("fotoPostadaAcompanhante",fotoPostada);
@@ -258,15 +260,6 @@ public class PerfilAcompanhante extends AppCompatActivity {
         if (segueUsuario){
             botaoSeguirAcompanhante.setText("Curtindo " + usuAcompanhante.getNome());
 
-           /* HashMap<String,Object> dadosAcompanhante = new HashMap<>();
-            dadosAcompanhante.put("nome",usuAcompanhante.getNome());
-            dadosAcompanhante.put("caminhoFoto",usuAcompanhante.getCaminhoFoto());
-
-            DatabaseReference seguidorRef = seguidoresRef.
-                    child(usuLogado.getId()).
-                    child(usuAcompanhante.getId());
-
-            seguidorRef.setValue(dadosAcompanhante);*/
 
         }
         else{

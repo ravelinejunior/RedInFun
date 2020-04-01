@@ -20,29 +20,32 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_launcher_round"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".VisualizarComentarioActivity" />
-        <activity android:name=".VisualizarFotoPostada" />
-        <activity android:name=".FiltrosActivity" />
+
         <activity
-            android:name=".AlterarDados"
-            android:parentActivityName=".MainActivity" />
-        <activity android:name=".CadastrarUsuario" />
-        <activity android:name=".PerfilAcompanhante" />
-        <activity android:name=".HomeLauncher">
+            android:name=".activities.launcher.SlideHomeLauncher"
+            android:theme="@style/Theme.Intro">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity" />
+        <activity android:name=".activities.view.VisualizarComentarioActivity" />
+        <activity android:name=".activities.view.VisualizarFotoPostada" />
+        <activity android:name=".activities.view.FiltrosActivity" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.usuario.AlterarDados"
+            android:parentActivityName=".activities.view.MainActivity" />
+        <activity android:name=".activities.usuario.CadastrarUsuario" />
+        <activity android:name=".activities.usuario.PerfilAcompanhante" />
+        <activity android:name=".activities.launcher.HomeLauncher" />
+        <activity android:name=".activities.usuario.LoginActivity" />
+        <activity
+            android:name=".activities.view.MainActivity"
             android:theme="@style/AppThemeLogin" />
     </application>
 

@@ -1,4 +1,4 @@
-package br.com.raveline.redinfunusers;
+package br.com.raveline.redinfunusers.activities.view;
 
 import android.content.Intent;
 import android.os.Build;
@@ -19,6 +19,8 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.firebase.auth.FirebaseAuth;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
+import br.com.raveline.redinfunusers.R;
+import br.com.raveline.redinfunusers.activities.usuario.LoginActivity;
 import fragment.HomeFragment;
 import fragment.PerfilFragment;
 import fragment.PesquisarFragment;
@@ -123,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.menu_main_sair:
                 deslogarUsuario();
-                startActivity(new Intent(MainActivity.this,LoginActivity.class));
+                startActivity(new Intent(MainActivity.this, LoginActivity.class));
                 break;
 
         }
