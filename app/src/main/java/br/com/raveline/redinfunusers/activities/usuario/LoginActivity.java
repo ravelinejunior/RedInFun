@@ -21,8 +21,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.BaseTransientBottomBar;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -41,11 +39,9 @@ import static android.view.View.GONE;
 public class LoginActivity extends AppCompatActivity {
     private Button botaoLogarLogin;
     private SignInButton botaoGoogleLogin;
-    private TextView cadastrarTextoLogin;
     private EditText emailLogarLogin;
     private EditText senhaLogarLogin;
     private ProgressBar progressBarLogin;
-    private Button botaoLogarAnonimo;
 
     //login google
     private static final int RC_SIGN_IN = 100;
@@ -85,19 +81,6 @@ public class LoginActivity extends AppCompatActivity {
             }else{
                 Toast.makeText(LoginActivity.this, "Campo EMAIL está vazio.", Toast.LENGTH_SHORT).show();
             }
-        });
-
-        botaoLogarAnonimo.setOnClickListener(v -> {
-
-            usuario = new Usuario();
-            usuario.setEmail("anonimo123@redinfun.com");
-            usuario.setSenha("senha123");
-            usuario.setFas(0);
-            usuario.setClientes(0);
-            validarUsuario(usuario);
-            Snackbar.make(v, "BEM VINDO", BaseTransientBottomBar.LENGTH_LONG).show();
-
-
         });
 
 
@@ -299,14 +282,14 @@ try {
 
     private void carregarElementos(){
         botaoLogarLogin = findViewById(R.id.botao_logar_login);
-        cadastrarTextoLogin = findViewById(R.id.cadastrar_text_login);
+//        cadastrarTextoLogin = findViewById(R.id.cadastrar_text_login);
         emailLogarLogin = findViewById(R.id.email_id_login);
         senhaLogarLogin = findViewById(R.id.senha_id_login);
         progressBarLogin = findViewById(R.id.progressBar_login);
         botaoGoogleLogin = findViewById(R.id.botao_logar_google_login);
         esqueceuSenhaLogin = findViewById(R.id.esqueceu_senha_login);
         databaseReference = ConfiguracaoFirebase.getReferenciaDatabase();
-        botaoLogarAnonimo = findViewById(R.id.botao_logar_anonimamente_id);
+        //   botaoLogarAnonimo = findViewById(R.id.botao_logar_anonimamente_id);
     }
 
 }

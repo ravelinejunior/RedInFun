@@ -3,4 +3,12 @@
 
     <string name="publicar" formatted="true">Publicar</string>
     <string name="petgram">PetGram</string>
+    <string name="cadastre_se_aqui">Cadastre-se Aqui.</string>
+    <string name="caso_j_seja_cadastrado_clique_no_bot_o_abaixo_para_logar">Caso já seja cadastrado, clique aqui para LOGAR!</string>
+    <string name="crie_sua_conta_aqui_gr_tis">Crie sua conta aqui grátis.</string>
+    <string name="conecte_se_a_rede_que_mostrar_as_criaturas_mais_puras_e_mais_fofas_do_mundo_encontre_um_pet_friend_para_seu_pet_quem_sabe_voc_n_o_encontra_seu_pet_romance">Conecte-se a rede que mostrará as criaturas mais puras e mais fofas do mundo. Encontre um PET FRIEND para seu pet. Quem sabe você não encontra seu pet romance?!</string>
+    <string name="entrar">Entrar</string>
+    <string name="esqueceu_a_senha_clique_aqui">Esqueceu a senha? Clique aqui!</string>
+    <string name="email">Email</string>
+    <string name="senha">Senha</string>
 </resources>
