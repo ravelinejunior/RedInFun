@@ -21,6 +21,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -39,8 +40,8 @@ import static android.view.View.GONE;
 public class LoginActivity extends AppCompatActivity {
     private Button botaoLogarLogin;
     private SignInButton botaoGoogleLogin;
-    private EditText emailLogarLogin;
-    private EditText senhaLogarLogin;
+    private TextInputEditText emailLogarLogin;
+    private TextInputEditText senhaLogarLogin;
     private ProgressBar progressBarLogin;
 
     //login google

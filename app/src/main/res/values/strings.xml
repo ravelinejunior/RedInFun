@@ -11,4 +11,14 @@
     <string name="esqueceu_a_senha_clique_aqui">Esqueceu a senha? Clique aqui!</string>
     <string name="email">Email</string>
     <string name="senha">Senha</string>
+    <string name="editar_perfil">Editar Perfil</string>
+    <string name="_0">0</string>
+    <string name="f_s">Fãs</string>
+    <string name="clientes">Clientes</string>
+    <string name="fotos">Fotos</string>
+    <string name="perfil">Perfil</string>
+    <string name="pesquisar">Pesquisar</string>
+    <string name="home">Home</string>
+    <string name="usuarios">Usuarios</string>
+    <string name="postar">Postar</string>
 </resources>

@@ -45,7 +45,7 @@ public class SlideHomeLauncher extends IntroActivity {
         );
 
         addSlide(new FragmentSlide.Builder()
-                .background(R.color.primaryDarkColor)
+                .background(R.color.laranjaClaro)
                 .fragment(R.layout.launcher_item_4)
                 .canGoForward(false)
                 .build()

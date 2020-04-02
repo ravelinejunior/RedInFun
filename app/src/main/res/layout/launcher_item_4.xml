@@ -11,7 +11,7 @@
         android:id="@+id/textView3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="260dp"
+        android:layout_marginTop="24dp"
         android:padding="5dp"
         android:text="@string/crie_sua_conta_aqui_gr_tis"
         android:textAlignment="center"
@@ -19,20 +19,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="8dp"
         android:padding="5dp"
         android:text="@string/conecte_se_a_rede_que_mostrar_as_criaturas_mais_puras_e_mais_fofas_do_mundo_encontre_um_pet_friend_para_seu_pet_quem_sabe_voc_n_o_encontra_seu_pet_romance"
         android:textAlignment="center"
+        android:textIsSelectable="true"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:textIsSelectable="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
@@ -59,19 +58,27 @@
         android:id="@+id/textDescricao_launcher_4"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
-        android:layout_marginEnd="8dp"
+        android:onClick="botaoLogarLauncher"
         android:padding="5dp"
+        android:background="@color/vermelholaranja"
         android:text="@string/caso_j_seja_cadastrado_clique_no_bot_o_abaixo_para_logar"
         android:textAlignment="center"
-        android:textIsSelectable="true"
         android:textSize="16sp"
-        android:onClick="botaoLogarLauncher"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textoCadastrar_launcher" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imageView"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="124dp"
+        android:src="@drawable/logodogtest"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

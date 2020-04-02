@@ -43,7 +43,11 @@
         <activity android:name=".activities.usuario.CadastrarUsuario" />
         <activity android:name=".activities.usuario.PerfilAcompanhante" />
         <activity android:name=".activities.launcher.HomeLauncher" />
-        <activity android:name=".activities.usuario.LoginActivity" />
+
+
+        <activity
+            android:name=".activities.usuario.LoginActivity"
+            android:theme="@style/AppThemeLogin" />
         <activity
             android:name=".activities.view.MainActivity"
             android:theme="@style/AppThemeLogin" />

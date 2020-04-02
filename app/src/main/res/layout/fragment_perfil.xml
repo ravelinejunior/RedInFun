@@ -9,7 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
 
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         tools:context="fragment.PerfilFragment">
 
         <!-- TODO: Update blank fragment layout -->
@@ -20,9 +20,9 @@
             android:layout_height="25dp"
             android:background="@drawable/shape_botao_perfil_fragment"
             android:padding="5dp"
-            android:text="Editar Perfil"
+            android:text="@string/editar_perfil"
             android:textColor="@color/branco"
-            android:textSize="12dp"
+            android:textSize="12sp"
             app:layout_constraintBottom_toTopOf="@+id/guideline3"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
             app:layout_constraintStart_toStartOf="@+id/guideline"
@@ -65,7 +65,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:padding="4dp"
-            android:text="Fotos"
+            android:text="@string/fotos"
             android:textColor="@color/branco"
             app:layout_constraintStart_toStartOf="@+id/guideline"
             app:layout_constraintTop_toBottomOf="@+id/fotos_perfil_fragment" />
@@ -76,7 +76,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:padding="4dp"
-            android:text="Clientes"
+            android:text="@string/clientes"
             android:textColor="@color/branco"
             app:layout_constraintBottom_toBottomOf="@+id/textView7"
             app:layout_constraintEnd_toStartOf="@+id/textView7"
@@ -90,7 +90,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:padding="4dp"
-            android:text="Fãs"
+            android:text="@string/f_s"
             android:textColor="@color/branco"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
             app:layout_constraintTop_toBottomOf="@+id/fas_perfil_fragment" />
@@ -101,7 +101,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:padding="4dp"
-            android:text="0"
+            android:text="@string/_0"
             android:textColor="@color/branco"
             android:textSize="14sp"
             android:textStyle="bold"
@@ -115,7 +115,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:padding="4dp"
-            android:text="0"
+            android:text="@string/_0"
             android:textColor="@color/branco"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/textView2"
@@ -128,7 +128,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:padding="4dp"
-            android:text="0"
+            android:text="@string/_0"
             android:textColor="@color/branco"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/textView7"

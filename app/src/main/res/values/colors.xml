@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#8B1515</color>
-    <color name="colorPrimaryDark">#321E6D</color>
-    <color name="colorAccent">#B10E57</color>
+    <color name="vermelhoescuro">#8B1515</color>
+    <color name="roxoescuro">#321E6D</color>
+    <color name="vermelhoGold">#B10E57</color>
     <color name="primaryColor">#7A7C8A</color>
     <color name="primaryLightColor">#ff5f52</color>
     <color name="primaryDarkColor">#550101</color>
-    <color name="secondaryColor">#d50000</color>
-    <color name="secondaryLightColor">#ff5131</color>
-    <color name="secondaryDarkColor">#B12602</color>
+    <color name="vermelhocomum">#d50000</color>
+    <color name="vermelholaranja">#ff5131</color>
+    <color name="vermelho">#B12602</color>
     <color name="branco">#ffffff</color>
     <color name="laranja">#e64a19</color>
     <color name="laranjaClaro">#ff7d47</color>
@@ -17,4 +17,12 @@
     <color name="cinzaClaro">#4f5b62</color>
     <color name="cinzaEscuro">#000a12</color>
     <color name="toolbarcor">#7EF8F8F8</color>
+    <color name="laranjaComum">#ff8000</color>
+    <color name="laranjaVermelho">#FF4500</color>
+    <color name="azul">#0040ff</color>
+    <color name="azulMarinho">#002080</color>
+    <color name="azulescuro">#0033cc</color>
+    <color name="escuroAzul">#001a66</color>
+    <color name="amarelo">#cccc00</color>
+
 </resources>
