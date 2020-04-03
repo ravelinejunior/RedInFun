@@ -23,8 +23,8 @@ import com.like.OnLikeListener;
 import java.util.List;
 import java.util.Objects;
 
+import activities.view.VisualizarComentarioActivity;
 import br.com.raveline.redinfunusers.R;
-import br.com.raveline.redinfunusers.activities.view.VisualizarComentarioActivity;
 import de.hdodenhof.circleimageview.CircleImageView;
 import helper.ConfiguracaoFirebase;
 import helper.UsuarioFirebase;

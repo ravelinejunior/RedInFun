@@ -8,7 +8,7 @@
     android:id="@+id/toolbar_principal_main_activity"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/laranjaClaro"
+    android:background="@color/Azulnovo"
     android:minHeight="?attr/actionBarSize"
     app:titleTextColor="@color/branco"
     app:subtitleTextColor="@color/branco"

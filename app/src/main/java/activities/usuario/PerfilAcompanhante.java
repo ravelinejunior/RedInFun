@@ -1,4 +1,4 @@
-package br.com.raveline.redinfunusers.activities.usuario;
+package activities.usuario;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -34,9 +34,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
+import activities.view.VisualizarFotoPostada;
 import adapter.AdapterGridFotosAcompanhante;
 import br.com.raveline.redinfunusers.R;
-import br.com.raveline.redinfunusers.activities.view.VisualizarFotoPostada;
 import de.hdodenhof.circleimageview.CircleImageView;
 import helper.ConfiguracaoFirebase;
 import helper.UsuarioFirebase;

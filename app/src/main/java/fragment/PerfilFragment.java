@@ -32,9 +32,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import activities.usuario.AlterarDados;
 import adapter.AdapterGridFotosAcompanhante;
 import br.com.raveline.redinfunusers.R;
-import br.com.raveline.redinfunusers.activities.usuario.AlterarDados;
 import de.hdodenhof.circleimageview.CircleImageView;
 import helper.ConfiguracaoFirebase;
 import helper.UsuarioFirebase;

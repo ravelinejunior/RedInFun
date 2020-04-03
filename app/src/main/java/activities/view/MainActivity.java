@@ -1,5 +1,6 @@
-package br.com.raveline.redinfunusers.activities.view;
+package activities.view;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
@@ -19,8 +21,8 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.firebase.auth.FirebaseAuth;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
+import activities.usuario.LoginActivity;
 import br.com.raveline.redinfunusers.R;
-import br.com.raveline.redinfunusers.activities.usuario.LoginActivity;
 import fragment.HomeFragment;
 import fragment.PerfilFragment;
 import fragment.PesquisarFragment;
@@ -40,8 +42,10 @@ public class MainActivity extends AppCompatActivity {
 
         //configurando toolbar
         Toolbar toolbar = findViewById(R.id.toolbar_principal_main_activity);
-        toolbar.setTitle("RedInFun");
+        toolbar.setTitle(R.string.app_name);
         toolbar.setTitleTextColor(ContextCompat.getColor(getApplicationContext(),R.color.branco));
+        toolbar.setLogo(R.drawable.ic_pets_white_24dp);
+        toolbar.setPadding(15, 0, 0, 0);
         setSupportActionBar(toolbar);
 
         //habilitando bottomNav
@@ -49,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frame_layout_main, new HomeFragment()).commit();
-
 
         //instanciar usuario firebase
         auth = ConfiguracaoFirebase.getFirebaseAutenticacao();
@@ -68,9 +71,8 @@ public class MainActivity extends AppCompatActivity {
 
         //configurar menu inicial quando tela for carrega ou houver algum impacto na rede
         Menu menu = bottomNavigationViewEx.getMenu();
-        MenuItem menuItem = menu.getItem(0);
+        MenuItem menuItem = menu.getItem(2);
         menuItem.setChecked(true);
-
 
     }
 
@@ -125,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.menu_main_sair:
                 deslogarUsuario();
-                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+
                 break;
 
         }
@@ -134,19 +136,39 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private Context getContext() {
+        return MainActivity.this;
+    }
+
     private void deslogarUsuario(){
-        try {
-            auth.signOut();
-        }catch (Exception e){
-            Toast.makeText(this, "Erro." +e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle(R.string.deseja_sair_app);
+        builder.setIcon(R.drawable.ic_pets_black_24dp);
+        builder.setMessage(R.string.deseja_sair_app_message);
+        builder.setCancelable(false);
+        builder.setPositiveButton(getString(R.string.confirmar), (dialog, which) -> {
+            try {
+                auth.signOut();
+                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            } catch (Exception e) {
+                Toast.makeText(this, "Erro." + e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        builder.setNegativeButton(R.string.cancelar, (dialog, which) -> {
+            Toast.makeText(getContext(), "Muito bem. Continue se divertindo com os pets do mundo todo!", Toast.LENGTH_SHORT).show();
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+
 
     }
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(MainActivity.this,LoginActivity.class));
-        finish();
+        deslogarUsuario();
         super.onBackPressed();
     }
 }

@@ -5,6 +5,7 @@
 
     <item
         android:id="@+id/ic_salvar_postagem_menu_postar"
+        android:icon="@drawable/ic_done_black_24dp"
         android:title="@string/publicar"
         app:showAsAction="always" />
 

@@ -1,4 +1,4 @@
-package br.com.raveline.redinfunusers.activities.view;
+package activities.view;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
-import com.bumptech.glide.Glide;
+import com.squareup.picasso.Picasso;
 
 import java.util.Objects;
 
@@ -42,17 +42,27 @@ public class VisualizarFotoPostada extends AppCompatActivity {
 
             //exibir dados do usuario selecionado
             Uri uri = Uri.parse(Objects.requireNonNull(usuario).getCaminhoFoto());
-            Glide.with(getApplicationContext()).load(uri).into(fotoUsuarioPostagem);
+            if (uri != null) {
+                Picasso.get().load(uri).into(fotoUsuarioPostagem);
+            } else {
+                Picasso.get().load(R.drawable.perfilfoto).into(fotoUsuarioPostagem);
+            }
+
             nomeUsuarioSelecionadoPostagem.setText(usuario.getNome());
 
             //exibir postagem
             Uri uriPostagem = Uri.parse(Objects.requireNonNull(postagem).getCaminhoFotoPostada());
-            Glide.with(VisualizarFotoPostada.this).load(uriPostagem).into(imagemPostadaPostagem);
+            if (uriPostagem != null) {
+                Picasso.get().load(uriPostagem).into(imagemPostadaPostagem);
+            } else {
+                Picasso.get().load(R.drawable.perfilfoto).into(imagemPostadaPostagem);
+            }
+
             //numeroCurtidasPostagem.setText(usuario.getFotos());
             if (postagem.getDescricaoFotoPostada() != null) {
                 descricaoPostagem.setText(postagem.getDescricaoFotoPostada());
             }else {
-                descricaoPostagem.setText("Foto sem descrição.");
+                descricaoPostagem.setText(R.string.foto_sem_desc);
             }
             //configurar comentarios
 
@@ -85,7 +95,7 @@ public class VisualizarFotoPostada extends AppCompatActivity {
     @Override
     public boolean onSupportNavigateUp() {
         finish();
-        return false;
+        return true;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package br.com.raveline.redinfunusers.activities.usuario;
+package activities.usuario;
 
 
 import android.Manifest;
@@ -28,8 +28,8 @@ import com.google.firebase.storage.UploadTask;
 import java.io.ByteArrayOutputStream;
 import java.util.Objects;
 
+import activities.view.MainActivity;
 import br.com.raveline.redinfunusers.R;
-import br.com.raveline.redinfunusers.activities.view.MainActivity;
 import helper.ConfiguracaoFirebase;
 import helper.Permissao;
 import helper.UsuarioFirebase;

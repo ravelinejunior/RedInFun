@@ -5,7 +5,7 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/cinzaEscuro</item>
-        <item name="colorAccent">@color/branco</item>
+        <item name="colorAccent">@color/preto</item>
     </style>
 
     <!-- Tema para Tela de login -->
@@ -13,7 +13,7 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/cinzaEscuro</item>
-        <item name="colorAccent">@color/branco</item>
+        <item name="colorAccent">@color/vermelhoescuro</item>
     </style>
 
 
@@ -21,7 +21,15 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/branco</item>
-        <item name="colorAccent">@color/branco</item>
+        <item name="colorAccent">@color/vermelhoescuro</item>
+    </style>
+
+    <style name="AppThemeToolbarMenuItem" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/branco</item>
+        <item name="colorAccent">@color/vermelhoescuro</item>
+
     </style>
 
 </resources>

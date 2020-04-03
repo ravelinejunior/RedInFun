@@ -23,9 +23,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import activities.usuario.PerfilAcompanhante;
 import adapter.AdapterUsuarios;
 import br.com.raveline.redinfunusers.R;
-import br.com.raveline.redinfunusers.activities.usuario.PerfilAcompanhante;
 import helper.ConfiguracaoFirebase;
 import helper.RecyclerItemClickListener;
 import helper.UsuarioFirebase;
@@ -35,15 +35,8 @@ import model.Usuario;
  * A simple {@link Fragment} subclass.
  */
 public class UsuariosFragment extends Fragment {
-    private RecyclerView recyclerViewUsuarios;
     private List<Usuario> listaUsuarios;
     private String idUsuarioLogado;
-
-    //atributo de referencia para usuarios
-    private Query usuariosReferencia;
-
-    //event listenener
-    private ValueEventListener valueEventListenerUsuariosFragment;
 
     //adapter
     private AdapterUsuarios adapterUsuarios;
@@ -64,7 +57,7 @@ public class UsuariosFragment extends Fragment {
 
 
         //inicializando componentes
-        recyclerViewUsuarios = view.findViewById(R.id.recyclerView_usuarios_id);
+        RecyclerView recyclerViewUsuarios = view.findViewById(R.id.recyclerView_usuarios_id);
         listaUsuarios = new ArrayList<>();
         idUsuarioLogado = UsuarioFirebase.getIdentificadorUsuario();
         usuariosReferenciaCriada = ConfiguracaoFirebase.getReferenciaDatabase().child("usuarios");
@@ -101,20 +94,24 @@ public class UsuariosFragment extends Fragment {
         ));
 
         exibirUsuarios();
-
-
         return view;
     }
 
     public void exibirUsuarios(){
 
-        usuariosReferencia = usuariosReferenciaCriada.orderByChild("nomeUsuarioPesquisa");
-        valueEventListenerUsuariosFragment = usuariosReferencia.addValueEventListener(new ValueEventListener() {
+        //atributo de referencia para usuarios
+        Query usuariosReferencia = usuariosReferenciaCriada.orderByChild("nomeUsuarioPesquisa");
+        //limpar lista de usuarios
+        //recuperando usuarios
+        //verificar se usuario pesquisado sou eu mesmo logado.
+        //adicionando usuario no Firebase
+        //event listenener
+        ValueEventListener valueEventListenerUsuariosFragment = usuariosReferencia.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 //limpar lista de usuarios
                 listaUsuarios.clear();
-                for (DataSnapshot ds: dataSnapshot.getChildren()){
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     //recuperando usuarios
                     Usuario usuario = ds.getValue(Usuario.class);
                     //verificar se usuario pesquisado sou eu mesmo logado.
@@ -124,7 +121,6 @@ public class UsuariosFragment extends Fragment {
                     //adicionando usuario no Firebase
                     listaUsuarios.add(usuario);
                     listaUsuarios.lastIndexOf(usuario);
-
 
                 }
                 adapterUsuarios.notifyDataSetChanged();

@@ -7,8 +7,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center_vertical"
-    android:background="@drawable/background_degrade"
-    tools:context=".activities.usuario.LoginActivity">
+    android:background="@drawable/background_degrade2"
+    tools:context="activities.usuario.LoginActivity">
 
     <LinearLayout
         android:id="@+id/linearLayout_id_imagem"
@@ -20,8 +20,9 @@
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imageView2"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:src="@drawable/logonovacirc" />
+            android:layout_height="250dp"
+            android:src="@drawable/doggirl"
+            android:layout_marginBottom="20dp" />
 
         <ScrollView
             android:fillViewport="true"
@@ -40,6 +41,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginStart="8dp"
+                    android:textColorHint="@color/branco"
+                    app:hintTextColor="@color/branco"
                     android:layout_marginEnd="8dp">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -49,12 +52,15 @@
                         android:drawableStart="@drawable/ic_email_alterar"
                         android:drawablePadding="10dp"
                         android:hint="@string/email"
+                        android:textColor="@color/branco"
                         android:inputType="textAutoCorrect|textAutoComplete|textEmailAddress" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:textColorHint="@color/branco"
+                    app:hintTextColor="@color/branco"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="8dp">
@@ -65,7 +71,7 @@
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/ic_password_senha_24dp"
                         android:drawablePadding="10dp"
-
+                        android:textColor="@color/branco"
                         android:hint="@string/senha"
                         android:inputType="textPassword" />
                 </com.google.android.material.textfield.TextInputLayout>

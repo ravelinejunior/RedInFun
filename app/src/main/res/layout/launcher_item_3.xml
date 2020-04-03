@@ -2,14 +2,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center"
+    android:background="@color/sunshine"
     android:orientation="vertical">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/image_launcher_3"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:src="@drawable/logonovacirc" />
+        android:layout_height="300dp"
+        android:layout_marginBottom="20dp"
+        app:civ_border_width="12dp"
+        app:civ_border_overlay="true"
+        app:civ_border_color="@color/amareloG"
+        android:src="@drawable/catdog" />
 
     <TextView
         android:id="@+id/textoTitulo_launcher_3"
@@ -19,7 +25,8 @@
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
         android:padding="5dp"
-        android:textSize="16sp"
+        android:textColor="@color/branco"
+        android:textSize="26sp"
         android:textStyle="bold"
         android:textAlignment="center"
         android:text="Poste fotos dos seus adoráveis (ou nem tanto) pets!" />
@@ -32,6 +39,9 @@
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
         android:padding="5dp"
+        android:textAlignment="center"
+        android:textColor="@color/branco"
+        android:textSize="20sp"
         android:text="Poste fotos de todos os seu pets e acompanhe em tempo real os amigos de seus pets!" />
 
 </LinearLayout>

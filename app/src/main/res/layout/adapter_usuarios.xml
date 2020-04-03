@@ -35,6 +35,6 @@
             android:textSize="18sp"
             android:paddingStart="8dp"
             android:textStyle="bold"
-            android:text="Nome Usuario" />
+            android:text="@string/nome_usuario" />
     </LinearLayout>
 </LinearLayout>

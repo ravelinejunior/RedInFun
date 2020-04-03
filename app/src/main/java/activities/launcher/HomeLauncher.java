@@ -1,4 +1,4 @@
-package br.com.raveline.redinfunusers.activities.launcher;
+package activities.launcher;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,8 +6,8 @@ import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import activities.usuario.LoginActivity;
 import br.com.raveline.redinfunusers.R;
-import br.com.raveline.redinfunusers.activities.usuario.LoginActivity;
 
 public class HomeLauncher extends AppCompatActivity {
 

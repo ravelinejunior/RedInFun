@@ -6,19 +6,18 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".activities.view.FiltrosActivity"
-    android:background="@drawable/background_degrade"
+    tools:context="activities.view.FiltrosActivity"
+    android:background="@drawable/background_degrade2"
     android:fillViewport="true"
     >
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
        >
 
-        <include layout="@layout/toolbar_filtros_layout"
-            />
+        <include layout="@layout/toolbar" />
 
         <ImageView
             android:id="@+id/imagem_foto_selecionada_filtro_activity"
@@ -32,7 +31,7 @@
             android:id="@+id/descricao_input_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Descrição"
+            android:hint="@string/descri_o"
             app:hintTextAppearance="@style/AppThemeToolbarFiltros"
             android:layout_margin="5dp"
             android:textColorHint="@color/branco"
@@ -43,8 +42,7 @@
                 android:id="@+id/descricao_id_input_edittext_filtros"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="15sp"
-                android:textStyle="bold"
+                android:textSize="18sp"
                 android:textColor="@color/branco"
                 />
 

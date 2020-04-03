@@ -18,8 +18,8 @@ import androidx.fragment.app.Fragment;
 import java.io.ByteArrayOutputStream;
 import java.util.Objects;
 
+import activities.view.FiltrosActivity;
 import br.com.raveline.redinfunusers.R;
-import br.com.raveline.redinfunusers.activities.view.FiltrosActivity;
 import helper.Permissao;
 
 /**

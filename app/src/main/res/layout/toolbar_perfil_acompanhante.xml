@@ -8,10 +8,10 @@
         android:id="@+id/toolbar_principal_main_activity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/shape_launcher"
+        android:background="@color/Azulnovo"
         android:minHeight="?attr/actionBarSize"
-        app:titleTextColor="@color/branco"
+        android:theme="?attr/actionBarTheme"
         app:subtitleTextColor="@color/branco"
-        android:theme="?attr/actionBarTheme" />
+        app:titleTextColor="@color/branco" />
 
 </FrameLayout>

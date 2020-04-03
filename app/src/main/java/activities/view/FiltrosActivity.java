@@ -1,4 +1,4 @@
-package br.com.raveline.redinfunusers.activities.view;
+package activities.view;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

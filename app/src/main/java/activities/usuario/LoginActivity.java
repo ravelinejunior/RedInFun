@@ -1,4 +1,4 @@
-package br.com.raveline.redinfunusers.activities.usuario;
+package activities.usuario;
 
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -30,8 +30,8 @@ import com.google.firebase.database.DatabaseReference;
 
 import java.util.Objects;
 
+import activities.view.MainActivity;
 import br.com.raveline.redinfunusers.R;
-import br.com.raveline.redinfunusers.activities.view.MainActivity;
 import helper.ConfiguracaoFirebase;
 import model.Usuario;
 

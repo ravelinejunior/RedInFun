@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"
-    android:background="@color/laranjaVermelho"
+    android:background="@color/VermelhoNovo"
     app:elevation="5dp"
     app:itemIconTint="@color/branco"
     app:itemTextColor="@color/branco"

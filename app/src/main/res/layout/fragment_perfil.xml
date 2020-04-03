@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_degrade"
+    android:background="@drawable/background_degrade2"
     android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -12,12 +12,10 @@
         android:layout_height="wrap_content"
         tools:context="fragment.PerfilFragment">
 
-        <!-- TODO: Update blank fragment layout -->
-
         <Button
             android:id="@+id/botao_acao_perfil"
             android:layout_width="0dp"
-            android:layout_height="25dp"
+            android:layout_height="wrap_content"
             android:background="@drawable/shape_botao_perfil_fragment"
             android:padding="5dp"
             android:text="@string/editar_perfil"
@@ -33,10 +31,10 @@
             android:id="@+id/grid_perfil_layout_fragment"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
             android:numColumns="3"
             android:paddingStart="5dp"
             android:paddingEnd="5dp"
@@ -65,6 +63,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:padding="4dp"
+            android:textStyle="bold"
             android:text="@string/fotos"
             android:textColor="@color/branco"
             app:layout_constraintStart_toStartOf="@+id/guideline"
@@ -75,6 +74,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:textStyle="bold"
             android:padding="4dp"
             android:text="@string/clientes"
             android:textColor="@color/branco"
@@ -89,6 +89,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
+            android:textStyle="bold"
             android:padding="4dp"
             android:text="@string/f_s"
             android:textColor="@color/branco"

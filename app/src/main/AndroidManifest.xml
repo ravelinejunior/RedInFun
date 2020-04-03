@@ -27,29 +27,29 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".activities.launcher.SlideHomeLauncher"
+            android:name="activities.launcher.SlideHomeLauncher"
             android:theme="@style/Theme.Intro">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.view.VisualizarComentarioActivity" />
-        <activity android:name=".activities.view.VisualizarFotoPostada" />
-        <activity android:name=".activities.view.FiltrosActivity" />
+        <activity android:name="activities.view.VisualizarComentarioActivity" />
+        <activity android:name="activities.view.VisualizarFotoPostada" />
+        <activity android:name="activities.view.FiltrosActivity" />
         <activity
-            android:name=".activities.usuario.AlterarDados"
-            android:parentActivityName=".activities.view.MainActivity" />
-        <activity android:name=".activities.usuario.CadastrarUsuario" />
-        <activity android:name=".activities.usuario.PerfilAcompanhante" />
-        <activity android:name=".activities.launcher.HomeLauncher" />
+            android:name="activities.usuario.AlterarDados"
+            android:parentActivityName="activities.view.MainActivity" />
 
+        <activity android:name="activities.usuario.CadastrarUsuario" />
+        <activity android:name="activities.usuario.PerfilAcompanhante" />
+        <activity android:name="activities.launcher.HomeLauncher" />
 
         <activity
-            android:name=".activities.usuario.LoginActivity"
+            android:name="activities.usuario.LoginActivity"
             android:theme="@style/AppThemeLogin" />
         <activity
-            android:name=".activities.view.MainActivity"
+            android:name="activities.view.MainActivity"
             android:theme="@style/AppThemeLogin" />
     </application>
 

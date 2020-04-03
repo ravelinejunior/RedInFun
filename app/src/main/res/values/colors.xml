@@ -10,8 +10,9 @@
     <color name="vermelholaranja">#ff5131</color>
     <color name="vermelho">#B12602</color>
     <color name="branco">#ffffff</color>
+    <color name="preto">#000000</color>
     <color name="laranja">#e64a19</color>
-    <color name="laranjaClaro">#ff7d47</color>
+    <color name="laranjaClaro">#F38C61</color>
     <color name="roxo">#250A44</color>
     <color name="cinza">#772D0C58</color>
     <color name="cinzaClaro">#4f5b62</color>
@@ -24,5 +25,21 @@
     <color name="azulescuro">#0033cc</color>
     <color name="escuroAzul">#001a66</color>
     <color name="amarelo">#cccc00</color>
+    <color name="amareloG">#FFFF00</color>
+    <color name="goldAmarelo">#FFD700</color>
+    <color name="amareloKhak">#F0E68C</color>
+    <color name="amareloEsc">#CDCD00</color>
+    <color name="Lima">#FDE910</color>
+    <color name="azulPiscina">#4ABDAC</color>
+    <color name="sunshine">#F7B733</color>
+    <color name="Clean">#DFDCE3</color>
+    <color name="Azulnovo">#345D7E</color>
+    <color name="VermelhoNovo">#F27281</color>
+    <color name="LaranjaNovo">#F8B195</color>
+    <color name="Verde">#00FA9A</color>
+    <color name="VerdeSptring">#1E7141</color>
+    <color name="Verdeescuro">#006400</color>
+    <color name="verdao">#008000</color>
+
 
 </resources>

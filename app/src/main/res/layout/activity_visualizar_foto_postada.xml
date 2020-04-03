@@ -11,10 +11,9 @@
     <LinearLayout
 
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/background_degrade"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        tools:context=".activities.view.VisualizarFotoPostada">
+        tools:context="activities.view.VisualizarFotoPostada">
 
         <include
             android:id="@+id/include"
@@ -24,12 +23,10 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/linearLayout"
-            android:background="@drawable/background_degrade"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@drawable/background_degrade2"
             android:orientation="vertical"
             >
 
@@ -51,7 +48,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="16dp"
                 android:padding="4dp"
-                android:text="Default"
+                android:text="@string/defaulty"
                 android:textColor="@color/branco"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -65,9 +62,8 @@
                 android:id="@+id/imagem_selecionada_visualizar_postagem"
                 android:layout_width="0dp"
                 android:layout_height="500dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="8dp"
                 android:scaleType="fitXY"
-                android:padding="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -118,7 +114,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:padding="4dp"
-                android:text="0 Curtidas"
+                android:text="@string/_0_curtidas"
                 android:textColor="@color/branco"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -133,9 +129,8 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:padding="4dp"
-                android:text="Descrição Default"
+                android:text="@string/descri_o_default"
                 android:textColor="@color/branco"
-                android:textStyle="italic|bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/numero_curtidas_visualizar_postagem" />

@@ -7,7 +7,7 @@
         android:id="@+id/toolbar_principal_main_activity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/shape_toolbar_filtros"
+        android:background="@color/vermelhoescuro"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme" />
 

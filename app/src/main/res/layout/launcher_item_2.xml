@@ -2,14 +2,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center"
+    android:background="@color/VerdeSptring"
     android:orientation="vertical">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/image_launcher_2"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:src="@drawable/logodogtest" />
+        android:layout_height="300dp"
+        app:civ_border_width="12dp"
+        android:layout_marginBottom="25dp"
+        app:civ_border_overlay="true"
+        app:civ_border_color="@color/Verdeescuro"
+        android:src="@drawable/catabdidog" />
 
     <TextView
         android:id="@+id/textoTitulo_launcher_2"
@@ -19,10 +25,11 @@
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
         android:padding="5dp"
-        android:textSize="16sp"
+        android:textColor="@color/branco"
+        android:textSize="26sp"
         android:textStyle="bold"
         android:textAlignment="center"
-        android:text="Poste fotos dos seus adoráveis (ou nem tanto) pets!" />
+        android:text="Encontre um PetLover" />
 
     <TextView
         android:id="@+id/textDescricao_launcher_2"
@@ -32,6 +39,9 @@
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
         android:padding="5dp"
+        android:textAlignment="center"
+        android:textColor="@color/branco"
+        android:textSize="20sp"
         android:text="Poste fotos de todos os seu pets e acompanhe em tempo real os amigos de seus pets!" />
 
 </LinearLayout>

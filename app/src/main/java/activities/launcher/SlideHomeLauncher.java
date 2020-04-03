@@ -1,4 +1,4 @@
-package br.com.raveline.redinfunusers.activities.launcher;
+package activities.launcher;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -9,9 +9,9 @@ import android.view.View;
 import com.heinrichreimersoftware.materialintro.app.IntroActivity;
 import com.heinrichreimersoftware.materialintro.slide.FragmentSlide;
 
+import activities.usuario.CadastrarUsuario;
+import activities.usuario.LoginActivity;
 import br.com.raveline.redinfunusers.R;
-import br.com.raveline.redinfunusers.activities.usuario.CadastrarUsuario;
-import br.com.raveline.redinfunusers.activities.usuario.LoginActivity;
 
 public class SlideHomeLauncher extends IntroActivity {
 
@@ -26,21 +26,21 @@ public class SlideHomeLauncher extends IntroActivity {
         setButtonNextVisible(false);*/
 
         addSlide(new FragmentSlide.Builder()
-                .background(R.color.primaryDarkColor)
+                .background(R.color.vermelholaranja)
                 .fragment(R.layout.launcher_item_1)
                 .canGoBackward(false)
                 .build()
         );
 
         addSlide(new FragmentSlide.Builder()
-                .background(R.color.laranja)
-                .fragment(R.layout.launcher_item_2)
+                .background(R.color.sunshine)
+                .fragment(R.layout.launcher_item_3)
                 .build()
         );
 
         addSlide(new FragmentSlide.Builder()
-                .background(R.color.fui_bgFacebook)
-                .fragment(R.layout.launcher_item_3)
+                .background(R.color.VerdeSptring)
+                .fragment(R.layout.launcher_item_2)
                 .build()
         );
 
