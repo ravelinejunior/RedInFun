@@ -5,6 +5,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
@@ -61,6 +63,7 @@ public class AlterarDados extends AppCompatActivity {
     //dados camera
     private static final int CODIGO_GALERIA_FOTO = 100;
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,32 +84,32 @@ public class AlterarDados extends AppCompatActivity {
         FirebaseUser firebaseUser = UsuarioFirebase.getUsuarioAtual();
 
         //usuario do firebase ja foi carregado no metodo carregarElementos()
-            try {
-                firebaseUser = UsuarioFirebase.getUsuarioAtual();
-                editarNomeAlterarDados.setText(Objects.requireNonNull(firebaseUser.getDisplayName()));
-                String nomeExibido = editarNomeAlterarDados.getText().toString();
-                if (nomeExibido.length() > 30){
-                    editarEmailAlterarDados.setText("");
-                }
-                editarEmailAlterarDados.setText(firebaseUser.getEmail());
-            }catch (Exception e){
-                e.getStackTrace();
+        try {
+            firebaseUser = UsuarioFirebase.getUsuarioAtual();
+            editarNomeAlterarDados.setText(Objects.requireNonNull(firebaseUser.getDisplayName()));
+            String nomeExibido = editarNomeAlterarDados.getText().toString();
+            if (nomeExibido.length() > 30){
+                editarEmailAlterarDados.setText("");
+            }
+            editarEmailAlterarDados.setText(firebaseUser.getEmail());
+        }catch (Exception e){
+            e.getStackTrace();
+        }
+
+        Uri url = firebaseUser.getPhotoUrl();
+        if (url != null){
+            Glide.with(AlterarDados.this).load(url).into(fotoPerfilAlterarDados);
+        } else{
+            fotoPerfilAlterarDados.setImageResource(R.drawable.ic_pessoa_usuario);
+        }
+
+        fotoPerfilAlterarDados.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            if (intent.resolveActivity(getPackageManager())!= null){
+                startActivityForResult(intent,CODIGO_GALERIA_FOTO);
             }
 
-            Uri url = firebaseUser.getPhotoUrl();
-            if (url != null){
-                Glide.with(AlterarDados.this).load(url).into(fotoPerfilAlterarDados);
-            } else{
-                fotoPerfilAlterarDados.setImageResource(R.drawable.ic_pessoa_usuario);
-            }
-
-            fotoPerfilAlterarDados.setOnClickListener(v -> {
-                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                if (intent.resolveActivity(getPackageManager())!= null){
-                    startActivityForResult(intent,CODIGO_GALERIA_FOTO);
-                }
-
-            });
+        });
 
         botaoAlterarDados.setOnClickListener(v -> {
             //recuperar nome atualizado
@@ -121,14 +124,14 @@ public class AlterarDados extends AppCompatActivity {
 
         });
 
-            //alterar foto do usuario
-            editarFotoAlterarDados.setOnClickListener(view -> {
-                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                if (intent.resolveActivity(getPackageManager())!=null){
-                    startActivityForResult(intent,CODIGO_GALERIA_FOTO);
-                }
+        //alterar foto do usuario
+        editarFotoAlterarDados.setOnClickListener(view -> {
+            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            if (intent.resolveActivity(getPackageManager())!=null){
+                startActivityForResult(intent,CODIGO_GALERIA_FOTO);
+            }
 
-            });
+        });
 
         imagemBotaoVoltar.setOnClickListener(v -> {
             startActivity(new Intent(AlterarDados.this,(MainActivity.class)));

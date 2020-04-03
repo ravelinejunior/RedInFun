@@ -15,7 +15,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.bumptech.glide.Glide;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,6 +25,7 @@ import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.utils.StorageUtils;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -43,9 +43,6 @@ import model.Usuario;
 
 import static java.util.Objects.requireNonNull;
 
-/**
-* A simple {@link Fragment} subclass.
-*/
 public class PerfilFragment extends Fragment {
 private Button botaoEditarPerfil;
 private GridView gridViewPerfil;
@@ -81,7 +78,7 @@ public View onCreateView(LayoutInflater inflater, ViewGroup container,
     View view = inflater.inflate(R.layout.fragment_perfil, container, false);
 
     //deixando apenas como portrait (nao permitir tela virar)
-    requireNonNull(getActivity()).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
+    requireNonNull(getActivity()).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
 
     //CONFIGURAÇÕES INICIAIS
     usuarioLogado = UsuarioFirebase.getUsuarioLogado();
@@ -190,10 +187,12 @@ private void recuperarFotoUsuario(){
     String caminhoFoto = usuarioLogado.getCaminhoFoto();
     if( caminhoFoto != null){
         Uri url = Uri.parse(caminhoFoto);
-        Glide.with(requireNonNull(getActivity())).load(url)
+       /* Glide.with(requireNonNull(getActivity())).load(url)
                 .circleCrop()
                 .centerInside()
                 .into(fotoPerfil);
+*/
+        Picasso.get().load(url).into(fotoPerfil);
 
     } else{
         Toast.makeText(getActivity(), "Erro ao recuperar imagem.", Toast.LENGTH_SHORT).show();

@@ -12,13 +12,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.like.LikeButton;
 import com.like.OnLikeListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 import java.util.Objects;
@@ -64,8 +64,11 @@ public class AdapterHome extends RecyclerView.Adapter<AdapterHome.myViewHolder> 
             Uri uriFotoPostada = Uri.parse(homeFeed.getFotoPostada());
 
             //carregando foto
-            Glide.with(context).load(uriFotoUsuario).into(holder.fotoPerfilUsuario);
-            Glide.with(context).load(uriFotoPostada).into(holder.fotoPostada);
+        Picasso.get().load(uriFotoUsuario).into(holder.fotoPerfilUsuario);
+        Picasso.get().load(uriFotoPostada).into(holder.fotoPostada);
+
+          /*  Glide.with(context).load(uriFotoUsuario).into(holder.fotoPerfilUsuario);
+            Glide.with(context).load(uriFotoPostada).into(holder.fotoPostada);*/
 
             //Levando para tela de comentarios
             holder.visualizarComentario.setOnClickListener(v -> {
