@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -20,8 +19,6 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import adapter.AdapterHome;
@@ -38,7 +35,6 @@ public class HomeFragment extends Fragment {
     private final List<HomeFeed> listaHomeFeed = new ArrayList<>();
     private ValueEventListener valueEventListenerHomeFeed;
     private Query homeFeedRef;
-    private Collection<Object> objectList;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -65,18 +61,23 @@ public class HomeFragment extends Fragment {
         //configurar RecyclerView
         adapterHomeFeed = new AdapterHome(listaHomeFeed,getActivity());
         recyclerViewHome.setHasFixedSize(true);
-        recyclerViewHome.setLayoutManager(new LinearLayoutManager(getActivity()));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        linearLayoutManager.setStackFromEnd(true);
+        linearLayoutManager.setReverseLayout(true);
+        recyclerViewHome.setLayoutManager(linearLayoutManager);
 
         //setando adapter
         recyclerViewHome.setAdapter(adapterHomeFeed);
-
+        listarHomeFeed();
         return view;
     }
 
     private void listarHomeFeed(){
-        try {
+        String idUsuarioLogado = UsuarioFirebase.getIdentificadorUsuario();
+        DatabaseReference homeFeedReferencia = ConfiguracaoFirebase.getReferenciaDatabase()
+                .child("feed").child(idUsuarioLogado);
 
-            valueEventListenerHomeFeed = homeFeedRef.addValueEventListener(new ValueEventListener() {
+        homeFeedReferencia.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
@@ -85,7 +86,7 @@ public class HomeFragment extends Fragment {
                         Log.i("listaHomeFeed", "onDataChange: " + ds.getChildrenCount());
                     }
                     //revertendo a lista para pegar sempre a ultima postagem de cada usuario
-                    Collections.reverse(listaHomeFeed);
+
                     adapterHomeFeed.notifyDataSetChanged();
                 }
 
@@ -94,22 +95,19 @@ public class HomeFragment extends Fragment {
 
                 }
             });
-        } catch (Exception e) {
-            e.printStackTrace();
-            Snackbar.make(getView(), e.getMessage(), Snackbar.LENGTH_LONG).show();
-        }
+
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        listarHomeFeed();
+        //  listarHomeFeed();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        homeFeedRef.removeEventListener(valueEventListenerHomeFeed);
+        //homeFeedRef.removeEventListener(valueEventListenerHomeFeed);
 
     }
 }

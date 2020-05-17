@@ -3,12 +3,14 @@ package helper;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 public class ConfiguracaoFirebase {
     private static DatabaseReference referenciaDatabase;
     private static FirebaseAuth referenciaAuth;
+    private static FirebaseFirestore referenciaFirestore;
     private static StorageReference storageReference;
 
     public ConfiguracaoFirebase() {
@@ -20,6 +22,14 @@ public class ConfiguracaoFirebase {
             referenciaAuth = FirebaseAuth.getInstance();
         }
         return referenciaAuth;
+    }
+
+    public static FirebaseFirestore getFirebaseStore() {
+        if (referenciaFirestore == null) {
+            referenciaFirestore = FirebaseFirestore.getInstance();
+        }
+
+        return referenciaFirestore;
     }
 
     public static DatabaseReference getReferenciaDatabase(){

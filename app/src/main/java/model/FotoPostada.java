@@ -27,6 +27,7 @@ public class FotoPostada implements Serializable {
     private String idUsuario;
     private String caminhoFotoPostada;
     private String descricaoFotoPostada;
+    private Usuario usuario;
 
     public FotoPostada() {
 
@@ -67,25 +68,25 @@ public class FotoPostada implements Serializable {
 
      //referencia para o feed
         for (DataSnapshot dsSeguidores:seguidoresSnapShot.getChildren()){
-             /*
-             exemplo da estrutura de feed
+ /*            exemplo da estrutura de feed
                 feed
                     idSeguidor
                         postagem (feita por)
 
-        montar objeto para salvar */
+        montar objeto para salvar
+*/
              //recuperar chave id seguidor
              String idSeguidor = dsSeguidores.getKey();
-             HashMap<String,Object> dadosSeguidor = new HashMap<>();
-             dadosSeguidor.put("fotoPostada",getCaminhoFotoPostada());
-             dadosSeguidor.put("descricaoFotoPostada",getDescricaoFotoPostada());
-             dadosSeguidor.put("idFotoPostada",getIdFotoPostada());
+            HashMap<String, Object> hashMap = new HashMap<>();
+            hashMap.put("fotoPostada", getCaminhoFotoPostada());
+            hashMap.put("descricaoFotoPostada", getDescricaoFotoPostada());
+            hashMap.put("idFotoPostada", getIdFotoPostada());
              //dados do usuario necessarios
-             dadosSeguidor.put("nomeUsuario",usuarioLogado.getNome());
-             dadosSeguidor.put("caminhoFotoUsuario",usuarioLogado.getCaminhoFoto());
+            hashMap.put("nomeUsuario", usuarioLogado.getNome());
+            hashMap.put("caminhoFotoUsuario", usuarioLogado.getCaminhoFoto());
              //salvar Objeto
             String caminhoAtualizacao = "/"+idSeguidor+"/"+getIdFotoPostada();
-            objeto.put("/feed"+caminhoAtualizacao,dadosSeguidor);
+            objeto.put("/feed" + caminhoAtualizacao, hashMap);
 
         }
 
@@ -126,5 +127,13 @@ public class FotoPostada implements Serializable {
 
     public void setDescricaoFotoPostada(String descricaoFotoPostada) {
         this.descricaoFotoPostada = descricaoFotoPostada;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 }

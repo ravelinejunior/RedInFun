@@ -60,8 +60,11 @@ public class AdapterHome extends RecyclerView.Adapter<AdapterHome.myViewHolder> 
 
         //carregando dados no home
 
-            Uri uriFotoUsuario = Uri.parse(homeFeed.getCaminhoFotoUsuario());
-            Uri uriFotoPostada = Uri.parse(homeFeed.getFotoPostada());
+            /*Uri uriFotoUsuario = Uri.parse(homeFeed.getUsuario().getCaminhoFoto());
+            Uri uriFotoPostada = Uri.parse(homeFeed.getFotoPostada());*/
+
+        Uri uriFotoUsuario = Uri.parse(homeFeed.getCaminhoFotoUsuario());
+        Uri uriFotoPostada = Uri.parse(homeFeed.getFotoPostada());
 
             //carregando foto
         Picasso.get().load(uriFotoUsuario).into(holder.fotoPerfilUsuario);
@@ -151,6 +154,8 @@ public class AdapterHome extends RecyclerView.Adapter<AdapterHome.myViewHolder> 
             }
         });
 
+        //  informacoesPublicacao(holder.fotoPerfilUsuario,holder.nomeUsuario,homeFeed.getIdUsuario());
+
         }
 
     @Override
@@ -185,6 +190,33 @@ public class AdapterHome extends RecyclerView.Adapter<AdapterHome.myViewHolder> 
 
 
         }
+    }
+
+    private void informacoesPublicacao(CircleImageView imagemPerfil, TextView nomeUsuario, String userId) {
+        DatabaseReference databaseReference = ConfiguracaoFirebase.getReferenciaDatabase().child("usuarios").child(userId);
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Usuario usuario = dataSnapshot.getValue(Usuario.class);
+
+                if (usuario.getCaminhoFoto() != null) {
+                    Uri uriFotoPerfil = Uri.parse(usuario.getCaminhoFoto());
+                    Picasso.get().load(uriFotoPerfil).placeholder(R.drawable.ic_pessoa_usuario).into(imagemPerfil);
+                } else {
+                    Picasso.get().load(R.drawable.ic_pessoa_usuario).into(imagemPerfil);
+                }
+
+                nomeUsuario.setText(usuario.getNome());
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
 

@@ -9,8 +9,8 @@ import android.view.View;
 import com.heinrichreimersoftware.materialintro.app.IntroActivity;
 import com.heinrichreimersoftware.materialintro.slide.FragmentSlide;
 
+import activities.TesteFireStore;
 import activities.usuario.CadastrarUsuario;
-import activities.usuario.LoginActivity;
 import br.com.raveline.redinfunusers.R;
 
 public class SlideHomeLauncher extends IntroActivity {
@@ -65,7 +65,7 @@ public class SlideHomeLauncher extends IntroActivity {
     }
 
     public void botaoLogarLauncher(View view) {
-        Intent intent = new Intent(getContext(), LoginActivity.class);
+        Intent intent = new Intent(getContext(), TesteFireStore.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }

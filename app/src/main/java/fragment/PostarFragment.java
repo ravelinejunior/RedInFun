@@ -26,8 +26,6 @@ import helper.Permissao;
  * A simple {@link Fragment} subclass.
  */
 public class PostarFragment extends Fragment {
-    private Button botaoAbrirCameraPostarFragment;
-    private Button botaoAbrirGaleriaPostarFragment;
 
     //request code para a ação de onclick de fotos
     private final static int CODIGO_ABRIR_CAMERA = 100;
@@ -56,8 +54,8 @@ public class PostarFragment extends Fragment {
         //validando as permissoes
         Permissao.validarPermissoes(listaPermissoesNecessarias,getActivity(),1);
 
-        botaoAbrirCameraPostarFragment = view.findViewById(R.id.botao_abrir_camera_postar_layout);
-        botaoAbrirGaleriaPostarFragment = view.findViewById(R.id.botao_abrir_galeria_postar_layout);
+        Button botaoAbrirCameraPostarFragment = view.findViewById(R.id.botao_abrir_camera_postar_layout);
+        Button botaoAbrirGaleriaPostarFragment = view.findViewById(R.id.botao_abrir_galeria_postar_layout);
 
         //evento de click para camera
         botaoAbrirCameraPostarFragment.setOnClickListener(v -> {

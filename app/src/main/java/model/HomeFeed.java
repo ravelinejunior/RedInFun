@@ -7,9 +7,18 @@ public class HomeFeed {
     private String descricaoFotoPostada;
     private String fotoPostada;
     private String idFotoPostada;
+    private Usuario usuario;
 
     public HomeFeed() {
 
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     public String getIdFotoPostada() {

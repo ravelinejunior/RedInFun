@@ -112,7 +112,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     //METODO PARA Abrir o linear layout de recuperação de senha
-    private void esqueceuSenha(){
+    private void esqueceuSenha() {
         //Alert dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Recuperar a senha");
@@ -126,15 +126,14 @@ public class LoginActivity extends AppCompatActivity {
         emailDigitadoNovo.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
         emailDigitadoNovo.setMinEms(20);
         linearLayout.addView(emailDigitadoNovo);
-        linearLayout.setPadding(10,10,10,10);
+        linearLayout.setPadding(10, 10, 10, 10);
         builder.setView(linearLayout);
 
         //botoes para recuperar
         builder.setPositiveButton("Recuperar", (dialogInterface, i) -> {
-            if (emailDigitadoNovo == null){
+            if (emailDigitadoNovo == null) {
                 Toast.makeText(this, "Não deixe o campo em branco!", Toast.LENGTH_SHORT).show();
-            }
-            else{
+            } else {
                 String emailRecuperado = emailDigitadoNovo.getText().toString();
                 progressBarLogin.setVisibility(View.VISIBLE);
                 recuperarSenha(emailRecuperado);
@@ -151,29 +150,28 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    private void recuperarSenha(String email){
-try {
+    private void recuperarSenha(String email) {
+        try {
 
 
-        autenticacao.sendPasswordResetEmail(email).addOnCompleteListener(task -> {
-            if (task.isSuccessful()){
+            autenticacao.sendPasswordResetEmail(email).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    progressBarLogin.setVisibility(GONE);
+                    Toast.makeText(LoginActivity.this, "Email enviado.", Toast.LENGTH_SHORT).show();
+                } else {
+                    progressBarLogin.setVisibility(GONE);
+                    Toast.makeText(LoginActivity.this, "Falha ao enviar.", Toast.LENGTH_SHORT).show();
+                }
+            }).addOnFailureListener(e -> {
                 progressBarLogin.setVisibility(GONE);
-                Toast.makeText(LoginActivity.this, "Email enviado.", Toast.LENGTH_SHORT).show();
-            }
-            else{
-                progressBarLogin.setVisibility(GONE);
-                Toast.makeText(LoginActivity.this, "Falha ao enviar.", Toast.LENGTH_SHORT).show();
-            }
-        }).addOnFailureListener(e -> {
+                //mostrar o erro
+                Toast.makeText(LoginActivity.this, "" + e.getMessage(), Toast.LENGTH_LONG).show();
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Verifique se o campo email está digitado corretamente.", Toast.LENGTH_SHORT).show();
             progressBarLogin.setVisibility(GONE);
-            //mostrar o erro
-            Toast.makeText(LoginActivity.this, ""+e.getMessage(), Toast.LENGTH_LONG).show();
-        });
-}catch (Exception e){
-    e.printStackTrace();
-    Toast.makeText(this, "Verifique se o campo email está digitado corretamente.", Toast.LENGTH_SHORT).show();
-    progressBarLogin.setVisibility(GONE);
-}
+        }
     }
 
 
